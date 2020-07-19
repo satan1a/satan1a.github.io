@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="设计模式及原则设计模式什么是设计模式？设计模式是可以应用于常见问题的通用可重用解决方案。创建软件应用程序是为了满足不断变化和发展的需求。一个成功的应用程序还应该提供一种简单的方法来扩展它以满足不断变化的期望。后面所讲的设计原则，以及后续所学习的设计模式都是为了这个目的：应用于常见问题的通用可重用解决，满足不断变化和发展的需求。 面向对象的设计原则面向对象的设计原则被称为SOLID。SOLID原则包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式及原则">
+<meta property="og:url" content="https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="设计模式及原则设计模式什么是设计模式？设计模式是可以应用于常见问题的通用可重用解决方案。创建软件应用程序是为了满足不断变化和发展的需求。一个成功的应用程序还应该提供一种简单的方法来扩展它以满足不断变化的期望。后面所讲的设计原则，以及后续所学习的设计模式都是为了这个目的：应用于常见问题的通用可重用解决，满足不断变化和发展的需求。 面向对象的设计原则面向对象的设计原则被称为SOLID。SOLID原则包">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213134011.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213134408.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213143318.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213205413.png">
+<meta property="article:published_time" content="2019-12-26T23:56:52.000Z">
+<meta property="article:modified_time" content="2019-12-26T23:56:52.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213134011.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>设计模式及原则</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/27/articles/2019/12/27/1577433325914.html/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/26/articles/2019/12/26/1577350330050.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&text=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&is_video=false&description=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=设计模式及原则&body=Check out this article: https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&name=设计模式及原则&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&t=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#设计模式及原则"><span class="toc-number">1.</span> <span class="toc-text">设计模式及原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式"><span class="toc-number">1.1.</span> <span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是设计模式？"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是设计模式？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面向对象的设计原则"><span class="toc-number">1.2.</span> <span class="toc-text">面向对象的设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单一职责原则"><span class="toc-number">1.2.1.</span> <span class="toc-text">单一职责原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开闭原则"><span class="toc-number">1.2.2.</span> <span class="toc-text">开闭原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#里氏替换原则"><span class="toc-number">1.2.3.</span> <span class="toc-text">里氏替换原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口隔离原则"><span class="toc-number">1.2.4.</span> <span class="toc-text">接口隔离原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖倒置原则"><span class="toc-number">1.2.5.</span> <span class="toc-text">依赖倒置原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建型模式（Creational-Pattern）"><span class="toc-number">1.3.</span> <span class="toc-text">创建型模式（Creational Pattern）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单例模式"><span class="toc-number">1.3.1.</span> <span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#概念"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何实现？"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">如何实现？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码示例"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步锁单例模式"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">同步锁单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拥有双重校验锁机制的同步锁单例模式"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">拥有双重校验锁机制的同步锁单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无锁的线程安全模式"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">无锁的线程安全模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两种单例模式"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">两种单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优缺点"><span class="toc-number">1.3.1.8.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂模式"><span class="toc-number">1.3.2.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建造者模式"><span class="toc-number">1.3.3.</span> <span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型模式"><span class="toc-number">1.3.4.</span> <span class="toc-text">原型模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象池模式"><span class="toc-number">1.3.5.</span> <span class="toc-text">对象池模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        设计模式及原则
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-26T23:56:52.000Z" itemprop="datePublished">2019-12-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="设计模式及原则"><a href="#设计模式及原则" class="headerlink" title="设计模式及原则"></a>设计模式及原则</h1><h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="什么是设计模式？"><a href="#什么是设计模式？" class="headerlink" title="什么是设计模式？"></a>什么是设计模式？</h3><p>设计模式是可以应用于<strong>常见问题的通用可重用解决方案</strong>。<br>创建软件应用程序是为了<strong>满足不断变化和发展的需求</strong>。一个成功的应用程序还应该提供一种简单的方法来扩展它以满足不断变化的期望。后面所讲的设计原则，以及后续所学习的设计模式都是为了这个目的：应用于常见问题的通用可重用解决，满足不断变化和发展的需求。</p>
+<h2 id="面向对象的设计原则"><a href="#面向对象的设计原则" class="headerlink" title="面向对象的设计原则"></a>面向对象的设计原则</h2><p>面向对象的设计原则被称为SOLID。SOLID原则包括单一职责原则、开闭原则、里氏替换原则、接口隔离原则和依赖倒置原则。在设计和开发软件时可以应用这些原则，以便创建易于维护和开发的程序。</p>
+<h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h3><p>该原则是指软件模块应该只有一个被修改的理由，目的是为了让封装工作达到最佳的状态。  </p>
+<p>例如常用于Java中类的修改：修改某个类时，需要修改的原因不止一个，而且这个过程常常会影响其他类的修改。每个更改的职责/理由都会增加新的依赖关系，使代码不那么健壮。<br>e.g. 一个Car类，假设对Car类添加方法来处理增、删、改、查的数据库操作。此时Car不仅会封装逻辑，还会封装数据库操作。使得类的维护和测试更加困难，因为代码是紧密耦合的。<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213134011.png" alt="没有遵循单一职责原则增加功能的Car类" style="zoom: 33%;" /><br>图：没有遵循单一职责原则增加功能的Car类<br>解决方案：创建两个类，一个用于封装Car逻辑(Car)，另一个用于负责持久性(CarDao)。<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213134408.png" alt="逻辑封装与持久性分离" style="zoom:50%;" /><br>图：逻辑封装与持久性分离  </p>
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><p>“模块、类和函数应该对扩展开放，对修改关闭。”  </p>
+<p>修改某个已完成部分分险和成本往往更大，我们应该在此基础上继续进行建设（通过继承和多态的方式），而不是去修改原本的。～是最重要的设计原则之一，是大多数设计模式的基础。</p>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h3><p>派生类型必须完全可替代其基类型。基于面向对象语言中的<strong>子类型多态</strong>，派生对象可以用其父类型替换。<br>简单来说：当类B继承类A时，除添加新的方法完成新增功能P2外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。此时可以说，类B是类A比较完整的派生对象，父类型可以替换子类型的多态（不同类型实体接口相同）。  </p>
+<h3 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h3><p>使用的接口方法满足客户端功能实现最低要求即可。即，“客户端不应该依赖于它所不需要的接口”。</p>
+<h3 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h3><p>“高级模块不应该依赖低级模块，两者都应该依赖抽象。”<br>“抽象不应该依赖于细节，细节应该依赖于抽象。”</p>
+<p>这个原则的目的就是为了降低耦合，常用的方法是将高级逻辑与低级模块分开。可以尝试让它们都<strong>依赖于抽象进而减少二者之间的依赖关系</strong>。如此就可以替换或扩展其中任何一个模块而不影响其他模块。</p>
+<p>e.g. 以下的vehicle为抽象类<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213143318.png" alt="依赖倒置原则的使用" style="zoom: 67%;" /><br>图：依赖倒置原则的使用  </p>
+<h2 id="创建型模式（Creational-Pattern）"><a href="#创建型模式（Creational-Pattern）" class="headerlink" title="创建型模式（Creational Pattern）"></a>创建型模式（Creational Pattern）</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>单例模式，故名思义是用来保证一个对象只能创建一个实例。单例模式是最简单也是最常用的一种设计模式，但因为过度使用或者在不恰当的时候使用，有的时候会被视为一种反模式。</p>
+<h4 id="如何实现？"><a href="#如何实现？" class="headerlink" title="如何实现？"></a>如何实现？</h4><p>只由单个类组成。为确保单例实例的唯一性，所有的单例构造器都要被声明为私有的（private），再通过声明静态（static）方法实现全局访问获得该单例实例。</p>
+<p>注意一下要点：</p>
+<ol>
+<li>单例构造器都要被声明为私有的（private）</li>
+<li>通过申明静态方法全局访问获得该单例示例</li>
+<li>自行向整个系统提供该实例<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213205413.png" alt="单例模式实现示意图"><br>图：单例模式实现示意图</li>
+</ol>
+<h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><p>以下为一段使用Java实现的单例模式，注意，要点在代码注释中再次写明：<br>Singleton.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 单例构造器都要被声明为私有的（private）</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Singleton is Instantiated."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 注意，检查实例是否为空，如果不为空则表明对象在之前被创建过</span></span><br><span class="line">		<span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">			<span class="comment">// 自行向整个系统提供该实例</span></span><br><span class="line">			instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Something is Done."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MyMainClass.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMainClass</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] s)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 通过申明静态方法全局访问获得该单例示例</span></span><br><span class="line">		Singleton singleton = Singleton.getInstance();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="同步锁单例模式"><a href="#同步锁单例模式" class="headerlink" title="同步锁单例模式"></a>同步锁单例模式</h4><p>在多线程应用中使用这种模式，如果实例为空，可能存在<strong>两个线程同时调用getInstance方法</strong>的情况。如果发生这种情况，第一个线程会首先使用新构造器实例化单例对象，同时第二个线程也会检查单例实例是否为空，由于第一个线程还没完成单例对象的实例化操作，所以第二个线程会发现这个实例是空的，也会开始实例化单例对象。  </p>
+<p>解决方法：创建一个代码块来检查实例是否空线程安全。在Java中，可以有以下两种方式：</p>
+<ol>
+<li>向getInstance方法的声明中添加synchronized关键字<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="keyword">synchronized</span> <span class="title">getInstance</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></li>
+<li>用synchronized代码块包装if(instance==null)条件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">synchronized (Singleton.class) &#123;</span><br><span class="line">if (instance &#x3D;&#x3D; null)</span><br><span class="line">instance &#x3D; new Singleton();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h4 id="拥有双重校验锁机制的同步锁单例模式"><a href="#拥有双重校验锁机制的同步锁单例模式" class="headerlink" title="拥有双重校验锁机制的同步锁单例模式"></a>拥有双重校验锁机制的同步锁单例模式</h4><p>同步锁单例模式虽然能够保证线程安全，但同时带来了延迟。用来检查实例是否被创建的代码是线程同步的，也就是说此代码块在同一时刻只能被一个线程执行，但是同步锁（locking）只有在实例没被创建的情况下才起作用。如果单例实例已经被创建了，那么任何线程都能用非同步的方式获取当前的实例。  </p>
+<p>因此我们设置只有在单例对象未实例化的情况下，才能在synchronized代码块前添加附加条件移动线程安全锁。且instance==null条件需要被检查了两次，保证在synchronized代码块中也要进行一次检查。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">	<span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">			<span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">			instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="无锁的线程安全模式"><a href="#无锁的线程安全模式" class="headerlink" title="无锁的线程安全模式"></a>无锁的线程安全模式</h4><p>Java中单例模式的最佳实现形式中，类只会加载一次，通过<strong>在声明时直接实例化静态成员</strong>的方式来保证一个类只有一个实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockFreeSingleton</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 在声明时直接实例化静态成员</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LockFreeSingleton instance = <span class="keyword">new</span> LockFreeSingleton();</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">LockFreeSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Singleton is Instantiated."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> LockFreeSingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> instance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Something is Done."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>// TODO</p>
+<h4 id="两种单例模式"><a href="#两种单例模式" class="headerlink" title="两种单例模式"></a>两种单例模式</h4><p>按照<strong>实例对象被创建的时机</strong>，可以将单例模式分为两类：</p>
+<ol>
+<li>提前加载单例模式：在应用开始时创建单例实例</li>
+<li>延迟加载单例模式：在getInstance方法首次被调用时才调用单例构造器（例如上文提到的无锁的线程安全模式）</li>
+</ol>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><h3 id="对象池模式"><a href="#对象池模式" class="headerlink" title="对象池模式"></a>对象池模式</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>卡马尔米特·辛格（Kamalmeet Singh）. Java设计模式及实践 (Java核心技术系列) (Chinese Edition) (Kindle Location 387). Kindle Edition. </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#设计模式及原则"><span class="toc-number">1.</span> <span class="toc-text">设计模式及原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#设计模式"><span class="toc-number">1.1.</span> <span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是设计模式？"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是设计模式？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面向对象的设计原则"><span class="toc-number">1.2.</span> <span class="toc-text">面向对象的设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单一职责原则"><span class="toc-number">1.2.1.</span> <span class="toc-text">单一职责原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开闭原则"><span class="toc-number">1.2.2.</span> <span class="toc-text">开闭原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#里氏替换原则"><span class="toc-number">1.2.3.</span> <span class="toc-text">里氏替换原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口隔离原则"><span class="toc-number">1.2.4.</span> <span class="toc-text">接口隔离原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#依赖倒置原则"><span class="toc-number">1.2.5.</span> <span class="toc-text">依赖倒置原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建型模式（Creational-Pattern）"><span class="toc-number">1.3.</span> <span class="toc-text">创建型模式（Creational Pattern）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单例模式"><span class="toc-number">1.3.1.</span> <span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#概念"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何实现？"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">如何实现？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码示例"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步锁单例模式"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">同步锁单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拥有双重校验锁机制的同步锁单例模式"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">拥有双重校验锁机制的同步锁单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无锁的线程安全模式"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">无锁的线程安全模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两种单例模式"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">两种单例模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优缺点"><span class="toc-number">1.3.1.8.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂模式"><span class="toc-number">1.3.2.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建造者模式"><span class="toc-number">1.3.3.</span> <span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型模式"><span class="toc-number">1.3.4.</span> <span class="toc-text">原型模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象池模式"><span class="toc-number">1.3.5.</span> <span class="toc-text">对象池模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.4.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&text=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&is_video=false&description=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=设计模式及原则&body=Check out this article: https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&title=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&name=设计模式及原则&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%8F%8A%E5%8E%9F%E5%88%99/&t=设计模式及原则" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

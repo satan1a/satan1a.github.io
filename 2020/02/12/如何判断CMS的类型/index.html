@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="如何判断CMS的类型？本文系吐司上看到的一个回答的摘录，以及一些修改。 被动信息收集使用指纹识别工具（网站）  云悉识别http:&#x2F;&#x2F;www.yunsee.cn&#x2F;  OnlineTools http:&#x2F;&#x2F;tools.hexlt.org&#x2F;whatcms https:&#x2F;&#x2F;github.com&#x2F;iceyhexman&#x2F;onlinetools  WhatWeb(国外) https:&#x2F;&#x2F;whatweb.net">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何判断CMS的类型">
+<meta property="og:url" content="https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="如何判断CMS的类型？本文系吐司上看到的一个回答的摘录，以及一些修改。 被动信息收集使用指纹识别工具（网站）  云悉识别http:&#x2F;&#x2F;www.yunsee.cn&#x2F;  OnlineTools http:&#x2F;&#x2F;tools.hexlt.org&#x2F;whatcms https:&#x2F;&#x2F;github.com&#x2F;iceyhexman&#x2F;onlinetools  WhatWeb(国外) https:&#x2F;&#x2F;whatweb.net">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-11T16:56:15.000Z">
+<meta property="article:modified_time" content="2020-02-12T03:12:14.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="安全综合">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>如何判断CMS的类型</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/07/No-Man-is-an-Island/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&text=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&is_video=false&description=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何判断CMS的类型&body=Check out this article: https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&name=如何判断CMS的类型&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&t=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何判断CMS的类型？"><span class="toc-number">1.</span> <span class="toc-text">如何判断CMS的类型？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#被动信息收集"><span class="toc-number">1.1.</span> <span class="toc-text">被动信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主动信息收集"><span class="toc-number">1.2.</span> <span class="toc-text">主动信息收集</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        如何判断CMS的类型
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-11T16:56:15.000Z" itemprop="datePublished">2020-02-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Web/" rel="tag">Web</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/" rel="tag">安全综合</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="如何判断CMS的类型？"><a href="#如何判断CMS的类型？" class="headerlink" title="如何判断CMS的类型？"></a>如何判断CMS的类型？</h1><p>本文系吐司上看到的一个回答的摘录，以及一些修改。</p>
+<h2 id="被动信息收集"><a href="#被动信息收集" class="headerlink" title="被动信息收集"></a>被动信息收集</h2><p>使用指纹识别工具（网站）</p>
+<ul>
+<li><p>云悉识别<br><a href="http://www.yunsee.cn/" target="_blank" rel="noopener">http://www.yunsee.cn/</a></p>
+</li>
+<li><p>OnlineTools</p>
+<p><a href="http://tools.hexlt.org/whatcms" target="_blank" rel="noopener">http://tools.hexlt.org/whatcms</a></p>
+<p><a href="https://github.com/iceyhexman/onlinetools" target="_blank" rel="noopener">https://github.com/iceyhexman/onlinetools</a></p>
+</li>
+<li><p>WhatWeb(国外)</p>
+<p><a href="https://whatweb.net/" target="_blank" rel="noopener">https://whatweb.net/</a></p>
+</li>
+<li><p>bugscaner指纹识别</p>
+<p><a href="http://whatweb.bugscaner.com/look/" target="_blank" rel="noopener">http://whatweb.bugscaner.com/look/</a> </p>
+</li>
+<li><p>百度云观测（探测web应用）</p>
+<p><a href="http://ce.baidu.com/index/guance?start_url=" target="_blank" rel="noopener">http://ce.baidu.com/index/guance?start_url=</a> </p>
+</li>
+<li><p>潮汐指纹（指纹识别）</p>
+<p><a href="http://finger.tidesec.net/" target="_blank" rel="noopener">http://finger.tidesec.net/</a></p>
+</li>
+</ul>
+<h2 id="主动信息收集"><a href="#主动信息收集" class="headerlink" title="主动信息收集"></a>主动信息收集</h2><p>查看网站的一些信息</p>
+<ul>
+<li><p>网站命名规则</p>
+</li>
+<li><p>返回头的关键字</p>
+</li>
+<li><p>网页关键字</p>
+</li>
+<li><p>URL特征</p>
+</li>
+<li><p>Meta特征</p>
+</li>
+<li><p>Script特征</p>
+</li>
+<li><p>robots.txt</p>
+</li>
+<li><p>网站路径特征</p>
+</li>
+<li><p>网站静态资源</p>
+</li>
+<li><p>爬取网站目录信息<br>例如/templets/default/style/dedecms.css（织梦CMS）关键的 js/css 文件</p>
+</li>
+<li><p>使用<a href="https://www.wappalyzer.com/download" target="_blank" rel="noopener">Wappalyzer</a>（一个框平台工具，可以检测网站使用的技术，CMS识别等）</p>
+</li>
+<li><p>网站独有文件的hash md5，例如favicon.ico，或者某固定的头像等</p>
+</li>
+<li><p>是否用了某种开源程序cms，然后我们可以利用公开的对应版本的poc、默认的后台登录页/数据库服务端口认证等进行测试，也可以将对应版本的源码下载下来进行代码审计</p>
+</li>
+<li><p>请求头server</p>
+</li>
+<li><p>页面的报错，报错页面源码（404页面）</p>
+</li>
+<li><p>cookie</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何判断CMS的类型？"><span class="toc-number">1.</span> <span class="toc-text">如何判断CMS的类型？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#被动信息收集"><span class="toc-number">1.1.</span> <span class="toc-text">被动信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主动信息收集"><span class="toc-number">1.2.</span> <span class="toc-text">主动信息收集</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&text=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&is_video=false&description=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=如何判断CMS的类型&body=Check out this article: https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&title=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&name=如何判断CMS的类型&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/&t=如何判断CMS的类型" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

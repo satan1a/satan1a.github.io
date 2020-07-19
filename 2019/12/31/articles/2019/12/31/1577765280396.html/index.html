@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="黑盒测试——因果图测试方法图：封面   开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE) 实验目的 认识黑盒测试方法中因果图测试方法原理   掌握黑盒测试方法中因果图测试方法过程  实验要求 要求学生能够理解因果图测试方法的相关概念、方法和过程。   具体为每一组，每组二——五人，根据实验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【软件工程】黑盒测试——因果图测试方法">
+<meta property="og:url" content="https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="黑盒测试——因果图测试方法图：封面   开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE) 实验目的 认识黑盒测试方法中因果图测试方法原理   掌握黑盒测试方法中因果图测试方法过程  实验要求 要求学生能够理解因果图测试方法的相关概念、方法和过程。   具体为每一组，每组二——五人，根据实验">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191231141825.png">
+<meta property="article:published_time" content="2019-12-31T04:08:00.000Z">
+<meta property="article:modified_time" content="2020-01-03T09:23:59.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="软件测试">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>【软件工程】黑盒测试——因果图测试方法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/01/articles/2020/01/01/1577875124044.html/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/29/articles/2019/12/29/1577587291774.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&text=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&is_video=false&description=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】黑盒测试——因果图测试方法&body=Check out this article: https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&name=【软件工程】黑盒测试——因果图测试方法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&t=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#黑盒测试——因果图测试方法"><span class="toc-number">1.</span> <span class="toc-text">黑盒测试——因果图测试方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验目的"><span class="toc-number">1.2.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.3.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.4.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.6.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.7.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题"><span class="toc-number">1.7.1.</span> <span class="toc-text">三角形问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试用例设计"><span class="toc-number">1.8.</span> <span class="toc-text">测试用例设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三角形问题：测试用例设计"><span class="toc-number">1.9.</span> <span class="toc-text">三角形问题：测试用例设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【测试代码及结果分析】"><span class="toc-number">1.10.</span> <span class="toc-text">【测试代码及结果分析】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试代码"><span class="toc-number">1.10.1.</span> <span class="toc-text">三角形问题：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试结果"><span class="toc-number">1.10.2.</span> <span class="toc-text">三角形问题：测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.11.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于因果图的黑盒测试方法的一般测试步骤"><span class="toc-number">1.11.1.</span> <span class="toc-text">基于因果图的黑盒测试方法的一般测试步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#因果图测试适用的范围"><span class="toc-number">1.11.2.</span> <span class="toc-text">因果图测试适用的范围</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【软件工程】黑盒测试——因果图测试方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-31T04:08:00.000Z" itemprop="datePublished">2019-12-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a>, <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="tag">软件测试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="黑盒测试——因果图测试方法"><a href="#黑盒测试——因果图测试方法" class="headerlink" title="黑盒测试——因果图测试方法"></a>黑盒测试——因果图测试方法</h1><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png"><br>图：封面  </p>
+<h2 id="开发语言及实现平台或实验环境"><a href="#开发语言及实现平台或实验环境" class="headerlink" title="开发语言及实现平台或实验环境"></a>开发语言及实现平台或实验环境</h2><p>在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE)</p>
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><ol>
+<li>认识黑盒测试方法中因果图测试方法原理  </li>
+<li>掌握黑盒测试方法中因果图测试方法过程</li>
+</ol>
+<h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><ol>
+<li>要求学生能够理解因果图测试方法的相关概念、方法和过程。  </li>
+<li>具体为每一组，每组二——五人，根据实验题目编写出对应的 c 语言或 c++语言程序，组间相互交换程序，按黑盒测试的方法进行测试。  </li>
+</ol>
+<h2 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h2><p>对编写的实验内容，采用基于因果图测试方法进行黑盒测试。</p>
+<h2 id="实验材料"><a href="#实验材料" class="headerlink" title="实验材料"></a>实验材料</h2><ol>
+<li>三角形问题<br>问题描述:三角形问题接受三个整数，a、b 和 c 作为输入，用作三角<br>形的边。程序的输出是由这三条边确定的三角形类型:等边三角形、等腰 三角形、不等边三角形或非三角形。<br>作为输入:三角形的三条边必须满足如下条件: C1:1&lt;=a&lt;=100<br>C2:1&lt;=b&lt;=100<br>C3:1&lt;=c&lt;=100<br>C4:a&lt;b+c C5:b&lt;a+c C6:c&lt;a+b</li>
+</ol>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><ol>
+<li>预习相关课堂和实验内容，了解测试对象。</li>
+<li>编写实验材料源代码。</li>
+<li>在调试过程中，如果需要，就建立一个或多个桩模块，并建立一个驱动<br>模块。</li>
+<li>设计测试用例。</li>
+<li>测试。</li>
+<li>填写试验报告。</li>
+</ol>
+<h2 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h2><h3 id="三角形问题"><a href="#三角形问题" class="headerlink" title="三角形问题"></a>三角形问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">import</span> java.util.InputMismatchException;</span><br><span class="line">        <span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TriangleProc</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideA = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideB = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideC = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TriangleProc</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：验证三角形边的长度范围</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> side</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verifyLengthRange</span><span class="params">(<span class="keyword">int</span> side)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ((side &gt;= <span class="number">1</span>) &amp;&amp; (side &lt;= <span class="number">100</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"边长 %1d 不满足大于等于1且小于等于 100"</span>, side));</span><br><span class="line">            System.out.println(<span class="string">"=========请重新输入========="</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：验证三角形两边之和大于第三边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> triangleProc</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verifyFormPrinciple</span><span class="params">(TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((triangleProc.sideA + triangleProc.sideB &lt;= triangleProc.sideC)</span><br><span class="line">                || (triangleProc.sideA + triangleProc.sideC &lt;= triangleProc.sideB)</span><br><span class="line">                || (triangleProc.sideB + triangleProc.sideC &lt;= triangleProc.sideA)) &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"边长组合为 %1d %2d %3d不满足两边之和大于第三边，是非三角形"</span>,</span><br><span class="line">                    triangleProc.sideA, triangleProc.sideB, triangleProc.sideC));</span><br><span class="line">            System.out.println(<span class="string">"=========请重新输入========="</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"边长组合满足两边之和大于第三边"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">judgeTriangleType</span><span class="params">(TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (triangleProc.sideA == triangleProc.sideB || triangleProc.sideA == triangleProc.sideC</span><br><span class="line">                || triangleProc.sideB == triangleProc.sideC) &#123;</span><br><span class="line">            <span class="keyword">if</span> (triangleProc.sideA == triangleProc.sideB &amp;&amp; triangleProc.sideB == triangleProc.sideC) &#123;</span><br><span class="line">                String triangleType = <span class="string">"等边三角形"</span>;</span><br><span class="line">                <span class="keyword">return</span> triangleType;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                String triangleType = <span class="string">"等腰三角形"</span>;</span><br><span class="line">                <span class="keyword">return</span> triangleType;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            String triangleType = <span class="string">"非等边三角形"</span>;</span><br><span class="line">            <span class="keyword">return</span> triangleType;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inputEdge</span><span class="params">(Scanner scanner, TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tempSideA = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tempSideB = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tempSideC = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println("Welcome to triangle judge program!!!d");</span></span><br><span class="line">        System.out.println(<span class="string">"Please input the side A"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (scanner.hasNext()) &#123;</span><br><span class="line">            tempSideA = scanner.nextInt();</span><br><span class="line">            triangleProc.sideA = tempSideA;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge A is %1d. Please input side B"</span>, tempSideA));</span><br><span class="line">            tempSideB = scanner.nextInt();</span><br><span class="line">            triangleProc.sideB = tempSideB;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge B is %1d. Please input side C"</span>, tempSideB));</span><br><span class="line">            tempSideC = scanner.nextInt();</span><br><span class="line">            triangleProc.sideC = tempSideC;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge C is %1d. The input is finished\n\n"</span>, tempSideC));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> stopFlag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!stopFlag) &#123;</span><br><span class="line">            <span class="keyword">if</span> (verifyLengthRange(triangleProc.sideA) &amp;&amp; verifyLengthRange(triangleProc.sideB)</span><br><span class="line">                    &amp;&amp; verifyLengthRange(triangleProc.sideC)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (verifyFormPrinciple(triangleProc)) &#123;</span><br><span class="line">                    stopFlag = <span class="keyword">true</span>;</span><br><span class="line">                    String triangleType = judgeTriangleType(triangleProc);</span><br><span class="line">                    System.out.println(String.format(<span class="string">"你输入的三角形类型为：%1s"</span>, triangleType));</span><br><span class="line">                    System.out.println(<span class="string">"========The End========"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    inputEdge(scanner, triangleProc);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 边长不满足两个条件，重新输入</span></span><br><span class="line">                inputEdge(scanner, triangleProc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 主函数，同时也是测试函数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TriangleProc triangleProc = <span class="keyword">new</span> TriangleProc();</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        triangleProc.inputEdge(scanner, triangleProc);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="测试用例设计"><a href="#测试用例设计" class="headerlink" title="测试用例设计"></a>测试用例设计</h2><h2 id="三角形问题：测试用例设计"><a href="#三角形问题：测试用例设计" class="headerlink" title="三角形问题：测试用例设计"></a>三角形问题：测试用例设计</h2><ol>
+<li><p>分析（输入输出数据以及其逻辑关系）<br>因：<br>C1: 1&lt;=a&lt;=100<br>C2: 1&lt;=b&lt;=100<br>C3: 1&lt;=c&lt;=100<br>C4: a&lt;b+c<br>C5: b&lt;a+c<br>C6: c&lt;a+b<br>C7: a=b<br>C8: a=c<br>C9: b=c<br>果：<br>R1：等边三角形<br>R2：等腰 三角形<br>R3：不等边三角形<br>R4：非三角形<br>R5：不可能 </p>
+</li>
+<li><p>关联（不同组合间的关联、约束或限制条件，形成因果图）</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191231141825.png" style="zoom:50%;" />
+中间条件：
+M1: 满足边长要求
+M2: 构成三角形
+M3: 满足全部输入要求
+M4: 任意边长度相等
+M5: 存在一条边边长相等
+M6: 任意边边长都相等
+M7: 边长不构成三角形
+
+</li>
+</ol>
+<p>3.转换（因果图转换为决策表并简化）</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>C8</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>C9</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>R1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>R2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>R3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>R5</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>因：<br>C1: 1&lt;=a&lt;=100<br>C2: 1&lt;=b&lt;=100<br>C3: 1&lt;=c&lt;=100<br>C4: a&lt;b+c<br>C5: b&lt;a+c<br>C6: c&lt;a+b<br>C7: a=b<br>C8: a=c<br>C9: b=c<br>果：<br>R1：等边三角形<br>R2：等腰 三角形<br>R3：不等边三角形<br>R4：非三角形<br>R5：不可能<br>R6：输入错误（// 忘记加了）</p>
+<p>4.输出（从决策表生成测试用例）</p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>预期输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>3</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>8</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>10</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>11</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>12</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>13</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>14</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>非等腰三角形</td>
+</tr>
+</tbody></table>
+<h2 id="【测试代码及结果分析】"><a href="#【测试代码及结果分析】" class="headerlink" title="【测试代码及结果分析】"></a>【测试代码及结果分析】</h2><h3 id="三角形问题：测试代码"><a href="#三角形问题：测试代码" class="headerlink" title="三角形问题：测试代码"></a>三角形问题：测试代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> procs.TriangleProc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TriangleTesting_fourth</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkShape</span><span class="params">(<span class="keyword">int</span> sideA, <span class="keyword">int</span> sideB, <span class="keyword">int</span> sideC)</span> </span>&#123;</span><br><span class="line">        TriangleProc triangleProc = <span class="keyword">new</span> TriangleProc();</span><br><span class="line"></span><br><span class="line">        triangleProc.sideA = sideA;</span><br><span class="line">        triangleProc.sideB = sideB;</span><br><span class="line">        triangleProc.sideC = sideC;</span><br><span class="line"></span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideA);</span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideB);</span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideC);</span><br><span class="line"></span><br><span class="line">        triangleProc.verifyFormPrinciple(triangleProc);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"三角形类型为："</span> + triangleProc.judgeTriangleType(triangleProc));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TriangleTesting_fourth triangleTesting_fourth = <span class="keyword">new</span> TriangleTesting_fourth();</span><br><span class="line"></span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">2</span>, <span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">0</span>, <span class="number">0</span> ,<span class="number">1</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_fourth.checkShape(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="三角形问题：测试结果"><a href="#三角形问题：测试结果" class="headerlink" title="三角形问题：测试结果"></a>三角形问题：测试结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 0  2   3不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：非等边三角形</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 2  0   3不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：非等边三角形</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 2  3   0不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：非等边三角形</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 1  0   0不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 0  1   0不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长 0 不满足大于等于1且小于等于 100</span><br><span class="line">边长组合为 0  0   1不满足两边之和大于第三边，是非三角形</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">边长组合满足两边之和大于第三边</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">边长组合满足两边之和大于第三边</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">边长组合满足两边之和大于第三边</span><br><span class="line">三角形类型为：等腰三角形</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;不可能&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;不可能&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;不可能&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">边长组合满足两边之和大于第三边</span><br><span class="line">三角形类型为：等边三角形</span><br><span class="line">边长组合满足两边之和大于第三边</span><br><span class="line">三角形类型为：非等边三角形</span><br></pre></td></tr></table></figure>
+
+<p>满足实验预期</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h3 id="基于因果图的黑盒测试方法的一般测试步骤"><a href="#基于因果图的黑盒测试方法的一般测试步骤" class="headerlink" title="基于因果图的黑盒测试方法的一般测试步骤"></a>基于因果图的黑盒测试方法的一般测试步骤</h3><ol>
+<li>分析<br> 分析输入输出数据（因和果）<br> 分析输入输出数据的关系</li>
+<li>关联<br> 不同组合间的关联、约束或限制条件，形成因果图</li>
+<li>转换<br> 将因果图转换为决策表并进行简化</li>
+<li>输出<br> 从决策表生成测试用例</li>
+</ol>
+<h3 id="因果图测试适用的范围"><a href="#因果图测试适用的范围" class="headerlink" title="因果图测试适用的范围"></a>因果图测试适用的范围</h3><p>通常适用于要产生大量决策的情况，或者输入变量之间存在重要逻辑关系。</p>
+<p>1.决策表测试法适用于具有以下特征的应用程序</p>
+<ul>
+<li>程序的 if then else 逻辑突出</li>
+<li>输入变量之间存在逻辑关系</li>
+<li>计算过程涉及输入变量子集的处理</li>
+<li>输入与输出之间存在因果关系</li>
+<li>圈复杂度较高的应用</li>
+</ul>
+<p>2.适用于使用决策表设计测试用例的条件</p>
+<ul>
+<li>规格说明以决策表形式给出，或较容易转换为决策表</li>
+<li>条件的排列顺序不会也不应影响执行的操作</li>
+<li>规则的排列顺序不会也不应影响执行的操作</li>
+<li>当某一规则的条件已经满足，并确定要执行的操作后，不必检验别的规则</li>
+<li>如果某一规则的条件要执行多个操作，这些操作的执行顺序无关紧要</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#黑盒测试——因果图测试方法"><span class="toc-number">1.</span> <span class="toc-text">黑盒测试——因果图测试方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验目的"><span class="toc-number">1.2.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.3.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.4.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.6.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.7.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题"><span class="toc-number">1.7.1.</span> <span class="toc-text">三角形问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试用例设计"><span class="toc-number">1.8.</span> <span class="toc-text">测试用例设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三角形问题：测试用例设计"><span class="toc-number">1.9.</span> <span class="toc-text">三角形问题：测试用例设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#【测试代码及结果分析】"><span class="toc-number">1.10.</span> <span class="toc-text">【测试代码及结果分析】</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试代码"><span class="toc-number">1.10.1.</span> <span class="toc-text">三角形问题：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试结果"><span class="toc-number">1.10.2.</span> <span class="toc-text">三角形问题：测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.11.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于因果图的黑盒测试方法的一般测试步骤"><span class="toc-number">1.11.1.</span> <span class="toc-text">基于因果图的黑盒测试方法的一般测试步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#因果图测试适用的范围"><span class="toc-number">1.11.2.</span> <span class="toc-text">因果图测试适用的范围</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&text=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&is_video=false&description=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】黑盒测试——因果图测试方法&body=Check out this article: https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&title=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&name=【软件工程】黑盒测试——因果图测试方法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/31/articles/2019/12/31/1577765280396.html/&t=【软件工程】黑盒测试——因果图测试方法" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

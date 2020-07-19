@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="iOS应用安全概要安全问题归纳1.敏感信息泄露用户名账户、密码；登入Token；密码锁等 问题点 文件存储  威胁 NSUserDefaults 未加密的数据库形式 APP的数据目录访问权限   审计方法 iFunbox等可访问文件系统的工具 PlistEdit、SqliteBrowser   解决方案 重要数据存储到Keychain中（iOS钥匙串Keychains安全机制参考：链接） Keyc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS应用安全概要">
+<meta property="og:url" content="https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="iOS应用安全概要安全问题归纳1.敏感信息泄露用户名账户、密码；登入Token；密码锁等 问题点 文件存储  威胁 NSUserDefaults 未加密的数据库形式 APP的数据目录访问权限   审计方法 iFunbox等可访问文件系统的工具 PlistEdit、SqliteBrowser   解决方案 重要数据存储到Keychain中（iOS钥匙串Keychains安全机制参考：链接） Keyc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-26T14:12:27.000Z">
+<meta property="article:modified_time" content="2020-02-29T12:01:48.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="iOS安全">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>iOS应用安全概要</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/27/Swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/26/iOS%E5%BA%94%E7%94%A8%E7%A0%B4%E8%A7%A3%E5%88%9D%E6%8E%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&text=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&is_video=false&description=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS应用安全概要&body=Check out this article: https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&name=iOS应用安全概要&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&t=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS应用安全概要"><span class="toc-number">1.</span> <span class="toc-text">iOS应用安全概要</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全问题归纳"><span class="toc-number">1.1.</span> <span class="toc-text">安全问题归纳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-敏感信息泄露"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.敏感信息泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据加密"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.数据加密</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点-1"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-网络交互"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.网络交互</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点-2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-第三方库"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AFNetworking"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">AFNetworking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FFmpeg"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">FFmpeg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方案"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Bug"><span class="toc-number">1.1.5.</span> <span class="toc-text">5.Bug</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#拒绝服务"><span class="toc-number">1.1.5.1.</span> <span class="toc-text">拒绝服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#功能逻辑"><span class="toc-number">1.1.5.2.</span> <span class="toc-text">功能逻辑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全审计辅助工具"><span class="toc-number">1.2.</span> <span class="toc-text">安全审计辅助工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具实现"><span class="toc-number">1.2.1.</span> <span class="toc-text">工具实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS应用安全概要
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-26T14:12:27.000Z" itemprop="datePublished">2020-02-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS%E5%AE%89%E5%85%A8/" rel="tag">iOS安全</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="iOS应用安全概要"><a href="#iOS应用安全概要" class="headerlink" title="iOS应用安全概要"></a>iOS应用安全概要</h1><h2 id="安全问题归纳"><a href="#安全问题归纳" class="headerlink" title="安全问题归纳"></a>安全问题归纳</h2><h3 id="1-敏感信息泄露"><a href="#1-敏感信息泄露" class="headerlink" title="1.敏感信息泄露"></a>1.敏感信息泄露</h3><p>用户名账户、密码；登入Token；密码锁等</p>
+<h4 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h4><ul>
+<li><p>文件存储</p>
+<ul>
+<li>威胁<ul>
+<li>NSUserDefaults</li>
+<li>未加密的数据库形式</li>
+<li>APP的数据目录访问权限</li>
+</ul>
+</li>
+<li>审计方法<ul>
+<li>iFunbox等可访问文件系统的工具</li>
+<li>PlistEdit、SqliteBrowser</li>
+</ul>
+</li>
+<li>解决方案<ul>
+<li>重要数据存储到Keychain中（iOS钥匙串Keychains安全机制参考：<a href="https://juejin.im/post/5bf2a942e51d4546db6bd139" target="_blank" rel="noopener">链接</a>）<ul>
+<li>Keychain实质上是一个安全的数据库</li>
+</ul>
+</li>
+<li>数据库文件可设置sqlite key进行数据库加密</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>网络请求</p>
+<ul>
+<li>主要考虑中间人攻击的场景</li>
+<li>威胁<ul>
+<li>网络请求中可能包含敏感信息的数据（明文）</li>
+</ul>
+</li>
+<li>审计方法<ul>
+<li>BurpSuite、Charles，观察APP网络请求</li>
+</ul>
+</li>
+<li>解救方案<ul>
+<li>禁止明文传输敏感数据，Hash加密</li>
+<li>重要数据HTTPS传输</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>日志输出</p>
+<ul>
+<li>威胁<ul>
+<li>一般不会有太大问题，但使用NSLog或第三方库Log中可能打印调试信息，日志中输出敏感数据或函数调用流程等，从而辅助了攻击者进行应用程序逆向，造成危害</li>
+</ul>
+</li>
+<li>审计方法<ul>
+<li>idevicesyslog from libimobiledevice</li>
+</ul>
+</li>
+<li>解决方案<ul>
+<li>使用宏来控制开发版本和发布版本的日志输出</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>后台快照</p>
+<ul>
+<li><p>APP被切换至后台时会保存当前界面的快照，若界面上包含敏感信息，可导致数据泄露</p>
+</li>
+<li><p>审计方法</p>
+<ul>
+<li>Library/Caches/snapshots中的快照图片</li>
+</ul>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li>程序别切换至后台时，通过UIApplicationDelegate进行处理</li>
+<li>TODO，模糊化处理; e.g. signal</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-数据加密"><a href="#2-数据加密" class="headerlink" title="2.数据加密"></a>2.数据加密</h3><h4 id="问题点-1"><a href="#问题点-1" class="headerlink" title="问题点"></a>问题点</h4><ul>
+<li>加密算法<ul>
+<li>威胁<ul>
+<li>加密算法自身安全性问题（自定义的简单加密算法或RC4）</li>
+</ul>
+</li>
+<li>审计方法<ul>
+<li>对APP进行逆向，分析对加密功能的类或方法的调用流程等</li>
+</ul>
+</li>
+<li>解决方案<ul>
+<li>尽量避免使用自定义的加密算法</li>
+<li>使用AES、DES等算法 ？TODO存疑，iOS最流行使用什么？</li>
+<li>使用非对称加密，但不能一概而论TODO</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>算法关键数据<ul>
+<li>威胁<ul>
+<li>算法KEY生成或存储方式不当，可逆向获取</li>
+<li>对称加密的KEY硬编码与程序中。可能会造成横向越权。</li>
+</ul>
+</li>
+<li>审计方法<ul>
+<li>逆向分析、审计本地文件是否存放相关数据</li>
+</ul>
+</li>
+<li>解决方法<ul>
+<li>以设备相关的信息作为基础（保证鉴权和独一）生成KEY。e.g. IDFV TODO <a href="https://www.jianshu.com/p/b810d7e007ad" target="_blank" rel="noopener">链接</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-网络交互"><a href="#3-网络交互" class="headerlink" title="3.网络交互"></a>3.网络交互</h3><p>中间人攻击</p>
+<h4 id="问题点-2"><a href="#问题点-2" class="headerlink" title="问题点"></a>问题点</h4><ul>
+<li><p>HTTP&amp;HTTPS</p>
+<ul>
+<li>敏感信息HTTP传输，存在MITM风险</li>
+<li>HTTPS传输，但在APP中未进行服务器证书校验，同样可能存在MITM风险</li>
+</ul>
+</li>
+<li><p>审计方法</p>
+<ul>
+<li>Burpsuite，Charles</li>
+</ul>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li>使用HTTPS时，客户端必须进行服务端证书校验</li>
+<li>在无法使用HTTPS传输吗，只能使用HTTP的情况下，HTTP要避免明文加密，在必要的情况下使用非对称加密</li>
+</ul>
+</li>
+<li><p>web View &amp; JavaScript</p>
+<ul>
+<li><p>通过JS调用APP的原生接口</p>
+</li>
+<li><p>来源</p>
+<ul>
+<li>UIWebView &amp; WKWebView &amp; WebViewJavascriptBridge</li>
+</ul>
+</li>
+<li><p>威胁</p>
+<ul>
+<li>WebView注册获取信息（GPS）的接口，恶意网页通过JS调用获取信息</li>
+<li>WebView注册的Native接口实现有缺陷，调用恶意JS代码导致APP崩溃</li>
+</ul>
+</li>
+<li><p>审计方法</p>
+<ul>
+<li>逆向APP，分析相关的类方法调用，测试注册的接口</li>
+</ul>
+</li>
+<li><p>解决方案</p>
+<ul>
+<li>使用Safari来打开链接</li>
+<li>尽量不要为JS注册获取敏感信息的接口</li>
+<li>使用WebView加载页面并设计JS调用时，对调用的接口进行检查，设置调用的黑/白名单</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-第三方库"><a href="#4-第三方库" class="headerlink" title="4.第三方库"></a>4.第三方库</h3><p>第三方库存在的安全隐患。TODO去看一些存在问题的第三方库的报告。</p>
+<h4 id="AFNetworking"><a href="#AFNetworking" class="headerlink" title="AFNetworking"></a>AFNetworking</h4><ul>
+<li><p>低于2.5.3版本存在安全隐患</p>
+</li>
+<li><p>通过加载dylib对AFNetworking进行测试</p>
+</li>
+</ul>
+<h4 id="FFmpeg"><a href="#FFmpeg" class="headerlink" title="FFmpeg"></a>FFmpeg</h4><ul>
+<li>低于2.8.5版本存在文件读取漏洞</li>
+</ul>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
+<li>实施更新第三方库</li>
+<li>或者实施跟进修补方案</li>
+</ul>
+<h3 id="5-Bug"><a href="#5-Bug" class="headerlink" title="5.Bug"></a>5.Bug</h3><h4 id="拒绝服务"><a href="#拒绝服务" class="headerlink" title="拒绝服务"></a>拒绝服务</h4><ul>
+<li>扫描畸形二维码，导致APP崩溃</li>
+</ul>
+<h4 id="功能逻辑"><a href="#功能逻辑" class="headerlink" title="功能逻辑"></a>功能逻辑</h4><ul>
+<li>APP原有旧数据存储于Keychain，卸载后未完全清除，重新安装后直接登入成功，绕过了登入</li>
+</ul>
+<h2 id="安全审计辅助工具"><a href="#安全审计辅助工具" class="headerlink" title="安全审计辅助工具"></a>安全审计辅助工具</h2><h3 id="工具实现"><a href="#工具实现" class="headerlink" title="工具实现"></a>工具实现</h3><ul>
+<li>Hook关键点   TODO学习HOOK概念，iOSHOOK技术，对比Android HOOK技术<ul>
+<li>NSData</li>
+<li>NSFileManager<ul>
+<li>经常用于存储临时数据</li>
+<li>拦截所有的文件读写，判断是否有敏感数据</li>
+</ul>
+</li>
+<li>sqlite3</li>
+<li>NSUserDefaults</li>
+<li>CCHmac, CCHash</li>
+<li>CCCrypt<ul>
+<li>明文</li>
+<li>使用的算法</li>
+<li>iv</li>
+<li>Key</li>
+<li>结合以上进行重要数据流程判别</li>
+</ul>
+</li>
+<li>…</li>
+</ul>
+</li>
+<li>记录相关数据</li>
+<li>敏感数据检查<ul>
+<li>比如对JSON文件<ul>
+<li>网络请求中大量存在JSON数据，可以进行拦截检查</li>
+<li>e.g. cookie信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] iOS应用审计，王兆威，<a href="https://www.ichunqiu.com/course/53965" target="_blank" rel="noopener">https://www.ichunqiu.com/course/53965</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS应用安全概要"><span class="toc-number">1.</span> <span class="toc-text">iOS应用安全概要</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全问题归纳"><span class="toc-number">1.1.</span> <span class="toc-text">安全问题归纳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-敏感信息泄露"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.敏感信息泄露</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据加密"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.数据加密</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点-1"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-网络交互"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.网络交互</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题点-2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">问题点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-第三方库"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.第三方库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AFNetworking"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">AFNetworking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FFmpeg"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">FFmpeg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方案"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Bug"><span class="toc-number">1.1.5.</span> <span class="toc-text">5.Bug</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#拒绝服务"><span class="toc-number">1.1.5.1.</span> <span class="toc-text">拒绝服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#功能逻辑"><span class="toc-number">1.1.5.2.</span> <span class="toc-text">功能逻辑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全审计辅助工具"><span class="toc-number">1.2.</span> <span class="toc-text">安全审计辅助工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具实现"><span class="toc-number">1.2.1.</span> <span class="toc-text">工具实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&text=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&is_video=false&description=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS应用安全概要&body=Check out this article: https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&title=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&name=iOS应用安全概要&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/26/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A6%82%E8%A6%81/&t=iOS应用安全概要" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

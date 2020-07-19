@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="iOS安全入门与进阶安全学习很难，但，山顶很高，哪怕失败了，也证明你爬过了高山，而不是在土丘上登顶。土丘容易被铲平，而高山不会，你挑战的目标就是你挑战的见证。 这是鸡汤还是警句，就取决于你有没有行动。让那些一笑而过的人成为历史的沙砾吧。你、我会书写历史。 iOS架构iOS安全研究的动力图：移动平台0day漏洞赏金榜，来自Zerodium iOS SecurityApple会发布iOS安全架构的白皮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS安全入门与进阶">
+<meta property="og:url" content="https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="iOS安全入门与进阶安全学习很难，但，山顶很高，哪怕失败了，也证明你爬过了高山，而不是在土丘上登顶。土丘容易被铲平，而高山不会，你挑战的目标就是你挑战的见证。 这是鸡汤还是警句，就取决于你有没有行动。让那些一笑而过的人成为历史的沙砾吧。你、我会书写历史。 iOS架构iOS安全研究的动力图：移动平台0day漏洞赏金榜，来自Zerodium iOS SecurityApple会发布iOS安全架构的白皮">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200228163618.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200304134450.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200304212337.png">
+<meta property="article:published_time" content="2020-03-04T15:59:29.000Z">
+<meta property="article:modified_time" content="2020-03-04T16:00:17.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="iOS安全入门与进阶">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200228163618.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>iOS安全入门与进阶</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/12/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&text=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&is_video=false&description=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS安全入门与进阶&body=Check out this article: https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&name=iOS安全入门与进阶&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&t=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS安全入门与进阶"><span class="toc-number">1.</span> <span class="toc-text">iOS安全入门与进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS架构"><span class="toc-number">1.1.</span> <span class="toc-text">iOS架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS安全研究的动力"><span class="toc-number">1.1.1.</span> <span class="toc-text">iOS安全研究的动力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-Security"><span class="toc-number">1.1.2.</span> <span class="toc-text">iOS Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS安全技术演进"><span class="toc-number">1.1.3.</span> <span class="toc-text">iOS安全技术演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS（通用）漏洞挖掘"><span class="toc-number">1.2.</span> <span class="toc-text">iOS（通用）漏洞挖掘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-识别Attack-Surface"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.识别Attack Surface</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iOS本地攻击面"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">iOS本地攻击面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户态远程攻击面分析"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">用户态远程攻击面分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内核攻击面分析"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">内核攻击面分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-理解数据交互过程"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.理解数据交互过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-审计代码实现和逻辑"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.审计代码实现和逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-挖掘漏洞构造触发样本"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.挖掘漏洞构造触发样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS消息机制漏洞样例分析"><span class="toc-number">1.3.</span> <span class="toc-text">iOS消息机制漏洞样例分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS内核态漏洞分析"><span class="toc-number">1.4.</span> <span class="toc-text">iOS内核态漏洞分析</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS安全入门与进阶
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-04T15:59:29.000Z" itemprop="datePublished">2020-03-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/" rel="tag">iOS安全入门与进阶</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="iOS安全入门与进阶"><a href="#iOS安全入门与进阶" class="headerlink" title="iOS安全入门与进阶"></a>iOS安全入门与进阶</h1><p>安全学习很难，但，山顶很高，哪怕失败了，也证明你爬过了高山，而不是在土丘上登顶。土丘容易被铲平，而高山不会，你挑战的目标就是你挑战的见证。</p>
+<p>这是鸡汤还是警句，就取决于你有没有行动。让那些一笑而过的人成为历史的沙砾吧。你、我会书写历史。</p>
+<h2 id="iOS架构"><a href="#iOS架构" class="headerlink" title="iOS架构"></a>iOS架构</h2><h3 id="iOS安全研究的动力"><a href="#iOS安全研究的动力" class="headerlink" title="iOS安全研究的动力"></a>iOS安全研究的动力</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200228163618.png"><br>图：移动平台0day漏洞赏金榜，来自<a href="https://zerodium.com/program.html" target="_blank" rel="noopener">Zerodium</a></p>
+<h3 id="iOS-Security"><a href="#iOS-Security" class="headerlink" title="iOS Security"></a>iOS Security</h3><p>Apple会发布iOS安全架构的白皮书：</p>
+<ul>
+<li>Apple Developer Documentation: <a href="https://developer.apple.com/documentation/security" target="_blank" rel="noopener">Link</a></li>
+<li>iOS  Security, iOS12.3, 2019: <a href="https://www.apple.com/tr/business/docs/site/iOS_Security_Guide.pdf" target="_blank" rel="noopener">Link</a></li>
+</ul>
+<h3 id="iOS安全技术演进"><a href="#iOS安全技术演进" class="headerlink" title="iOS安全技术演进"></a>iOS安全技术演进</h3><ul>
+<li><p>Isolation</p>
+</li>
+<li><p>Restricted Sanbox</p>
+<ul>
+<li>默认的沙盒规则为Container</li>
+<li>所有从App Store下载的APP，第一次打卡应用时，询问用户访问控制是否给予权限</li>
+<li>沙盒内的应用和内核的交互非常窄</li>
+<li>沙箱内的应用只能访问几个有限的内核模块 [TODO，哪几个？]</li>
+</ul>
+</li>
+<li><p>Code Signing</p>
+</li>
+<li><p>Apple上的代码签名验证很严格</p>
+</li>
+<li><p>Expoloit Mitigation(ASLR, DEP)</p>
+</li>
+<li><p>Data Protection</p>
+<ul>
+<li>Passcode 屏幕锁、指纹识别、FaceID？TODO</li>
+<li>很多敏感数据只有在正确的passcode输入后，才会生成有效的解密key</li>
+<li>iPhone5S后，有一个专门的硬件芯片负责Passcode的计算、生成Passcode Key和Passcode输入错误次数的检测（从硬件上进行的防范）</li>
+</ul>
+</li>
+<li><p>Hypervisor</p>
+<ul>
+<li>iOS 9之后</li>
+<li>会检查内核代码段的完整性 Kernel Patch Protection</li>
+</ul>
+<p>iOS安全体系经历了从无到有，从弱到强的发展，其中也得益于硬件芯片的发展。</p>
+</li>
+</ul>
+<h2 id="iOS（通用）漏洞挖掘"><a href="#iOS（通用）漏洞挖掘" class="headerlink" title="iOS（通用）漏洞挖掘"></a>iOS（通用）漏洞挖掘</h2><h3 id="1-识别Attack-Surface"><a href="#1-识别Attack-Surface" class="headerlink" title="1.识别Attack Surface"></a>1.识别Attack Surface</h3><p>先明确哪些地方会接受数据，识别<strong>攻击面</strong></p>
+<h4 id="iOS本地攻击面"><a href="#iOS本地攻击面" class="headerlink" title="iOS本地攻击面"></a>iOS本地攻击面</h4><ul>
+<li><p>USB</p>
+<ul>
+<li>文件访问接口</li>
+<li>备份还原接口<ul>
+<li>问题比较多，被大量分析的一个接口</li>
+</ul>
+</li>
+<li>应用管理接口<ul>
+<li>安装一个IPA包时，通过PC端上传一个包给iOS，iOS中有一个installd的守护进程，在解压缩IPA包时，需要时间，此时可以造成一个竞争条件漏洞</li>
+<li>参考：<a href="https://www.mottoin.com/detail/2519.html" target="_blank" rel="noopener">IORegistryIterator竞争条件漏洞分析与利用</a> TODO</li>
+</ul>
+</li>
+<li>开发者接口<ul>
+<li>配合Xcode </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装的应用</p>
+<ul>
+<li>JekyII 类型应用（USENIX Security’13）</li>
+<li>Masque Attacks（FireEye Research）</li>
+</ul>
+</li>
+<li><p>接口漏洞资料</p>
+<ul>
+<li>《是谁推开我的“窗”：iOS App接口安全分析》，长亭科技：<a href="https://zhuanlan.zhihu.com/p/76707111" target="_blank" rel="noopener">Link</a> TODO</li>
+</ul>
+</li>
+</ul>
+<h4 id="用户态远程攻击面分析"><a href="#用户态远程攻击面分析" class="headerlink" title="用户态远程攻击面分析"></a>用户态远程攻击面分析</h4><ul>
+<li>任何网络连接都有可能成为攻击面<ul>
+<li>Mobile Safari<ul>
+<li>JailbreakMe</li>
+<li>Mobile Pwn2Own</li>
+</ul>
+</li>
+<li>Messager    研究iMessage黑产漏洞信息 [TODO, 重要]<ul>
+<li>🎯CEV-2009-2204, SMS vulnerability, Charlie Miller </li>
+<li>🎯CVE-2015-1157, crafted Unicode text reboot bug</li>
+</ul>
+</li>
+<li>系统中的网络服务进程<ul>
+<li>🎯CVE-2015-1118, crafted configuration profile reboot bug</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="内核攻击面分析"><a href="#内核攻击面分析" class="headerlink" title="内核攻击面分析"></a>内核攻击面分析</h4><ul>
+<li><p>用户态和内核的任何通信渠道都是潜在的攻击面。对于内核来说，可以默认流入的数据都是有害的</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200304134450.png" style="zoom: 67%;" />
+
+<p>进一步细分</p>
+</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200304212337.png"></p>
+<p>ioctl</p>
+<p>File System</p>
+<p>Devices</p>
+<p>IOkit：macOS和iOS上的驱动内核扩展总称</p>
+<p>MIG：负责用户态到内核态的数据交互</p>
+<ul>
+<li><p>文件系统（File System）</p>
+<ul>
+<li>🎯HFS legacy volume（） name stack buffer overflow<ul>
+<li>JailbreakME 3 for iOS 4.2.x</li>
+</ul>
+</li>
+<li>🎯HFS heap overflow <ul>
+<li>Corona for iOS 5.0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>POSIX系统调用</p>
+<ul>
+<li>posix_spawn 处理file action data的整数溢出漏洞</li>
+<li>p0sixspwn for iOS 6.1.3</li>
+</ul>
+</li>
+<li><p>ioctl</p>
+<ul>
+<li>Packet Filter Kernel Exploit<ul>
+<li>🎯DIOCADDRULE ioctl 处理函数未初始化变量漏洞<ul>
+<li>可以使任意内核地址的内容减一</li>
+</ul>
+</li>
+<li>🎯limera1n/greenpois0n for iOS 4.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设备 /dev/*</p>
+<ul>
+<li>🎯ptmx_get_ioctl 内存越界访问漏洞<ul>
+<li>ptmx设备在处理minor参数的时候没有做越界检测</li>
+<li>evasi0n7 for 7.0.x</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>🎯IOKit（很多）</p>
+<ul>
+<li>IOSurface</li>
+<li>IOMobileFrameBuffer（越狱漏洞，2017年，iOS10，堆溢出）</li>
+<li>IOUSBDeviceFamily：<a href="https://www.theiphonewiki.com/wiki/IOUSBDeviceFamily_Vulnerability" target="_blank" rel="noopener">Link</a> ，最终可以实现RCE</li>
+<li>IOShareDataQueue</li>
+<li>IOHIDFamily，开源模块，漏洞很多</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-理解数据交互过程"><a href="#2-理解数据交互过程" class="headerlink" title="2.理解数据交互过程"></a>2.理解数据交互过程</h3><p>非常关键，读源码，明确用户态和内核态的交互过程</p>
+<h3 id="3-审计代码实现和逻辑"><a href="#3-审计代码实现和逻辑" class="headerlink" title="3.审计代码实现和逻辑"></a>3.审计代码实现和逻辑</h3><p>审计、发现代码缺陷</p>
+<h3 id="4-挖掘漏洞构造触发样本"><a href="#4-挖掘漏洞构造触发样本" class="headerlink" title="4.挖掘漏洞构造触发样本"></a>4.挖掘漏洞构造触发样本</h3><p>构造、使用POC进行验证</p>
+<p>自动化挖掘（静态、动态）</p>
+<h2 id="iOS消息机制漏洞样例分析"><a href="#iOS消息机制漏洞样例分析" class="headerlink" title="iOS消息机制漏洞样例分析"></a>iOS消息机制漏洞样例分析</h2><h2 id="iOS内核态漏洞分析"><a href="#iOS内核态漏洞分析" class="headerlink" title="iOS内核态漏洞分析"></a>iOS内核态漏洞分析</h2>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS安全入门与进阶"><span class="toc-number">1.</span> <span class="toc-text">iOS安全入门与进阶</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS架构"><span class="toc-number">1.1.</span> <span class="toc-text">iOS架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS安全研究的动力"><span class="toc-number">1.1.1.</span> <span class="toc-text">iOS安全研究的动力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-Security"><span class="toc-number">1.1.2.</span> <span class="toc-text">iOS Security</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS安全技术演进"><span class="toc-number">1.1.3.</span> <span class="toc-text">iOS安全技术演进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS（通用）漏洞挖掘"><span class="toc-number">1.2.</span> <span class="toc-text">iOS（通用）漏洞挖掘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-识别Attack-Surface"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.识别Attack Surface</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iOS本地攻击面"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">iOS本地攻击面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户态远程攻击面分析"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">用户态远程攻击面分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#内核攻击面分析"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">内核攻击面分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-理解数据交互过程"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.理解数据交互过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-审计代码实现和逻辑"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.审计代码实现和逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-挖掘漏洞构造触发样本"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.挖掘漏洞构造触发样本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS消息机制漏洞样例分析"><span class="toc-number">1.3.</span> <span class="toc-text">iOS消息机制漏洞样例分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS内核态漏洞分析"><span class="toc-number">1.4.</span> <span class="toc-text">iOS内核态漏洞分析</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&text=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&is_video=false&description=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS安全入门与进阶&body=Check out this article: https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&title=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&name=iOS安全入门与进阶&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/&t=iOS安全入门与进阶" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

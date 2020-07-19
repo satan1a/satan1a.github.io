@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="PWNABLE学习笔记 [updating]这是我学习system exploit时, 在pwnable上做题的一个记录, 感谢这个平台提供的练习, 帮助我入门学习。 PWNABLE：Link WriteUp(14 challenges): Link Challenge 1: [fd]题目文件：文件fd.c , 文件fd（fd.c编译后的可执行二进制文件）, 文件flag 123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PWNABLE学习笔记【updating】">
+<meta property="og:url" content="https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="PWNABLE学习笔记 [updating]这是我学习system exploit时, 在pwnable上做题的一个记录, 感谢这个平台提供的练习, 帮助我入门学习。 PWNABLE：Link WriteUp(14 challenges): Link Challenge 1: [fd]题目文件：文件fd.c , 文件fd（fd.c编译后的可执行二进制文件）, 文件flag 123456789101">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-28T03:15:47.000Z">
+<meta property="article:modified_time" content="2020-03-28T03:16:43.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="系统安全">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>PWNABLE学习笔记【updating】</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/05/28/security/Security-Research-for-SSL-TLS/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/03/27/%E8%AF%BB%E3%80%8A%E7%99%BD%E5%B8%BD%E5%AD%90%E8%AE%B2web%E5%AE%89%E5%85%A8%E3%80%8B%E7%9A%84%E6%80%9D%E8%80%83%E5%92%8C%E6%95%B4%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PWNABLE学习笔记【updating】&body=Check out this article: https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=PWNABLE学习笔记【updating】&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PWNABLE学习笔记-updating"><span class="toc-number">1.</span> <span class="toc-text">PWNABLE学习笔记 [updating]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenge-1-fd"><span class="toc-number">1.1.</span> <span class="toc-text">Challenge 1: [fd]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目要点"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要补充：文件权限"><span class="toc-number">1.1.2.</span> <span class="toc-text">重要补充：文件权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#题目总结"><span class="toc-number">1.1.3.</span> <span class="toc-text">题目总结</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        PWNABLE学习笔记【updating】
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-28T03:15:47.000Z" itemprop="datePublished">2020-03-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" rel="tag">系统安全</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="PWNABLE学习笔记-updating"><a href="#PWNABLE学习笔记-updating" class="headerlink" title="PWNABLE学习笔记 [updating]"></a>PWNABLE学习笔记 [updating]</h1><p>这是我学习system exploit时, 在pwnable上做题的一个记录, 感谢这个平台提供的练习, 帮助我入门学习。</p>
+<p>PWNABLE：<a href="http://pwnable.kr/play.php" target="_blank" rel="noopener">Link</a></p>
+<p>WriteUp(14 challenges): <a href="https://research.checkpoint.com/wp-content/uploads/2020/03/pwnable_writeup.pdf" target="_blank" rel="noopener">Link</a></p>
+<h2 id="Challenge-1-fd"><a href="#Challenge-1-fd" class="headerlink" title="Challenge 1: [fd]"></a>Challenge 1: [fd]</h2><p>题目文件：文件fd.c , 文件fd（fd.c编译后的可执行二进制文件）, 文件flag</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[], <span class="keyword">char</span>* envp[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"pass argv[1] a number\n"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = read(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">"LETMEWIN\n"</span>, buf))&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"good job :)\n"</span>);</span><br><span class="line">                system(<span class="string">"/bin/cat flag"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"learn about Linux file IO\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="题目要点"><a href="#题目要点" class="headerlink" title="题目要点"></a>题目要点</h3><p>作为第一个题目，主要的知识点是让我们掌握C语言的文件IO标识符，open和read（题目中）。</p>
+<p>关注题目中的以下几个要点：</p>
+<ul>
+<li><p>主函数中的参数</p>
+<ul>
+<li>argc 保存的是命令行中总的参数个数，并且包含程序名。 e.g. <code>./test 1 2 3 4</code>，那么，argc的值即为 5</li>
+<li>agrv[] 数组中保存传入的参数，参数可以是多个的，e.g. <code>./test 1 2 3</code>，那个argv[0] == 1, argv[1] == 2, argv[2] == 3</li>
+<li>envp[] 数组中保存系统的环境变量，操作系统运行程序时，通过envp参数将系统环境变量传递给程序</li>
+</ul>
+</li>
+<li><p>atoi() 函数</p>
+<ul>
+<li>该函数（atoi, ascii to integer）会将字符串转化为整数</li>
+<li>函数会扫描输入的参数，跳过空白字符（空格、tab缩进等），将数字的字符转为整型，如果无法有效转换（字符串以英文字母开头），则会返回0</li>
+<li>注意，函数会保留+-符号，但会舍弃小数点及后面的数字</li>
+</ul>
+</li>
+<li><p>read() 函数</p>
+<ul>
+<li><p><code>ssize_t read (int fd, void *buf, size_t count);</code></p>
+</li>
+<li><p>功能：用于从文件描述符（fd, file description）对应的文件读取数据（从打开的设备或文件中读取数据，也可以为终端上的数据）</p>
+</li>
+<li><p>在UNIX/Linux平台上，fd有三个（fd = 0, fd = 1; fd = 2），分别对应控制台(Console)的标准输入，标准输出，标准错误输出</p>
+</li>
+<li><p>e.g. 在<code>read(0,buf,32)</code> 中，fd=0，表示进行标准输入（控制台，键盘输入），读取最多32个字节到buf中</p>
+</li>
+<li><p>常规的用途是配合open()函数，实现文件的读取</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> fp = open(<span class="string">"./test.txt"</span>, O_RDONLY); <span class="comment">//只读模式打开文件</span></span><br><span class="line">res = read(fp, buffer, <span class="number">60</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>strcmp() 函数</p>
+<ul>
+<li><code> int strcmp(const char *s1, const char *s2);</code></li>
+<li>功能：比较字符串s1与字符串s2，区分大小写，相同返回0，不同则返回s1与s2的差值</li>
+</ul>
+</li>
+<li><p>system() 函数</p>
+<ul>
+<li><code> int system(char *command);</code></li>
+<li>功能：发出一个terminal命令</li>
+</ul>
+</li>
+<li><p>补充：open() 函数</p>
+<ul>
+<li><p><code>int open(const char *path, int oflags,mode_t mode);</code></p>
+</li>
+<li><p>功能：用于建立了一条到文件或设备的访问路径，配合read()等函数，实现文件的读写和设备的操作</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="重要补充：文件权限"><a href="#重要补充：文件权限" class="headerlink" title="重要补充：文件权限"></a>重要补充：文件权限</h3><p>在题目中，我们以fd的用户身份登入，我们的操作都是受身份限制的，因此我们需要对题目中的文件进行权限的识别。使用<code>groups fd</code>判断fd用户所属的组为fd。使用命令<code>ls -l</code>可以查看当年目录下的所有文件的权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-r-sr-x--- 1 fd_pwn fd   7322 Jun 11  2014 fd</span><br><span class="line">-rw-r--r-- 1 root   root  418 Jun 11  2014 fd.c</span><br><span class="line">-r--r----- 1 fd_pwn root   50 Jun 11  2014 flag</span><br></pre></td></tr></table></figure>
+
+<p>依次分析：</p>
+<ul>
+<li><p>权限：前面由连字符和字母组成的部分，例如<code>-r-sr-x---</code>， 该部分由四个部分组成，共占10位(1 + 3 + 3 + 3)</p>
+<ul>
+<li><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>所有者权限</th>
+<th>所属组权限</th>
+<th>其他人权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-</td>
+<td>r   -   s</td>
+<td>r   -   x</td>
+<td>-   -   -</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>类型部分</p>
+<p><code>-</code> 代表文件</p>
+<p><code>d</code> 代表目录</p>
+<p><code>l</code> 代表链接</p>
+<p><code>c</code> 代表字符型设备</p>
+<p><code>b</code> 代表块设备</p>
+<p><code>n</code> 代表网络设备</p>
+</li>
+<li><p>权限部分</p>
+<p><code>-</code> 权限为空</p>
+<p><code>r</code> 可读</p>
+<p><code>w</code> 可写</p>
+<p><code>x</code> 可执行</p>
+<p><code>s</code> 当执行该文件时将具有该文件所有者的权限，注意这个，比较特殊</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>所有者：例如fd_pwn，表示fd文件的所有者是fd_pwn</p>
+<ul>
+<li>分析第一条，可以发现fd和目标文件flag是同一个所有者</li>
+</ul>
+</li>
+<li><p>所属组：例如fd, 表示fd文件所属组是fd，同一个组中的有不同的用户/角色</p>
+<ul>
+<li>继续分析第一条，可以发现fd和flag是不是同一个组，flag属于root组</li>
+</ul>
+</li>
+<li><p>文件大小</p>
+</li>
+<li><p>创建事件</p>
+</li>
+<li><p>文件名称</p>
+</li>
+</ul>
+<hr>
+<p>综合以上的条件，我们分析目标文件flag，可以得出：</p>
+<ul>
+<li>flag是文件</li>
+<li>flag的权限为：所有者可读；所属组可读；其他人无权限</li>
+<li>flag的所有者为：fd_pwn</li>
+<li>flag的所属组为：root</li>
+</ul>
+<p>分析我们可以利用的二进制可执行文件fd可以发现：</p>
+<ul>
+<li><p>fd是文件</p>
+</li>
+<li><p>fd的权限为：所有者可读，并且当执行该文件时将具有该文件所有者的权限；所属组可读可执行；其他人无权限</p>
+</li>
+<li><p>fd的所有者为fd_pwn</p>
+</li>
+<li><p>fd的所有组为fd，注意，这里很重要, 可以发现我们登入使用的用户fd属于用户组fd，与该文件相同。结合文件权限中表明的，所属组可以执行该文件，并且执行该文件时可以获取该文件所有者的权限，而文件fd与文件flag属于同一个所有者fd_pwn, 文件flag的所有者可以读取文件flag。</p>
+<p>那么，我们的用户fd就可以执行文件fd，暂时获取所有者fd_pwn的权限，进而可以读取文件flag</p>
+</li>
+</ul>
+<p>总结一下，在Linux/Unix中一切皆文件，弄清楚文件的权限，我们的角色，才可以明确我们想进行的操作，一切从实际出发，而思维又要高于实际。</p>
+<h3 id="题目总结"><a href="#题目总结" class="headerlink" title="题目总结"></a>题目总结</h3><p>这是第一道题目，主要考察文件IO的知识点。在分析过程中，我们不经要去看程序代码，更要注意理清文件权限和我们的角色，这样才能更加明确总体的思路。</p>
+<p>在做题或者分析的过程中，我们的第一步不是直接去分析程序文件，而是要查看当前用户角色和文件权限，明确自己可以做什么，不可以做什么，这会更好地帮助我们组织后面的操作。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PWNABLE学习笔记-updating"><span class="toc-number">1.</span> <span class="toc-text">PWNABLE学习笔记 [updating]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenge-1-fd"><span class="toc-number">1.1.</span> <span class="toc-text">Challenge 1: [fd]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目要点"><span class="toc-number">1.1.1.</span> <span class="toc-text">题目要点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要补充：文件权限"><span class="toc-number">1.1.2.</span> <span class="toc-text">重要补充：文件权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#题目总结"><span class="toc-number">1.1.3.</span> <span class="toc-text">题目总结</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&text=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&is_video=false&description=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PWNABLE学习笔记【updating】&body=Check out this article: https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&title=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&name=PWNABLE学习笔记【updating】&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/28/PWNABLE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/&t=PWNABLE学习笔记【updating】" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

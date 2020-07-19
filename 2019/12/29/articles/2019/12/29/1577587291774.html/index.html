@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="实验三 黑盒测试——基于决策表分析法图：封面 开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE) 实验目的 认识黑盒测试方法中基于决策表分析的测试方法原理   掌握黑盒测试方法中基于决策表分析的测试方法过程  实验要求 要求学生能够理解基于决策表的测试方法的相关概念、方法和过程  ~ 具体为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【软件工程】黑盒测试——基于决策表分析法">
+<meta property="og:url" content="https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="实验三 黑盒测试——基于决策表分析法图：封面 开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE) 实验目的 认识黑盒测试方法中基于决策表分析的测试方法原理   掌握黑盒测试方法中基于决策表分析的测试方法过程  实验要求 要求学生能够理解基于决策表的测试方法的相关概念、方法和过程  ~ 具体为">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229102623.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229103451.png">
+<meta property="article:published_time" content="2019-12-29T02:41:31.000Z">
+<meta property="article:modified_time" content="2020-01-03T01:15:58.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="软件测试">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>【软件工程】黑盒测试——基于决策表分析法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/31/articles/2019/12/31/1577765280396.html/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/27/articles/2019/12/27/1577433325914.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&text=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&is_video=false&description=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】黑盒测试——基于决策表分析法&body=Check out this article: https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&name=【软件工程】黑盒测试——基于决策表分析法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&t=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实验三-黑盒测试——基于决策表分析法"><span class="toc-number">1.</span> <span class="toc-text">实验三 黑盒测试——基于决策表分析法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验目的"><span class="toc-number">1.2.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.3.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.4.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.6.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.7.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题"><span class="toc-number">1.7.1.</span> <span class="toc-text">三角形问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate"><span class="toc-number">1.7.2.</span> <span class="toc-text">NextDate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#佣金问题"><span class="toc-number">1.7.3.</span> <span class="toc-text">佣金问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试案例"><span class="toc-number">1.8.</span> <span class="toc-text">测试案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试用例设计"><span class="toc-number">1.8.1.</span> <span class="toc-text">三角形问题：测试用例设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试用例设计"><span class="toc-number">1.8.2.</span> <span class="toc-text">NextDate：测试用例设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码及结果分析"><span class="toc-number">1.9.</span> <span class="toc-text">测试代码及结果分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试代码"><span class="toc-number">1.9.1.</span> <span class="toc-text">三角形问题：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试结果"><span class="toc-number">1.9.2.</span> <span class="toc-text">三角形问题：测试结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试代码"><span class="toc-number">1.9.3.</span> <span class="toc-text">NextDate：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试结果"><span class="toc-number">1.9.4.</span> <span class="toc-text">NextDate：测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.10.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于决策表的黑盒测试一般测试步骤"><span class="toc-number">1.10.1.</span> <span class="toc-text">基于决策表的黑盒测试一般测试步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#决策表的适用范围"><span class="toc-number">1.10.2.</span> <span class="toc-text">决策表的适用范围</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【软件工程】黑盒测试——基于决策表分析法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-29T02:41:31.000Z" itemprop="datePublished">2019-12-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a>, <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="tag">软件测试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="实验三-黑盒测试——基于决策表分析法"><a href="#实验三-黑盒测试——基于决策表分析法" class="headerlink" title="实验三 黑盒测试——基于决策表分析法"></a>实验三 黑盒测试——基于决策表分析法</h1><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png"><br>图：封面</p>
+<h2 id="开发语言及实现平台或实验环境"><a href="#开发语言及实现平台或实验环境" class="headerlink" title="开发语言及实现平台或实验环境"></a>开发语言及实现平台或实验环境</h2><p>在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 及对应的开发环境(IDE)</p>
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><ol>
+<li>认识黑盒测试方法中基于决策表分析的测试方法原理  </li>
+<li>掌握黑盒测试方法中基于决策表分析的测试方法过程</li>
+</ol>
+<h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><ol>
+<li>要求学生能够理解基于决策表的测试方法的相关概念、方法和过程  <del>~</del></li>
+<li>具体为每一组，每组二——五人，根据实验题目编写出对应的 c 语言或c++语言程序，组间相互交换程序，按黑盒测试的方法进行测试。</li>
+</ol>
+<h2 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h2><p>对编写的实验内容，采用基于决策表的测试方法进行黑盒测试。</p>
+<h2 id="实验材料"><a href="#实验材料" class="headerlink" title="实验材料"></a>实验材料</h2><ol>
+<li><p>三角形问题<br>问题描述:三角形问题接受三个整数，a、b 和 c 作为输入，用作三角<br>形的边。程序的输出是由这三条边确定的三角形类型:等边三角形、等腰 三角形、不等边三角形或非三角形。<br>作为输入:三角形的三条边必须满足如下条件: C1:1&lt;=a&lt;=100<br>C2:1&lt;=b&lt;=100<br>C3:1&lt;=c&lt;=100<br>C4:a&lt;b+c C5:b&lt;a+c C6:c&lt;a+b  </p>
+</li>
+<li><p>NextDate 函数<br>问题描述:NextDate 是一个由三个变量(月份、日期和年份)的函数。<br>函数返回输入日期后边的那个日期。 作为输入:变量月份、日期和年都具有整数值，满足以下条件。 C1:1&lt;=月份&lt;=12<br>C2:1&lt;=日期&lt;=31<br>C3:1912&lt;=年&lt;=2050</p>
+</li>
+</ol>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><ol>
+<li>预习相关课堂和实验内容，了解测试对象。</li>
+<li>编写实验材料源代码。</li>
+<li>划分等价类，设计测试用例。</li>
+<li>根据问题需要建立桩模块和驱动模块。 </li>
+<li>测试。</li>
+<li>填写试验报告。</li>
+</ol>
+<h2 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h2><h3 id="三角形问题"><a href="#三角形问题" class="headerlink" title="三角形问题"></a>三角形问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">import</span> java.util.InputMismatchException;</span><br><span class="line">        <span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TriangleProc</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideA = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideB = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> sideC = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TriangleProc</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：验证三角形边的长度范围</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> side</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verifyLengthRange</span><span class="params">(<span class="keyword">int</span> side)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ((side &gt;= <span class="number">1</span>) &amp;&amp; (side &lt;= <span class="number">100</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"边长 %1d 不满足大于等于1且小于等于 100"</span>, side));</span><br><span class="line">            System.out.println(<span class="string">"=========请重新输入========="</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：验证三角形两边之和大于第三边</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> triangleProc</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verifyFormPrinciple</span><span class="params">(TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((triangleProc.sideA + triangleProc.sideB &lt;= triangleProc.sideC)</span><br><span class="line">                || (triangleProc.sideA + triangleProc.sideC &lt;= triangleProc.sideB)</span><br><span class="line">                || (triangleProc.sideB + triangleProc.sideC &lt;= triangleProc.sideA)) &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"边长组合为 %1d %2d %3d不满足两边之和大于第三边，是非三角形"</span>,</span><br><span class="line">                    triangleProc.sideA, triangleProc.sideB, triangleProc.sideC));</span><br><span class="line">            System.out.println(<span class="string">"=========请重新输入========="</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"边长组合满足两边之和大于第三边"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">judgeTriangleType</span><span class="params">(TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (triangleProc.sideA == triangleProc.sideB || triangleProc.sideA == triangleProc.sideC</span><br><span class="line">                || triangleProc.sideB == triangleProc.sideC) &#123;</span><br><span class="line">            <span class="keyword">if</span> (triangleProc.sideA == triangleProc.sideB &amp;&amp; triangleProc.sideB == triangleProc.sideC) &#123;</span><br><span class="line">                String triangleType = <span class="string">"等边三角形"</span>;</span><br><span class="line">                <span class="keyword">return</span> triangleType;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                String triangleType = <span class="string">"等腰三角形"</span>;</span><br><span class="line">                <span class="keyword">return</span> triangleType;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            String triangleType = <span class="string">"非等边三角形"</span>;</span><br><span class="line">            <span class="keyword">return</span> triangleType;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inputEdge</span><span class="params">(Scanner scanner, TriangleProc triangleProc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tempSideA = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tempSideB = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> tempSideC = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        System.out.println("Welcome to triangle judge program!!!d");</span></span><br><span class="line">        System.out.println(<span class="string">"Please input the side A"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (scanner.hasNext()) &#123;</span><br><span class="line">            tempSideA = scanner.nextInt();</span><br><span class="line">            triangleProc.sideA = tempSideA;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge A is %1d. Please input side B"</span>, tempSideA));</span><br><span class="line">            tempSideB = scanner.nextInt();</span><br><span class="line">            triangleProc.sideB = tempSideB;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge B is %1d. Please input side C"</span>, tempSideB));</span><br><span class="line">            tempSideC = scanner.nextInt();</span><br><span class="line">            triangleProc.sideC = tempSideC;</span><br><span class="line">            System.out.println(String.format(<span class="string">"Edge C is %1d. The input is finished\n\n"</span>, tempSideC));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> stopFlag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!stopFlag) &#123;</span><br><span class="line">            <span class="keyword">if</span> (verifyLengthRange(triangleProc.sideA) &amp;&amp; verifyLengthRange(triangleProc.sideB)</span><br><span class="line">                    &amp;&amp; verifyLengthRange(triangleProc.sideC)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (verifyFormPrinciple(triangleProc)) &#123;</span><br><span class="line">                    stopFlag = <span class="keyword">true</span>;</span><br><span class="line">                    String triangleType = judgeTriangleType(triangleProc);</span><br><span class="line">                    System.out.println(String.format(<span class="string">"你输入的三角形类型为：%1s"</span>, triangleType));</span><br><span class="line">                    System.out.println(<span class="string">"========The End========"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    inputEdge(scanner, triangleProc);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 边长不满足两个条件，重新输入</span></span><br><span class="line">                inputEdge(scanner, triangleProc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 主函数，同时也是测试函数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TriangleProc triangleProc = <span class="keyword">new</span> TriangleProc();</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        triangleProc.inputEdge(scanner, triangleProc);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NextDate"><a href="#NextDate" class="headerlink" title="NextDate"></a>NextDate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.ParseException;</span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NextDate</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> year = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> month = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> day = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：根据指定的日期，计算下一天</span></span><br><span class="line"><span class="comment">     * 注意：应该在进行日期检查之后再调用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> year</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> month</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> day</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">nextDateFunction</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line"></span><br><span class="line">        String yearString = Integer.toString(year);</span><br><span class="line">        String monthString = Integer.toString(month);</span><br><span class="line">        String dayString = Integer.toString(day);</span><br><span class="line"></span><br><span class="line">        String stringDate = yearString + <span class="string">'-'</span> + monthString + <span class="string">'-'</span> + dayString;</span><br><span class="line"></span><br><span class="line">        Date date = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            date = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>).parse(stringDate);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        calendar.setTime(date);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> dayBefore = calendar.get(Calendar.DATE);</span><br><span class="line">        calendar.set(Calendar.DATE, dayBefore + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        String dayAfter = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>).format(calendar.getTime());</span><br><span class="line">        <span class="keyword">return</span> dayAfter;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 函数：日期检查函数</span></span><br><span class="line"><span class="comment">     * 检查指定的日期是否符合要求</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> scanner</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nextDate</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dateCheckFunction</span><span class="params">(Scanner scanner, NextDate nextDate)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Please Input Your Specific Day"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"Please Input the Year(1912 &lt;= year &lt;= 2050): "</span>);</span><br><span class="line">            nextDate.year = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (nextDate.year &lt; <span class="number">1912</span> || nextDate.year &gt; <span class="number">2050</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"Please Input the Month(1 &lt;= month &lt;= 12): "</span>);</span><br><span class="line">            nextDate.month = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (nextDate.month &lt; <span class="number">1</span> || nextDate.month &gt; <span class="number">12</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"Please Input the Day(1 &lt;= day &lt;= 31): "</span>);</span><br><span class="line">            nextDate.day = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (nextDate.day &lt; <span class="number">1</span> || nextDate.day &gt; <span class="number">31</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"></span><br><span class="line">        NextDate nextDate = <span class="keyword">new</span> NextDate();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查输入的日期是否符合要求</span></span><br><span class="line">        nextDate.dateCheckFunction(scanner, nextDate);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据nextDateFunction函数获取后一天的日期</span></span><br><span class="line">        String dayAfter = nextDate.nextDateFunction(nextDate.year, nextDate.month, nextDate.day);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"The day after is "</span> + dayAfter);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="佣金问题"><a href="#佣金问题" class="headerlink" title="佣金问题"></a>佣金问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GunSale</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 机枪</span></span><br><span class="line">    <span class="keyword">int</span> part1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> part1Price = <span class="number">45</span>;</span><br><span class="line">    <span class="comment">// 枪托</span></span><br><span class="line">    <span class="keyword">int</span> part2 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> part2Price = <span class="number">30</span>;</span><br><span class="line">    <span class="comment">// 枪管</span></span><br><span class="line">    <span class="keyword">int</span> part3 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> part3Price = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销售数量总和</span></span><br><span class="line">    <span class="keyword">int</span> amountSum = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 总销售额</span></span><br><span class="line">    <span class="keyword">int</span> priceSum = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 佣金总和</span></span><br><span class="line">    <span class="keyword">double</span> commissionSum = <span class="number">0.00f</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 枪部件输入、检查函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">amountInputAndCheck</span><span class="params">(Scanner scanner, GunSale gunSale)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Please input the amount of a gun's every part"</span>);</span><br><span class="line">        System.out.println(<span class="string">"----------------------------------------------"</span>);</span><br><span class="line">        System.out.println(<span class="string">"------------机枪----枪托----枪管------------"</span>);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 输入的数量赋值给gunSale对象，且对其销售数量进行检查</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.printf(<span class="string">"请输入机枪销售额："</span>);</span><br><span class="line">            gunSale.part1 = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (gunSale.part1 &lt; <span class="number">1</span> || gunSale.part1 &gt; <span class="number">70</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.printf(<span class="string">"请输入枪托销售额："</span>);</span><br><span class="line">            gunSale.part2 = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (gunSale.part2 &lt; <span class="number">1</span> || gunSale.part1 &gt; <span class="number">80</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.printf(<span class="string">"请输入枪管："</span>);</span><br><span class="line">            gunSale.part3 = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (gunSale.part3 &lt; <span class="number">1</span> || gunSale.part1 &gt; <span class="number">90</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销售数目总和</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">amountSumFunction</span><span class="params">(GunSale gunSale)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> amount = gunSale.part1 + gunSale.part2 + gunSale.part3;</span><br><span class="line">        gunSale.amountSum = amountSum;</span><br><span class="line">        <span class="keyword">return</span> amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 总销售额</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">priceSumFunction</span><span class="params">(GunSale gunSale)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> priceSum = gunSale.part1 * gunSale.part1Price + gunSale.part2 * gunSale.part2Price</span><br><span class="line">                + gunSale.part3 * gunSale.part3Price;</span><br><span class="line">        gunSale.priceSum = priceSum;</span><br><span class="line">        <span class="keyword">return</span> priceSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">commissionSum</span><span class="params">(GunSale gunSale)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> commissionSum = <span class="number">0.00f</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (gunSale.priceSum &lt;= <span class="number">1000</span>) &#123;</span><br><span class="line">            commissionSum = gunSale.priceSum * <span class="number">0.1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (gunSale.priceSum &lt;= <span class="number">1800</span>) &#123;</span><br><span class="line">            commissionSum = (gunSale.priceSum - <span class="number">1000</span>) * <span class="number">0.15</span> + <span class="number">100</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            commissionSum = (gunSale.priceSum - <span class="number">1800</span>) * <span class="number">0.20</span> + <span class="number">220</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        gunSale.commissionSum = commissionSum;</span><br><span class="line">        <span class="keyword">return</span> commissionSum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        GunSale gunSale = <span class="keyword">new</span> GunSale();</span><br><span class="line">        gunSale.amountInputAndCheck(scanner, gunSale);</span><br><span class="line">        <span class="keyword">int</span> amountSum = gunSale.amountSumFunction(gunSale);</span><br><span class="line">        <span class="keyword">int</span> priceSum = gunSale.priceSumFunction(gunSale);</span><br><span class="line">        <span class="keyword">double</span> commissionSum = gunSale.commissionSum(gunSale);</span><br><span class="line">        System.out.println(String.format(<span class="string">"=====销售总数是：%1d， 总销售额：%2d，佣金总和：%3f====="</span></span><br><span class="line">                , amountSum, priceSum, commissionSum));</span><br><span class="line">        System.out.println(<span class="string">"----------------------------------------------"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h2><h3 id="三角形问题：测试用例设计"><a href="#三角形问题：测试用例设计" class="headerlink" title="三角形问题：测试用例设计"></a>三角形问题：测试用例设计</h3><p>1.第一步，分析实验实验，确定条件桩和动作桩<br>| 条件桩     | 行动桩（不与条件桩一一对应） |<br>| ———- | —— |<br>| C1: a&lt;b+c? | 非三角形 |<br>| C2: b&lt;a+c? | 不等边三角形 |<br>| C3: c&lt;a+b? | 等腰三角形 |<br>| C4: a=b?   | 等边三角形 |<br>| C5: a=c?   | 不可能 |<br>| C6: b=c?   |        |</p>
+<p>2.确定规则的个数</p>
+<p>由于该问题中为有限条目决策表（二值条件，真/假），所以规则的数目为：2^6 = 64(条)</p>
+<p>3.填入条件项</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1: a&lt;b+c?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>C2: b&lt;a+c?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>C3: c&lt;a+b?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>C4: a=b?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C5: a=c?</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td>C6: b=c?</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>4.填入动作项</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1: a&lt;b+c?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C2: b&lt;a+c?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C3: c&lt;a+b?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C4: a=b?</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C5: a=c?</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C6: b=c?</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>…</td>
+</tr>
+<tr>
+<td>A1: 非三角形</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>…</td>
+</tr>
+<tr>
+<td>A2: 不等边三角形</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A3: 等腰三角形</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A4: 等边三角形</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A5: 不可能</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>5.合并相似规则</p>
+<p>从上表中可以发现，测试用例1-8，由于C1条件为false，不管下面的条件项真值情况，动作项都为A1。此时C2-C6为不相关条目，因此可以被合并。以下表格为合并后的结果：<br>| 条件             | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   |<br>| —————- | —- | —- | —- | —- | —- | —- | —- | —- | —- | —- | —- |<br>| C1: a&lt;b+c?       | F    | T    | T    | T    | T    | T    | T    | T    | T    | T    | T    |<br>| C2: b&lt;a+c?       | -    | F    | T    | T    | T    | T    | T    | T    | T    | T    | T    |<br>| C3: c&lt;a+b?       | -    | -    | F    | T    | T    | T    | T    | T    | T    | T    | T    |<br>| C4: a=b?         | -    | -    | -    | F    | T    | T    | F    | T    | F    | F    | T    |<br>| C5: a=c?         | -    | -    | -    | F    | F    | T    | T    | F    | T    | F    | T    |<br>| C6: b=c?         | -    | -    | -    | F    | F    | F    | T    | T    | F    | T    | T    |<br>| A1: 非三角形     | 1    | 1    | 1    |      |      |      |      |      |      |      |      |<br>| A2: 不等边三角形 |      |      |      | 1    |      |      |      |      |      |      |      |<br>| A3: 等腰三角形   |      |      |      |      | 1    |      |      |      | 1    | 1    |      |<br>| A4: 等边三角形   |      |      |      |      |      |      |      |      |      |      | 1    |<br>| A5: 不可能       |      |      |      |      |      | 1    | 1    | 1    |      |      |      |</p>
+<p>合并后即为最终决策表。  </p>
+<ol start="6">
+<li>得到测试用例<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>预期输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>5</td>
+<td>2</td>
+<td>3</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+<td>3</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>非三角形</td>
+</tr>
+<tr>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>不等边三角形</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>4</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>6</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>7</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>8</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>9</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>10</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>等腰三角形</td>
+</tr>
+<tr>
+<td>11</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>等边三角形</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="NextDate：测试用例设计"><a href="#NextDate：测试用例设计" class="headerlink" title="NextDate：测试用例设计"></a>NextDate：测试用例设计</h3><ol>
+<li><p>分析案例，确定条件桩和行动桩</p>
+<p>又因为案例中直接将边界条件转化为条件桩的话，会缺漏的很多条件，因此，更加细分并且使用等价类归类。</p>
+<table>
+<thead>
+<tr>
+<th>等价类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M1 = {月份：每月有30天}</td>
+</tr>
+<tr>
+<td>M2 = {月份：每月有31天，12月除外}</td>
+</tr>
+<tr>
+<td>M3 = {月份：此月是12月}</td>
+</tr>
+<tr>
+<td>M4 = {月份：此月是2月}</td>
+</tr>
+<tr>
+<td>D1 = {日期：1&lt;=日期&lt;=27}</td>
+</tr>
+<tr>
+<td>D2 = {日期：日期 = 28}</td>
+</tr>
+<tr>
+<td>D3 = {日期：日期 = 29}</td>
+</tr>
+<tr>
+<td>D4 = {日期：日期 = 30}</td>
+</tr>
+<tr>
+<td>D5 = {日期：日期 = 31}</td>
+</tr>
+<tr>
+<td>Y1 = {年：年是闰年}</td>
+</tr>
+<tr>
+<td>Y2 = {年：年是平年}</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>条件桩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1：月份在{M1, M2, M3, M4}中之一</td>
+</tr>
+<tr>
+<td>C2：日期在{D1, D2, D3, D4, D5}中之一</td>
+</tr>
+<tr>
+<td>C3：年份在{Y1, Y2}中之一</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>动作桩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A1：不可能</td>
+</tr>
+<tr>
+<td>A2：日增1</td>
+</tr>
+<tr>
+<td>A3：日复位</td>
+</tr>
+<tr>
+<td>A4：月增1</td>
+</tr>
+<tr>
+<td>A5：月复位</td>
+</tr>
+<tr>
+<td>A6：年增1</td>
+</tr>
+</tbody></table>
+<p>2.确定规则个数</p>
+<p>   4*5*2 = 40</p>
+<p>3.填入条件项</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1：月份在{M1, M2, M3, M4}中之一</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M2</td>
+<td>M2</td>
+<td>M2</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C2：日期在{D1, D2, D3, D4, D5}中之一</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>D4</td>
+<td>D5</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C3：年份在{Y1, Y2}中之一</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>…</td>
+</tr>
+<tr>
+<td>A1：不可能</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A2：日增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A3：日复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A4：月增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A5：月复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A6：年增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>4.填入动作项</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1：月份在{M1, M2, M3, M4}中之一</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M2</td>
+<td>M2</td>
+<td>M2</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C2：日期在{D1, D2, D3, D4, D5}中之一</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>D4</td>
+<td>D5</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C3：年份在{Y1, Y2}中之一</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>Y1</td>
+<td>…</td>
+</tr>
+<tr>
+<td>A1：不可能</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A2：日增1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>A3：日复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A4：月增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A5：月复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A6：年增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>5.合并相似规则</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1：月份在{M1, M2, M3, M4}中之一</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M1</td>
+<td>M2</td>
+<td>M2</td>
+<td>M2</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C2：日期在{D1, D2, D3, D4, D5}中之一</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>D4</td>
+<td>D5</td>
+<td>D1</td>
+<td>D2</td>
+<td>D3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>C3：年份在{Y1, Y2}中之一</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>…</td>
+</tr>
+<tr>
+<td>A1：不可能</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A2：日增1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>A3：日复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A4：月增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A5：月复位</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A6：年增1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>6.得出测试用例</p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>月份</th>
+<th>日期</th>
+<th>年份</th>
+<th>预计输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1-3</td>
+<td>4</td>
+<td>12</td>
+<td>2001</td>
+<td>2001年4月12日</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>30</td>
+<td>2001</td>
+<td>2001年5月1日</td>
+</tr>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>31</td>
+<td>2001</td>
+<td>不可能</td>
+</tr>
+<tr>
+<td>6-9</td>
+<td>1</td>
+<td>15</td>
+<td>2001</td>
+<td>2001年1月16日</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1</td>
+<td>31</td>
+<td>2001</td>
+<td>2001年2月1日</td>
+</tr>
+<tr>
+<td>11-14</td>
+<td>12</td>
+<td>15</td>
+<td>2001</td>
+<td>2001年12月16日</td>
+</tr>
+<tr>
+<td>15</td>
+<td>12</td>
+<td>31</td>
+<td>2001</td>
+<td>2002年1月1日</td>
+</tr>
+<tr>
+<td>16</td>
+<td>2</td>
+<td>15</td>
+<td>2001</td>
+<td>2001年2月16日</td>
+</tr>
+<tr>
+<td>17</td>
+<td>2</td>
+<td>31</td>
+<td>2004</td>
+<td>2004年2月29日</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<h2 id="测试代码及结果分析"><a href="#测试代码及结果分析" class="headerlink" title="测试代码及结果分析"></a>测试代码及结果分析</h2><h3 id="三角形问题：测试代码"><a href="#三角形问题：测试代码" class="headerlink" title="三角形问题：测试代码"></a>三角形问题：测试代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> procs.TriangleProc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TriangleTesting_third</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkShape</span><span class="params">(<span class="keyword">int</span> sideA, <span class="keyword">int</span> sideB, <span class="keyword">int</span> sideC)</span> </span>&#123;</span><br><span class="line">        TriangleProc triangleProc = <span class="keyword">new</span> TriangleProc();</span><br><span class="line"></span><br><span class="line">        triangleProc.sideA = sideA;</span><br><span class="line">        triangleProc.sideB = sideB;</span><br><span class="line">        triangleProc.sideC = sideC;</span><br><span class="line"></span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideA);</span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideB);</span><br><span class="line">        triangleProc.verifyLengthRange(triangleProc.sideC);</span><br><span class="line"></span><br><span class="line">        triangleProc.verifyFormPrinciple(triangleProc);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"三角形类型为："</span> + triangleProc.judgeTriangleType(triangleProc));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        TriangleTesting_third triangleTesting_third = <span class="keyword">new</span> TriangleTesting_third();</span><br><span class="line"></span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">2</span>, <span class="number">5</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        System.out.println(<span class="string">"=====不可能====="</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">        triangleTesting_third.checkShape(<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三角形问题：测试结果"><a href="#三角形问题：测试结果" class="headerlink" title="三角形问题：测试结果"></a>三角形问题：测试结果</h3><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229102623.png" style="zoom:50%;" />
+符合实验预期
+
+<h3 id="NextDate：测试代码"><a href="#NextDate：测试代码" class="headerlink" title="NextDate：测试代码"></a>NextDate：测试代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> procs.NextDate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NextDateTesting_third</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 驱动模块</span></span><br><span class="line"><span class="comment">     * 函数：dateCheckFunction</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nextDate</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dateCheckFunction</span><span class="params">(NextDate nextDate, <span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (year &gt;= <span class="number">1912</span> &amp;&amp; year &lt;= <span class="number">2050</span>) &#123;</span><br><span class="line">            nextDate.year = year;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"The YEAR is out of range"</span>);</span><br><span class="line">            flag = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (month &gt;= <span class="number">1</span> &amp;&amp; month &lt;= <span class="number">12</span>) &#123;</span><br><span class="line">            nextDate.month = month;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"The MONTH is out of range"</span>);</span><br><span class="line">            flag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (day &gt;= <span class="number">1</span> &amp;&amp; day &lt;= <span class="number">31</span>) &#123;</span><br><span class="line">            nextDate.day = day;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"The DAY is out of range"</span>);</span><br><span class="line">            flag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> flag;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkNextDate</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span> </span>&#123;</span><br><span class="line">        NextDate nextDate = <span class="keyword">new</span> NextDate();</span><br><span class="line">        NextDateTesting_two nextDateTesting_two = <span class="keyword">new</span> NextDateTesting_two();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查输入的日期是否符合要求</span></span><br><span class="line">        <span class="keyword">if</span> (nextDateTesting_two.dateCheckFunction(nextDate, year, month, day)) &#123;</span><br><span class="line">            <span class="comment">// 根据nextDateFunction函数获取后一天的日期</span></span><br><span class="line">            String dayAfter = nextDate.nextDateFunction(nextDate.year,</span><br><span class="line">                    nextDate.month, nextDate.day);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">"The day after is "</span> + dayAfter);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        NextDateTesting_third nextDateTesting_third = <span class="keyword">new</span> NextDateTesting_third();</span><br><span class="line"></span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">4</span>, <span class="number">12</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">4</span>, <span class="number">30</span>);</span><br><span class="line">        System.out.println(<span class="string">"将超出的日期当作下月的日期增位"</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">4</span>, <span class="number">31</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">1</span>, <span class="number">15</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">1</span>, <span class="number">31</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">12</span>, <span class="number">15</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2001</span>, <span class="number">2</span>, <span class="number">15</span>);</span><br><span class="line">        nextDateTesting_third.checkNextDate(<span class="number">2004</span>, <span class="number">2</span>, <span class="number">31</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NextDate：测试结果"><a href="#NextDate：测试结果" class="headerlink" title="NextDate：测试结果"></a>NextDate：测试结果</h3><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229103451.png" style="zoom:50%;" />
+以上是测试结果，符合实验预期
+
+
+
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h3 id="基于决策表的黑盒测试一般测试步骤"><a href="#基于决策表的黑盒测试一般测试步骤" class="headerlink" title="基于决策表的黑盒测试一般测试步骤"></a>基于决策表的黑盒测试一般测试步骤</h3><ol>
+<li>列出所有的条件桩和动作桩</li>
+<li>确定规则的个数</li>
+<li>填入条件项（有限条件决策表/扩展条目决策表）</li>
+<li>填入动作项</li>
+<li>合并相似规则（不是必须的）</li>
+<li>得到测试用例</li>
+</ol>
+<h3 id="决策表的适用范围"><a href="#决策表的适用范围" class="headerlink" title="决策表的适用范围"></a>决策表的适用范围</h3><p>通常适用于要产生大量决策的情况，或者输入变量之间存在重要逻辑关系。</p>
+<p>1.决策表测试法适用于具有以下特征的应用程序</p>
+<ul>
+<li>程序的 if then else 逻辑突出</li>
+<li>输入变量之间存在逻辑关系</li>
+<li>计算过程涉及输入变量子集的处理</li>
+<li>输入与输出之间存在因果关系</li>
+<li>圈复杂度较高的应用</li>
+</ul>
+<p>2.适用于使用决策表设计测试用例的条件</p>
+<ul>
+<li>规格说明以决策表形式给出，或较容易转换为决策表</li>
+<li>条件的排列顺序不会也不应影响执行的操作</li>
+<li>规则的排列顺序不会也不应影响执行的操作</li>
+<li>当某一规则的条件已经满足，并确定要执行的操作后，不必检验别的规则</li>
+<li>如果某一规则的条件要执行多个操作，这些操作的执行顺序无关紧要</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实验三-黑盒测试——基于决策表分析法"><span class="toc-number">1.</span> <span class="toc-text">实验三 黑盒测试——基于决策表分析法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验目的"><span class="toc-number">1.2.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.3.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.4.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.6.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.7.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题"><span class="toc-number">1.7.1.</span> <span class="toc-text">三角形问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate"><span class="toc-number">1.7.2.</span> <span class="toc-text">NextDate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#佣金问题"><span class="toc-number">1.7.3.</span> <span class="toc-text">佣金问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试案例"><span class="toc-number">1.8.</span> <span class="toc-text">测试案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试用例设计"><span class="toc-number">1.8.1.</span> <span class="toc-text">三角形问题：测试用例设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试用例设计"><span class="toc-number">1.8.2.</span> <span class="toc-text">NextDate：测试用例设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码及结果分析"><span class="toc-number">1.9.</span> <span class="toc-text">测试代码及结果分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试代码"><span class="toc-number">1.9.1.</span> <span class="toc-text">三角形问题：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三角形问题：测试结果"><span class="toc-number">1.9.2.</span> <span class="toc-text">三角形问题：测试结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试代码"><span class="toc-number">1.9.3.</span> <span class="toc-text">NextDate：测试代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NextDate：测试结果"><span class="toc-number">1.9.4.</span> <span class="toc-text">NextDate：测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.10.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基于决策表的黑盒测试一般测试步骤"><span class="toc-number">1.10.1.</span> <span class="toc-text">基于决策表的黑盒测试一般测试步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#决策表的适用范围"><span class="toc-number">1.10.2.</span> <span class="toc-text">决策表的适用范围</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&text=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&is_video=false&description=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】黑盒测试——基于决策表分析法&body=Check out this article: https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&title=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&name=【软件工程】黑盒测试——基于决策表分析法&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/29/articles/2019/12/29/1577587291774.html/&t=【软件工程】黑盒测试——基于决策表分析法" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

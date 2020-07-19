@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="iOS应用脱壳基于Frida的脱壳方法主要参考：Link frida-ios-dump 步骤1: 在手机上安装Frida，分为越狱设备和非越狱设备两种。参见官方文档：Link  步骤2: 在mac上安装Frida 1234# Python API binding$ pip install frida# frida command$ pip install frida-tools  注意：在安装fr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS应用脱壳">
+<meta property="og:url" content="https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="iOS应用脱壳基于Frida的脱壳方法主要参考：Link frida-ios-dump 步骤1: 在手机上安装Frida，分为越狱设备和非越狱设备两种。参见官方文档：Link  步骤2: 在mac上安装Frida 1234# Python API binding$ pip install frida# frida command$ pip install frida-tools  注意：在安装fr">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-02-29T20:01:31.000Z">
+<meta property="article:modified_time" content="2020-02-29T20:02:17.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="iOS安全">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>iOS应用脱壳</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/04/iOS%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/27/%E7%B3%BB%E7%BB%9F%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%AE%89%E5%85%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&text=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&is_video=false&description=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS应用脱壳&body=Check out this article: https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&name=iOS应用脱壳&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&t=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS应用脱壳"><span class="toc-number">1.</span> <span class="toc-text">iOS应用脱壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于Frida的脱壳方法"><span class="toc-number">1.1.</span> <span class="toc-text">基于Frida的脱壳方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ios-dump"><span class="toc-number">1.1.1.</span> <span class="toc-text">frida-ios-dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#故障备忘"><span class="toc-number">1.1.2.</span> <span class="toc-text">故障备忘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.2.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS应用脱壳
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-29T20:01:31.000Z" itemprop="datePublished">2020-03-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS%E5%AE%89%E5%85%A8/" rel="tag">iOS安全</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="iOS应用脱壳"><a href="#iOS应用脱壳" class="headerlink" title="iOS应用脱壳"></a>iOS应用脱壳</h1><h2 id="基于Frida的脱壳方法"><a href="#基于Frida的脱壳方法" class="headerlink" title="基于Frida的脱壳方法"></a>基于Frida的脱壳方法</h2><p>主要参考：<a href="https://www.jianshu.com/p/4aee1c07d1da" target="_blank" rel="noopener">Link</a></p>
+<h3 id="frida-ios-dump"><a href="#frida-ios-dump" class="headerlink" title="frida-ios-dump"></a><strong><a href="https://github.com/AloneMonkey/frida-ios-dump" target="_blank" rel="noopener">frida-ios-dump</a></strong></h3><ul>
+<li><p>步骤1: 在手机上安装Frida，分为越狱设备和非越狱设备两种。参见官方文档：<a href="https://frida.re/docs/ios/#without-jailbreak" target="_blank" rel="noopener">Link</a></p>
+</li>
+<li><p>步骤2: 在mac上安装Frida</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python API binding</span></span><br><span class="line">$ pip install frida</span><br><span class="line"><span class="comment"># frida command</span></span><br><span class="line">$ pip install frida-tools</span><br></pre></td></tr></table></figure>
+
+<p>注意：在安装<code>frida-tools</code>时，出现了报错<code>ERROR: No matching distribution found for prompt-toolkit&lt;4.0.0,&gt;=3.0.3 (from frida-tools)</code>，单独安装 prompt后<code>pip install prompt</code>后发现没有影响，原因可参考另一项目的<a href="https://github.com/sensepost/objection/issues/179" target="_blank" rel="noopener">issue</a>。其实在<code>requirements.txt</code>文件中也写明了<code>prompt</code>包，因此也不用手动单独安装<code>prompt</code>。</p>
+</li>
+<li><p>步骤三：下载frida-ios-dump脚本，安装依赖</p>
+<ul>
+<li><p>使用Python2的脚本：<a href="https://github.com/AloneMonkey/frida-ios-dump" target="_blank" rel="noopener">Link</a></p>
+</li>
+<li><p>使用Python3的脚本：<a href="https://github.com/AloneMonkey/frida-ios-dump/tree/3.x" target="_blank" rel="noopener">Link</a>    注意：该版本的脚本目前容易出现<a href="https://github.com/AloneMonkey/frida-ios-dump/issues/97" target="_blank" rel="noopener">TypeError: can’t concat str to bytes</a>报错，因此推荐使用Python2版本的</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/AloneMonkey/frida-ios-dump.git</span><br><span class="line">$ <span class="built_in">cd</span> frida-ios-dump</span><br><span class="line">$ pip install -r requirements.txt --upgrade</span><br></pre></td></tr></table></figure>
+
+<p>注意：如果设备的连接信息（e.g. ssh默认的连接密码alpine）已经修改，要修改脚本中对应的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ vim dump.py</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment"># 手机连接配置</span></span><br><span class="line">  User = <span class="string">'root'</span></span><br><span class="line">  Password = <span class="string">'alpine'</span></span><br><span class="line">  Host = <span class="string">'localhost'</span> <span class="comment"># 此处不用修改</span></span><br><span class="line">  Port = 2222</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过USB使用SSH连接设备</p>
+<p>参考：<a href="http://blog.okeyang.com/blog/2013/09/16/iproxy-tong-guo-usbshi-yong-sshlian-jie-iosshe-bei/" target="_blank" rel="noopener">Link</a></p>
+<p>该脚本使用SSH连接进行操作（基于Frida），但使用Wi-Fi的SSH容易不稳定，因此可以使用<code>iproxy</code>工具将SSH的22端口转发到一个本地端口2222，再通过USB连接，会更加稳定。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># USB连接你的Mac，新开一个命令行窗口，进行转发</span></span><br><span class="line">$ iproxy 2222 22</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用脚本</p>
+<p>默认使用USB连接，需要进行端口转发</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ ./dump.py -h</span><br><span class="line">usage: dump.py [-h] [-l] [-o OUTPUT_IPA] [-H SSH_HOST] [-p SSH_PORT]</span><br><span class="line">               [-u SSH_USER] [-P SSH_PASSWORD]</span><br><span class="line">               [target]</span><br><span class="line"></span><br><span class="line">frida-ios-dump (by AloneMonkey v2.0)</span><br><span class="line"></span><br><span class="line">positional arguments:</span><br><span class="line">  target                Bundle identifier or display name of the target app</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --<span class="built_in">help</span>            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></span><br><span class="line">  -l, --list            List the installed apps</span><br><span class="line">  -o OUTPUT_IPA, --output OUTPUT_IPA</span><br><span class="line">                        Specify name of the decrypted IPA</span><br><span class="line">  -H SSH_HOST, --host SSH_HOST</span><br><span class="line">                        Specify SSH hostname</span><br><span class="line">  -p SSH_PORT, --port SSH_PORT</span><br><span class="line">                        Specify SSH port</span><br><span class="line">  -u SSH_USER, --user SSH_USER</span><br><span class="line">                        Specify SSH username</span><br><span class="line">  -P SSH_PASSWORD, --password SSH_PASSWORD</span><br><span class="line">                        Specify SSH password</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="故障备忘"><a href="#故障备忘" class="headerlink" title="故障备忘"></a>故障备忘</h3><p>第一次执行后报错</p>
+<blockquote>
+<p>unable to attach to the specified process</p>
+</blockquote>
+<p>原来是因为手机没有安装Frida.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[0] <a href="https://www.exchen.net/ios-hacker-frida-ios-dump.html" target="_blank" rel="noopener">https://www.exchen.net/ios-hacker-frida-ios-dump.html</a></p>
+<p>[1] <a href="https://www.jianshu.com/p/79d2d9f3958c" target="_blank" rel="noopener">https://www.jianshu.com/p/79d2d9f3958c</a></p>
+<p>[2] <a href="https://www.exchen.net/ios-hacker-frida-ios-dump.html" target="_blank" rel="noopener">https://www.exchen.net/ios-hacker-frida-ios-dump.html</a></p>
+<p>[3] <a href="https://www.jianshu.com/p/4aee1c07d1da" target="_blank" rel="noopener">https://www.jianshu.com/p/4aee1c07d1da</a></p>
+<p>[4] <a href="http://blog.okeyang.com/blog/2013/09/16/iproxy-tong-guo-usbshi-yong-sshlian-jie-iosshe-bei/" target="_blank" rel="noopener">http://blog.okeyang.com/blog/2013/09/16/iproxy-tong-guo-usbshi-yong-sshlian-jie-iosshe-bei/</a> </p>
+<p>[5] <a href="https://blog.aberlt.com/2017/12/14/%E8%AE%B0%E7%A0%B8%E5%A3%B3%E5%B7%A5%E5%85%B7-frida-ios-dump-%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">https://blog.aberlt.com/2017/12/14/%E8%AE%B0%E7%A0%B8%E5%A3%B3%E5%B7%A5%E5%85%B7-frida-ios-dump-%E7%9A%84%E4%BD%BF%E7%94%A8/</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS应用脱壳"><span class="toc-number">1.</span> <span class="toc-text">iOS应用脱壳</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于Frida的脱壳方法"><span class="toc-number">1.1.</span> <span class="toc-text">基于Frida的脱壳方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#frida-ios-dump"><span class="toc-number">1.1.1.</span> <span class="toc-text">frida-ios-dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#故障备忘"><span class="toc-number">1.1.2.</span> <span class="toc-text">故障备忘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.2.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&text=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&is_video=false&description=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS应用脱壳&body=Check out this article: https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&title=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&name=iOS应用脱壳&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/03/01/iOS%E5%BA%94%E7%94%A8%E8%84%B1%E5%A3%B3/&t=iOS应用脱壳" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

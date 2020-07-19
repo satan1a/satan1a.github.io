@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="实验五 白盒测试图：封面 开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 第 10 页 共 26 页 及对应的开发环境(IDE) 【实验目的】  熟悉掌握白盒测试的原理 掌握白盒测试过程，了解逻辑覆盖，独立路径测试、循环测试等白盒测试方法并能根据问题设计测试样例。  实验要求 要求学生能够理解白盒测试的相关概念和白">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【软件工程】白盒测试">
+<meta property="og:url" content="https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="实验五 白盒测试图：封面 开发语言及实现平台或实验环境在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 第 10 页 共 26 页 及对应的开发环境(IDE) 【实验目的】  熟悉掌握白盒测试的原理 掌握白盒测试过程，了解逻辑覆盖，独立路径测试、循环测试等白盒测试方法并能根据问题设计测试样例。  实验要求 要求学生能够理解白盒测试的相关概念和白">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101115605.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101165400.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101181454.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101182154.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101183339.png">
+<meta property="article:published_time" content="2020-01-01T10:38:44.000Z">
+<meta property="article:modified_time" content="2020-01-07T11:46:12.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="软件测试">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>【软件工程】白盒测试</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/03/Artificial_Intelligence_of_Things%20(AIoT)/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/31/articles/2019/12/31/1577765280396.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&text=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&is_video=false&description=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】白盒测试&body=Check out this article: https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&name=【软件工程】白盒测试&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&t=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实验五-白盒测试"><span class="toc-number">1.</span> <span class="toc-text">实验五 白盒测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.2.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.3.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.4.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.6.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料一"><span class="toc-number">1.6.1.</span> <span class="toc-text">实验材料一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料二"><span class="toc-number">1.6.2.</span> <span class="toc-text">实验材料二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料三"><span class="toc-number">1.6.3.</span> <span class="toc-text">实验材料三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试用例及设计"><span class="toc-number">1.7.</span> <span class="toc-text">测试用例及设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料1：逻辑覆盖"><span class="toc-number">1.7.1.</span> <span class="toc-text">实验材料1：逻辑覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料2：N-S-流程图测试"><span class="toc-number">1.7.2.</span> <span class="toc-text">实验材料2：N-S 流程图测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料3：基本（独立）路径测试"><span class="toc-number">1.7.3.</span> <span class="toc-text">实验材料3：基本（独立）路径测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码及结果分析"><span class="toc-number">1.8.</span> <span class="toc-text">测试代码及结果分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料1-逻辑覆盖"><span class="toc-number">1.8.1.</span> <span class="toc-text">实验材料1: 逻辑覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料2：N-S流程图测试"><span class="toc-number">1.8.2.</span> <span class="toc-text">实验材料2：N-S流程图测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料3：独立路径测试"><span class="toc-number">1.8.3.</span> <span class="toc-text">实验材料3：独立路径测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.9.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#白盒一般的测试的步骤是什么"><span class="toc-number">1.9.1.</span> <span class="toc-text">白盒一般的测试的步骤是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#白盒测试的测试用例设计有哪些方法"><span class="toc-number">1.9.2.</span> <span class="toc-text">白盒测试的测试用例设计有哪些方法?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较白盒、黑盒测试优缺点"><span class="toc-number">1.9.3.</span> <span class="toc-text">比较白盒、黑盒测试优缺点</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【软件工程】白盒测试
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-01T10:38:44.000Z" itemprop="datePublished">2020-01-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a>, <a class="tag-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="tag">软件测试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="实验五-白盒测试"><a href="#实验五-白盒测试" class="headerlink" title="实验五 白盒测试"></a>实验五 白盒测试</h1><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191229104834.png"><br>图：封面</p>
+<h2 id="开发语言及实现平台或实验环境"><a href="#开发语言及实现平台或实验环境" class="headerlink" title="开发语言及实现平台或实验环境"></a>开发语言及实现平台或实验环境</h2><p>在 Windows 7 或 Windows 10 操作系统上，使用 C，C++，C#或 Java 语言 第 10 页 共 26 页<br> 及对应的开发环境(IDE) 【实验目的】</p>
+<ol>
+<li>熟悉掌握白盒测试的原理</li>
+<li>掌握白盒测试过程，了解逻辑覆盖，独立路径测试、循环测试等白盒测<br>试方法并能根据问题设计测试样例。</li>
+</ol>
+<h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><ol>
+<li>要求学生能够理解白盒测试的相关概念和白盒测试的过程、方法。</li>
+<li>具体为每一组，每组二——五人，根据实验题目编写出对应的 c 语言或<br>c++语言程序，组间相互交换程序，按白盒测试的方法进行测试。</li>
+</ol>
+<h2 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理"></a>实验原理</h2><p>对给定的模块，采用语句覆盖、判定覆盖、条件覆盖、判定\条件覆盖、 分组条件覆盖和路径覆盖的方法设计测试用例。</p>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><ol>
+<li>预习相关课堂内容，了解测试对象</li>
+<li>编写实验材料源代码，画出程序流程图。</li>
+<li>根据对应的实验题目，设计逻辑覆盖和路径覆盖的测试样例。 4. 执行测试样例，分析测试结果。</li>
+<li>填写试验报告。</li>
+</ol>
+<h2 id="实验材料"><a href="#实验材料" class="headerlink" title="实验材料"></a>实验材料</h2><ol>
+<li>逻辑覆盖根据下述题目，给出语句覆盖、判定覆盖、条件覆盖、判定\条件覆盖、<br>分组条件覆盖和路径覆盖的测试用例并执行测试。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoWork</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ((x&gt;<span class="number">3</span>)&amp;&amp;(z&lt;<span class="number">10</span>)) &#123;</span><br><span class="line">        k=k* y<span class="number">-1</span>;</span><br><span class="line">        j=<span class="built_in">sqrt</span>(k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((x==<span class="number">4</span>)‖(y&gt;<span class="number">5</span>)) &#123;</span><br><span class="line">    j=x*y+<span class="number">10</span>;</span><br><span class="line">    j=j%<span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>N-S 流程图测试用例设计和执行<br>编写一元二次方程( ax2+bx+c=0)算法，设计路径测试用例并执行测<br>试。</li>
+<li>基本路径测试用例设计和执行 编写对有序表进行折半查找的算法，计算圈复杂度，设计测试用例并<br>执行独立路径测试。</li>
+</ol>
+<h2 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h2><h3 id="实验材料一"><a href="#实验材料一" class="headerlink" title="实验材料一"></a>实验材料一</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoWork</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ((x&gt;<span class="number">3</span>)&amp;&amp;(z&lt;<span class="number">10</span>)) &#123;</span><br><span class="line">        k=k* y<span class="number">-1</span>;</span><br><span class="line">        j=<span class="built_in">sqrt</span>(k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((x==<span class="number">4</span>)‖(y&gt;<span class="number">5</span>)) &#123;</span><br><span class="line">        j = x*y+<span class="number">10</span>;</span><br><span class="line">        j = j%<span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验材料二"><a href="#实验材料二" class="headerlink" title="实验材料二"></a>实验材料二</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;<span class="comment">//导入java.util包下的Scanner类</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnitaryQuadraticEquation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> argsA = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> argsB = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> argsC = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inputCoefficient</span><span class="params">(UnitaryQuadraticEquation equation)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> argsA = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> argsB = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> argsC = <span class="number">0</span>;</span><br><span class="line">        System.out.print(<span class="string">"======求 ax^2+bx+c=0 的根======"</span>+<span class="string">"\n"</span>);</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"请输入a的值(a!=0)："</span>);</span><br><span class="line">            argsA = scanner.nextInt();</span><br><span class="line">        &#125; <span class="keyword">while</span> (argsA == <span class="number">0</span>);</span><br><span class="line">        equation.argsA = argsA;</span><br><span class="line">        System.out.println(<span class="string">"请输入b的值："</span>);</span><br><span class="line"></span><br><span class="line">        argsB = scanner.nextInt();</span><br><span class="line">        equation.argsB = argsB;</span><br><span class="line">        System.out.println(<span class="string">"请输入c的值："</span>);</span><br><span class="line"></span><br><span class="line">        argsC = scanner.nextInt();</span><br><span class="line">        equation.argsC = argsC;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">calculateRoot</span><span class="params">(UnitaryQuadraticEquation equation)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//运用求根公式，并且Math.sqrt()为开平方根</span></span><br><span class="line">            <span class="keyword">double</span> rootX1 = ((-equation.argsB + Math.sqrt(equation.argsB * equation.argsB</span><br><span class="line">                    - <span class="number">4</span> * equation.argsA * equation.argsC)) / (<span class="number">2</span> * equation.argsA));</span><br><span class="line"></span><br><span class="line">            <span class="comment">//运用求根公式，并且Math.sqrt()为开平方根</span></span><br><span class="line">            <span class="keyword">double</span> rootX2 = ((-equation.argsB - Math.sqrt(equation.argsB * equation.argsB</span><br><span class="line">                    - <span class="number">4</span> * equation.argsA * equation.argsC)) / (<span class="number">2</span> * equation.argsA));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 第一个根X1</span></span><br><span class="line">            System.out.println(<span class="string">"x1 = "</span> + rootX1);</span><br><span class="line">            <span class="comment">// 第一个根X2</span></span><br><span class="line">            System.out.println(<span class="string">"x2 = "</span> + rootX2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        UnitaryQuadraticEquation equation = <span class="keyword">new</span> UnitaryQuadraticEquation();</span><br><span class="line">        equation.inputCoefficient(equation);</span><br><span class="line">        equation.calculateRoot(equation);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验材料三"><a href="#实验材料三" class="headerlink" title="实验材料三"></a>实验材料三</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> procs;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对有序表对折半查找</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> orderlyTable 有序表（由小到大排列）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 要查找的关键字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 返回要查找的关键字下标，若没有查找到则返回-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(<span class="keyword">int</span>[] orderlyTable, <span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low, high, mid;</span><br><span class="line">        low = <span class="number">0</span>;</span><br><span class="line">        high = orderlyTable.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (key &lt; orderlyTable[mid]) &#123;</span><br><span class="line">                high = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (key &gt; orderlyTable[mid]) &#123;</span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> key = <span class="number">0</span>;</span><br><span class="line">            Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">            System.out.println(<span class="string">"请输入要查找的关键词："</span>);</span><br><span class="line">            key = scanner.nextInt();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 有序表</span></span><br><span class="line">            <span class="keyword">int</span>[] orderlyTable = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line">            <span class="comment">// 调用BinarySearch方法计算关键词下标</span></span><br><span class="line">            <span class="keyword">int</span> index = BinarySearch(orderlyTable, key);</span><br><span class="line">            System.out.println(<span class="string">"关键词的下标是（-1表示未找到）："</span> + index);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="测试用例及设计"><a href="#测试用例及设计" class="headerlink" title="测试用例及设计"></a>测试用例及设计</h2><h3 id="实验材料1：逻辑覆盖"><a href="#实验材料1：逻辑覆盖" class="headerlink" title="实验材料1：逻辑覆盖"></a>实验材料1：逻辑覆盖</h3><p>1.语句覆盖<br>由于语句覆盖至要求每个语句执行一次即可，因此设计如下测试用例  </p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>2.判定覆盖</p>
+<p>   判定覆盖是在语句覆盖的基础上，使得程序中的每个判定分值都覆盖，因此设计如下用例  </p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>3.条件覆盖</p>
+<p>   在语句覆盖的基础上，使得程序中的每个条件（原子条件）都能获得可能的结果，因此设计如下用例  </p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>4.判定条件覆盖</p>
+<p>   判定/条件覆盖是使得判定的每个条件都取到可能的值（即满足判定覆盖），也使得条件满足每个可能的结果（即满足条件覆盖）因此设计如下用例  </p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>5.条件组合覆盖</p>
+<p>   条件组合覆盖是指设计足够多的测试用例，使得每个判定中的条件的各种可能组合都至少出现一次。</p>
+<p>   可能的条件组合：</p>
+<ul>
+<li><ol>
+<li>x&gt;3, z&lt;10, x=4, y&gt;5</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>x&gt;3, z&gt;=10, x=4, y&gt;5</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>x&gt;3, z&lt;10, x!=4, y&gt;5</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>x&gt;3, z&gt;=10, x!=4, y&gt;5</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>x&gt;3, z&lt;10, x=4, y&lt;=5</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>x&gt;3, z&gt;=10, x=4, y&lt;=5</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>x&gt;3, z&gt;=10, x!=4, y&lt;=5</li>
+</ol>
+</li>
+<li>….</li>
+</ul>
+<p>相应的测试用例为：</p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>4</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+<td>5</td>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>5</td>
+<td>5</td>
+<td>12</td>
+<td>5</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>6.路径覆盖测试</p>
+<p>   路径覆盖测试是指设计足够多的测试数据，使得程序中的每一条可行路径（即从开始到结束的一条程序流）都至少执行一次。</p>
+<p>   路径有：</p>
+<p>   P1(FF)</p>
+<p>   P2(FT)</p>
+<p>   P3(TF)</p>
+<p>   P4(TT)</p>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>X</th>
+<th>Y</th>
+<th>Z</th>
+<th>K</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>12</td>
+<td>5</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>6</td>
+<td>5</td>
+<td>5</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>5</td>
+<td>P4</td>
+</tr>
+</tbody></table>
+<p>如上表的测试用例，使得程序中的每一条可行路径都执行了一次。</p>
+<h3 id="实验材料2：N-S-流程图测试"><a href="#实验材料2：N-S-流程图测试" class="headerlink" title="实验材料2：N-S 流程图测试"></a>实验材料2：N-S 流程图测试</h3><p>N-S流程图可用于测算最小测试用例，根据所写的实验代码，绘制N-S图：<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101115605.png" style="zoom:25%;" /></p>
+<ol>
+<li><p>P1: a是否不等于0  </p>
+</li>
+<li><p>a: 输入的argsA有效  </p>
+</li>
+<li><p>b: 再次输入argsA</p>
+</li>
+<li><p>c: 输入argsB</p>
+</li>
+<li><p>d: 输入argsC</p>
+</li>
+<li><p>e: 计算root1（第一个根）</p>
+</li>
+<li><p>f: 计算root2（第二个根）</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>条件</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>P1 = True</td>
+<td>acdef</td>
+</tr>
+<tr>
+<td>2</td>
+<td>P1 = False</td>
+<td>bcdef</td>
+</tr>
+</tbody></table>
+<h3 id="实验材料3：基本（独立）路径测试"><a href="#实验材料3：基本（独立）路径测试" class="headerlink" title="实验材料3：基本（独立）路径测试"></a>实验材料3：基本（独立）路径测试</h3><p>基本（独立）路径测试是在程序控制流图的基础上，分析控制构造的环路复杂性，导出独立可执行路径集合，设置测试用例的方法。是路径覆盖测试的一种改进，它把覆盖的路径数压缩到一定限度内，程序中的循环体最多执行一次。  </p>
+<p>独立路径测试步骤是：  </p>
+<ol>
+<li>画出控制流程图（拓扑结构-流图）</li>
+<li>计算流图G的环路复杂性V(G)</li>
+<li>确定只包含独立路径的基本路径集</li>
+<li>设计测试用例</li>
+</ol>
+<p>以下为针对实验材料3到路径路径测试用例设计：  </p>
+<ol>
+<li>画出控制流程图<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101165400.png" style="zoom:15%;" />  
+node0: low = 0; high = oderlyTable.length-1;  
+node1: low <= high  
+node2: mid = (low + high) / 2  
+node3: key < orderlyTable[mid]  
+node4: high = mid - 1  
+node5: key > orderlyTable[mid]  
+node6: low = mid + 1  
+node7: return mid  
+node8: return -1  </li>
+<li>计算环路复杂性</li>
+</ol>
+<p>V(G) = e - n +1 = 10-9+1 = 2<br>判定节点数为1， 加1，得2，验证正确</p>
+<ol start="3">
+<li>基本路径集</li>
+</ol>
+<p>path1: 1-8<br>path2: 1-2-3-4-1-2-3-7<br>path3: 1-2-3-5-6-1-2-3-7<br>path4: 1-2-3-7</p>
+<ol start="4">
+<li>设计测试用例</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>用例ID</th>
+<th>orderlyTable</th>
+<th>Key</th>
+<th>满足路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>[]</td>
+<td>0</td>
+<td>Path1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[1, 2, 3, 4, 5]</td>
+<td>2</td>
+<td>Path2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>[1, 2, 3, 4, 5]</td>
+<td>4</td>
+<td>Path3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>[1, 2, 3, 4, 5]</td>
+<td>3</td>
+<td>Path4</td>
+</tr>
+</tbody></table>
+<h2 id="测试代码及结果分析"><a href="#测试代码及结果分析" class="headerlink" title="测试代码及结果分析"></a>测试代码及结果分析</h2><h3 id="实验材料1-逻辑覆盖"><a href="#实验材料1-逻辑覆盖" class="headerlink" title="实验材料1: 逻辑覆盖"></a>实验材料1: 逻辑覆盖</h3><ol>
+<li>测试代码<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoWorkTesting_fifth</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * DoWork的驱动函数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> z</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">doWork</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z , <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((x &gt; <span class="number">3</span>) &amp;&amp; (z &lt; <span class="number">10</span>)) &#123;</span><br><span class="line">            k = k * y - <span class="number">1</span>;</span><br><span class="line">            j = Math.sqrt(k);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((x == <span class="number">4</span>) || (y &gt; <span class="number">5</span>)) &#123;</span><br><span class="line">            j = x * y + <span class="number">10</span>;</span><br><span class="line">            j = j % <span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> j;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        DoWorkTesting_fifth doWork = <span class="keyword">new</span> DoWorkTesting_fifth();</span><br><span class="line">        <span class="keyword">double</span> tempJ = <span class="number">0.00f</span>;</span><br><span class="line">        System.out.println(<span class="string">"======语句覆盖======"</span>);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======判定覆盖======"</span>);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">2</span>,<span class="number">2</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======条件覆盖======"</span>);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">4</span>, <span class="number">5</span>,<span class="number">5</span> ,<span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======判定条件覆盖======"</span>);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">4</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">"======条件组合覆盖======"</span>);</span><br><span class="line">        System.out.println(<span class="string">"..."</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======路径覆盖======"</span>);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">2</span>, <span class="number">5</span>, <span class="number">12</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">5</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line">        tempJ = doWork.doWork(<span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(tempJ);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>结果分析<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101181454.png" style="zoom: 50%;" />
+
+</li>
+</ol>
+<p>符合实验预期。</p>
+<h3 id="实验材料2：N-S流程图测试"><a href="#实验材料2：N-S流程图测试" class="headerlink" title="实验材料2：N-S流程图测试"></a>实验材料2：N-S流程图测试</h3><ol>
+<li>测试代码</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> procs.UnitaryQuadraticEquation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnitaryQuadraticEquationTesting_fifth</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        UnitaryQuadraticEquation equation = <span class="keyword">new</span> UnitaryQuadraticEquation();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 1======"</span>);</span><br><span class="line">        equation.argsA = <span class="number">2</span>;</span><br><span class="line">        equation.argsB = <span class="number">3</span>;</span><br><span class="line">        equation.argsC = <span class="number">1</span>;</span><br><span class="line">        equation.calculateRoot(equation);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 2======"</span>);</span><br><span class="line">        equation.argsA = <span class="number">0</span>;</span><br><span class="line">        equation.argsB = <span class="number">3</span>;</span><br><span class="line">        equation.argsC = <span class="number">1</span>;</span><br><span class="line">        equation.calculateRoot(equation);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>实验结果<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101182154.png" style="zoom:50%;" />  
+
+</li>
+</ol>
+<p>符合实验预期。</p>
+<h3 id="实验材料3：独立路径测试"><a href="#实验材料3：独立路径测试" class="headerlink" title="实验材料3：独立路径测试"></a>实验材料3：独立路径测试</h3><ol>
+<li>测试代码</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> exps;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> procs.BinarySearch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearchTesting_fifth</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        BinarySearch binarySearch = <span class="keyword">new</span> procs.BinarySearch();</span><br><span class="line">        <span class="keyword">int</span> key = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 1======"</span>);</span><br><span class="line">        key = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 有序表</span></span><br><span class="line">        <span class="keyword">int</span>[] orderlyTable_path1 = &#123;&#125;;</span><br><span class="line">        <span class="comment">// 调用BinarySearch方法计算关键词下标</span></span><br><span class="line">        <span class="keyword">int</span> index = binarySearch.binarySearch(orderlyTable_path1, key);</span><br><span class="line">        System.out.println(<span class="string">"关键词的下标是（-1表示未找到）："</span> + index);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 2======"</span>);</span><br><span class="line">        key = <span class="number">2</span>;</span><br><span class="line">        <span class="comment">// 有序表</span></span><br><span class="line">        <span class="keyword">int</span>[] orderlyTable = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        <span class="comment">// 调用BinarySearch方法计算关键词下标</span></span><br><span class="line">        index = binarySearch.binarySearch(orderlyTable, key);</span><br><span class="line">        System.out.println(<span class="string">"关键词的下标是（-1表示未找到）："</span> + index);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 3======"</span>);</span><br><span class="line">        key = <span class="number">4</span>;</span><br><span class="line">        <span class="comment">// 有序表, Path2中已定义</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用BinarySearch方法计算关键词下标</span></span><br><span class="line">        index = binarySearch.binarySearch(orderlyTable, key);</span><br><span class="line">        System.out.println(<span class="string">"关键词的下标是（-1表示未找到）："</span> + index);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"======Path 4======"</span>);</span><br><span class="line">        key = <span class="number">3</span>;</span><br><span class="line">        <span class="comment">// 有序表, Path2中已定义</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用BinarySearch方法计算关键词下标</span></span><br><span class="line">        index = binarySearch.binarySearch(orderlyTable, key);</span><br><span class="line">        System.out.println(<span class="string">"关键词的下标是（-1表示未找到）："</span> + index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>测试结果</li>
+</ol>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200101183339.png" style="zoom:50%;" />
+结果符合预期。
+
+
+
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h3 id="白盒一般的测试的步骤是什么"><a href="#白盒一般的测试的步骤是什么" class="headerlink" title="白盒一般的测试的步骤是什么?"></a>白盒一般的测试的步骤是什么?</h3><ol>
+<li><p>测试计划阶段：根据需求说明书，制定测试进度</p>
+</li>
+<li><p>测试设计阶段：依据程序设计说明书，按照一定规范化的方法进行软件结构划分和设计测试用例</p>
+</li>
+<li><p>测试执行阶段：输入测试用例，得到测试结果</p>
+</li>
+<li><p>测试总结阶段：对比测试的结果和代码的预期结果，分析错误原因，找到并解决错误</p>
+</li>
+</ol>
+<h3 id="白盒测试的测试用例设计有哪些方法"><a href="#白盒测试的测试用例设计有哪些方法" class="headerlink" title="白盒测试的测试用例设计有哪些方法?"></a>白盒测试的测试用例设计有哪些方法?</h3><ol>
+<li><p>逻辑覆盖测试</p>
+</li>
+<li><p>独立路径测试</p>
+</li>
+<li><p>循环测试</p>
+</li>
+<li><p>面对对象的白盒测试</p>
+</li>
+<li><p>域测试</p>
+</li>
+<li><p>符号测试</p>
+</li>
+<li><p>Z路径覆盖</p>
+</li>
+</ol>
+<h3 id="比较白盒、黑盒测试优缺点"><a href="#比较白盒、黑盒测试优缺点" class="headerlink" title="比较白盒、黑盒测试优缺点"></a>比较白盒、黑盒测试优缺点</h3><p>白盒测试的优点：</p>
+<p>对于黑盒测试：</p>
+<ol>
+<li><p>优点<br>1）从产品功能角度测试，可以最大限度的满足用户的需求<br>2）相同的动作可以重复执行，最枯燥的部分可由机器完成<br>3）依据测试用例有针对性地寻找问题，定位更加准确，容易生成测试数据<br>4）可将测试直接和程序/系统要完成的操作相关联</p>
+</li>
+<li><p>缺点<br>1）不能对程序代码进行测试<br>2）如果规格说明设计错误，很难发现<br>3）测试不能充分地进行<br>4）测试结果的准确性取决于测试用例的设计<br>5）自动化测试的复用性较低</p>
+</li>
+</ol>
+<p> 对于白盒测试 :</p>
+<ol>
+<li><p>优点：<br>帮助软件测试人员增大代码的覆盖率。 提供代码的质量，发现代码中隐藏的问题。</p>
+</li>
+<li><p>缺点 ：<br>1) 程序运行会有很多不同的路径，不可能测试所有的运行路径<br>2) 测试基于代码，不能知道设计是否正确，可能会漏掉一些功能需求<br>3) 系统庞大时，测试开销会非常大</p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实验五-白盒测试"><span class="toc-number">1.</span> <span class="toc-text">实验五 白盒测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发语言及实现平台或实验环境"><span class="toc-number">1.1.</span> <span class="toc-text">开发语言及实现平台或实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">1.2.</span> <span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验原理"><span class="toc-number">1.3.</span> <span class="toc-text">实验原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验步骤"><span class="toc-number">1.4.</span> <span class="toc-text">实验步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验材料"><span class="toc-number">1.5.</span> <span class="toc-text">实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验代码"><span class="toc-number">1.6.</span> <span class="toc-text">实验代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料一"><span class="toc-number">1.6.1.</span> <span class="toc-text">实验材料一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料二"><span class="toc-number">1.6.2.</span> <span class="toc-text">实验材料二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料三"><span class="toc-number">1.6.3.</span> <span class="toc-text">实验材料三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试用例及设计"><span class="toc-number">1.7.</span> <span class="toc-text">测试用例及设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料1：逻辑覆盖"><span class="toc-number">1.7.1.</span> <span class="toc-text">实验材料1：逻辑覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料2：N-S-流程图测试"><span class="toc-number">1.7.2.</span> <span class="toc-text">实验材料2：N-S 流程图测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料3：基本（独立）路径测试"><span class="toc-number">1.7.3.</span> <span class="toc-text">实验材料3：基本（独立）路径测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码及结果分析"><span class="toc-number">1.8.</span> <span class="toc-text">测试代码及结果分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料1-逻辑覆盖"><span class="toc-number">1.8.1.</span> <span class="toc-text">实验材料1: 逻辑覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料2：N-S流程图测试"><span class="toc-number">1.8.2.</span> <span class="toc-text">实验材料2：N-S流程图测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验材料3：独立路径测试"><span class="toc-number">1.8.3.</span> <span class="toc-text">实验材料3：独立路径测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验总结"><span class="toc-number">1.9.</span> <span class="toc-text">实验总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#白盒一般的测试的步骤是什么"><span class="toc-number">1.9.1.</span> <span class="toc-text">白盒一般的测试的步骤是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#白盒测试的测试用例设计有哪些方法"><span class="toc-number">1.9.2.</span> <span class="toc-text">白盒测试的测试用例设计有哪些方法?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较白盒、黑盒测试优缺点"><span class="toc-number">1.9.3.</span> <span class="toc-text">比较白盒、黑盒测试优缺点</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&text=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&is_video=false&description=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【软件工程】白盒测试&body=Check out this article: https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&title=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&name=【软件工程】白盒测试&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/01/01/articles/2020/01/01/1577875124044.html/&t=【软件工程】白盒测试" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

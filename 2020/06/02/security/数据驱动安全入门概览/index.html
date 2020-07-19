@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="数据驱动安全入门学习安全威胁数据是安全数据中的一种，其中对应的处理过程是：“威胁数据——&gt; SIEM（安全信息与事件管理）——&gt;安全保障”。 类比地看，数据驱动安全，就是从数据的角度，经过不同阶段的处理，最后综合地达到驱动安全保障的过程。现在这一阶段，应用的范围更加广泛，“包括入侵检测、漏洞挖掘与分析、欺诈检测、钓鱼攻击检测、SPAM检测等等。”[2]  “数据驱动安全的本质是一种高层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据驱动安全概要">
+<meta property="og:url" content="https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="数据驱动安全入门学习安全威胁数据是安全数据中的一种，其中对应的处理过程是：“威胁数据——&gt; SIEM（安全信息与事件管理）——&gt;安全保障”。 类比地看，数据驱动安全，就是从数据的角度，经过不同阶段的处理，最后综合地达到驱动安全保障的过程。现在这一阶段，应用的范围更加广泛，“包括入侵检测、漏洞挖掘与分析、欺诈检测、钓鱼攻击检测、SPAM检测等等。”[2]  “数据驱动安全的本质是一种高层">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424222024.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424223510.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424224043.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424230247.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424230655.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424231925.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424233617.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001133.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001333.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001353.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003527.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003457.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003750.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003937.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425004008.png">
+<meta property="article:published_time" content="2020-06-02T15:51:21.000Z">
+<meta property="article:modified_time" content="2020-06-02T15:51:21.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424222024.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>数据驱动安全概要</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/07/12/test/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/05/28/security/Security-Research-for-SSL-TLS/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&text=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&is_video=false&description=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据驱动安全概要&body=Check out this article: https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&name=数据驱动安全概要&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&t=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据驱动安全入门学习"><span class="toc-number">1.</span> <span class="toc-text">数据驱动安全入门学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据分析能力图"><span class="toc-number">1.1.</span> <span class="toc-text">安全数据分析能力图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据分析落地情况"><span class="toc-number">1.2.</span> <span class="toc-text">安全数据分析落地情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文本内容监测"><span class="toc-number">1.2.1.</span> <span class="toc-text">文本内容监测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单统计和假设检验"><span class="toc-number">1.2.2.</span> <span class="toc-text">简单统计和假设检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时序建模和时序异常监测算法"><span class="toc-number">1.2.3.</span> <span class="toc-text">时序建模和时序异常监测算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相似性匹配算法"><span class="toc-number">1.2.4.</span> <span class="toc-text">相似性匹配算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据学习概览"><span class="toc-number">1.3.</span> <span class="toc-text">安全数据学习概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法论"><span class="toc-number">1.3.1.</span> <span class="toc-text">方法论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特征"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模型"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ML-Workflow"><span class="toc-number">1.3.2.</span> <span class="toc-text">ML Workflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目标"><span class="toc-number">1.3.3.</span> <span class="toc-text">目标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#更快、更全、更准"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">更快、更全、更准</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全问题抽象"><span class="toc-number">1.3.4.</span> <span class="toc-text">安全问题抽象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分类、聚类、降维"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">分类、聚类、降维</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据挖掘"><span class="toc-number">1.3.5.</span> <span class="toc-text">数据挖掘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据清洗"><span class="toc-number">1.3.6.</span> <span class="toc-text">数据清洗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征工程"><span class="toc-number">1.3.7.</span> <span class="toc-text">特征工程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤、封装、嵌入"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">过滤、封装、嵌入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型-1"><span class="toc-number">1.3.8.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据脚本小子"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">数据脚本小子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#策略选择"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">策略选择</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">1.4.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两个角度"><span class="toc-number">1.4.1.</span> <span class="toc-text">两个角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例一"><span class="toc-number">1.4.2.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例二"><span class="toc-number">1.4.3.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.5.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        数据驱动安全概要
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-02T15:51:21.000Z" itemprop="datePublished">2020-06-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/security/">security</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="数据驱动安全入门学习"><a href="#数据驱动安全入门学习" class="headerlink" title="数据驱动安全入门学习"></a>数据驱动安全入门学习</h1><p>安全威胁数据是安全数据中的一种，其中对应的处理过程是：“威胁数据——&gt; SIEM（安全信息与事件管理）——&gt;安全保障”。</p>
+<p>类比地看，数据驱动安全，就是从数据的角度，经过不同阶段的处理，最后综合地达到驱动安全保障的过程。现在这一阶段，应用的范围更加广泛，“包括入侵检测、漏洞挖掘与分析、欺诈检测、钓鱼攻击检测、SPAM检测等等。”[2]</p>
+<blockquote>
+<p>“数据驱动安全的本质是一种高层次、跨学科的自动化手段，其内涵包括了数据分析、人工智能、大数据、云计算等等。数据分析技术作为一种重要的自动化手段，必然会消灭掉一部分简单、重复工作内容，进一步提高行业从业人员的进入门槛。在未来可以预期的很长一段时间内，数据分析都将是安全工程师和研究人员的有力工作助手。” </p>
+</blockquote>
+<h2 id="安全数据分析能力图"><a href="#安全数据分析能力图" class="headerlink" title="安全数据分析能力图"></a>安全数据分析能力图</h2><p>从数据中提取知识，辅助解决安全问题</p>
+<ul>
+<li>Hacking Skills</li>
+<li>Math &amp; Statistics knowledge</li>
+<li>Substantive Expertise（先验专家经验）</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424222024.png"></p>
+<p>图：安全数据分析能力图</p>
+<h2 id="安全数据分析落地情况"><a href="#安全数据分析落地情况" class="headerlink" title="安全数据分析落地情况"></a>安全数据分析落地情况</h2><p>给予历史经验样本下的拟合学习</p>
+<p>基于知识的对抗</p>
+<h3 id="文本内容监测"><a href="#文本内容监测" class="headerlink" title="文本内容监测"></a>文本内容监测</h3><ul>
+<li>WAF </li>
+<li>WebShell检测</li>
+<li>二进制病毒检测</li>
+<li>网页敏感内容检测</li>
+<li>明码流量检测</li>
+</ul>
+<h3 id="简单统计和假设检验"><a href="#简单统计和假设检验" class="headerlink" title="简单统计和假设检验"></a>简单统计和假设检验</h3><ul>
+<li>暴力破解攻击检测</li>
+<li>异地登录检测</li>
+<li>真实入侵证据发现</li>
+</ul>
+<h3 id="时序建模和时序异常监测算法"><a href="#时序建模和时序异常监测算法" class="headerlink" title="时序建模和时序异常监测算法"></a>时序建模和时序异常监测算法</h3><ul>
+<li>DDoS</li>
+<li>CC</li>
+<li>定点API接口爆破检测</li>
+</ul>
+<h3 id="相似性匹配算法"><a href="#相似性匹配算法" class="headerlink" title="相似性匹配算法"></a>相似性匹配算法</h3><ul>
+<li>缺乏可解释性，目前更多用于辅助专家决策</li>
+</ul>
+<h2 id="安全数据学习概览"><a href="#安全数据学习概览" class="headerlink" title="安全数据学习概览"></a>安全数据学习概览</h2><h3 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h3><p><strong>问题——数据——特征——模型</strong></p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424223510.png"></p>
+<p>图：机器学习方法论</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>安全问题抽象</p>
+<h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h4><p>数据采集</p>
+<h4 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h4><p>特征工程</p>
+<h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><p>模型构建</p>
+<p>效果评估</p>
+<h3 id="ML-Workflow"><a href="#ML-Workflow" class="headerlink" title="ML Workflow"></a>ML Workflow</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424224043.png"></p>
+<p>图：ML Workflow</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><h4 id="更快、更全、更准"><a href="#更快、更全、更准" class="headerlink" title="更快、更全、更准"></a>更快、更全、更准</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424230247.png"></p>
+<p>图：安全数据分析的目标</p>
+<h3 id="安全问题抽象"><a href="#安全问题抽象" class="headerlink" title="安全问题抽象"></a>安全问题抽象</h3><h4 id="分类、聚类、降维"><a href="#分类、聚类、降维" class="headerlink" title="分类、聚类、降维"></a>分类、聚类、降维</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424230655.png"></p>
+<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><p>减少误报率的方法：基于业务来减少误报率。对不同业务场景下，对单一的业务逐个进行进行验证，不断将误报的样本送回进行训练，从而降低误报率</p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p><strong>安全数据来源、安全数据类型</strong></p>
+<p>最优数据量：多到特征明显，少到几乎无噪音干扰</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424231925.png"></p>
+<p>图：数据挖掘</p>
+<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200424233617.png"></p>
+<p>图：数据清洗</p>
+<h3 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h3><h4 id="过滤、封装、嵌入"><a href="#过滤、封装、嵌入" class="headerlink" title="过滤、封装、嵌入"></a>过滤、封装、嵌入</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001133.png"></p>
+<h3 id="模型-1"><a href="#模型-1" class="headerlink" title="模型"></a>模型</h3><h4 id="数据脚本小子"><a href="#数据脚本小子" class="headerlink" title="数据脚本小子"></a>数据脚本小子</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001333.png"></p>
+<h4 id="策略选择"><a href="#策略选择" class="headerlink" title="策略选择"></a>策略选择</h4><p>白名单策略：找到正常行为——建立pattern（模式）——滤出异常</p>
+<ul>
+<li>业务改变时，需要重新进行聚类</li>
+<li>无监督聚类的效果还没有达到有监督的好，容易尝试误报</li>
+</ul>
+<p>黑名单策略：原始日志或异常——分类器——识别威胁</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425001353.png"></p>
+<p>图：常用的两种策略</p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="两个角度"><a href="#两个角度" class="headerlink" title="两个角度"></a>两个角度</h3><p>对抗：对深度学习的逃逸攻击</p>
+<p>防护：HTTP恶意外连流量的机器学习检测</p>
+<h3 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h3><p>对深度学习的逃逸攻击</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003527.png"></p>
+<p>参考：<a href="https://blogs.360.cn/post/evasion-attacks-on-ai-system.html" target="_blank" rel="noopener">https://blogs.360.cn/post/evasion-attacks-on-ai-system.html</a></p>
+<h3 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h3><p>HTTP恶意外连流量的机器学习检测</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003457.png"></p>
+<p>图：论文概要和笔记</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003750.png"></p>
+<p>图：控制协议模板的生成</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425003937.png"></p>
+<p>图：主要的流程示意图</p>
+<p>泛化其实就是用来进行数据降维的一种方式</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200425004008.png"></p>
+<p>图：上图的泛化部分示意</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] 【每周分享】数据驱动安全入门概览，Nepnep战队，<a href="https://www.bilibili.com/video/BV1ye411W7xn" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1ye411W7xn</a></p>
+<p>[2] 数据驱动安全怎么做, <a href="https://c4pr1c3.github.io/cuc-ns/ds-security/how.html" target="_blank" rel="noopener">https://c4pr1c3.github.io/cuc-ns/ds-security/how.html</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据驱动安全入门学习"><span class="toc-number">1.</span> <span class="toc-text">数据驱动安全入门学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据分析能力图"><span class="toc-number">1.1.</span> <span class="toc-text">安全数据分析能力图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据分析落地情况"><span class="toc-number">1.2.</span> <span class="toc-text">安全数据分析落地情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文本内容监测"><span class="toc-number">1.2.1.</span> <span class="toc-text">文本内容监测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单统计和假设检验"><span class="toc-number">1.2.2.</span> <span class="toc-text">简单统计和假设检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时序建模和时序异常监测算法"><span class="toc-number">1.2.3.</span> <span class="toc-text">时序建模和时序异常监测算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相似性匹配算法"><span class="toc-number">1.2.4.</span> <span class="toc-text">相似性匹配算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全数据学习概览"><span class="toc-number">1.3.</span> <span class="toc-text">安全数据学习概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法论"><span class="toc-number">1.3.1.</span> <span class="toc-text">方法论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特征"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模型"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ML-Workflow"><span class="toc-number">1.3.2.</span> <span class="toc-text">ML Workflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目标"><span class="toc-number">1.3.3.</span> <span class="toc-text">目标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#更快、更全、更准"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">更快、更全、更准</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全问题抽象"><span class="toc-number">1.3.4.</span> <span class="toc-text">安全问题抽象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分类、聚类、降维"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">分类、聚类、降维</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据挖掘"><span class="toc-number">1.3.5.</span> <span class="toc-text">数据挖掘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据清洗"><span class="toc-number">1.3.6.</span> <span class="toc-text">数据清洗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征工程"><span class="toc-number">1.3.7.</span> <span class="toc-text">特征工程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤、封装、嵌入"><span class="toc-number">1.3.7.1.</span> <span class="toc-text">过滤、封装、嵌入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型-1"><span class="toc-number">1.3.8.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据脚本小子"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">数据脚本小子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#策略选择"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">策略选择</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">1.4.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两个角度"><span class="toc-number">1.4.1.</span> <span class="toc-text">两个角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例一"><span class="toc-number">1.4.2.</span> <span class="toc-text">案例一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例二"><span class="toc-number">1.4.3.</span> <span class="toc-text">案例二</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.5.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&text=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&is_video=false&description=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据驱动安全概要&body=Check out this article: https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&title=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&name=数据驱动安全概要&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/&t=数据驱动安全概要" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

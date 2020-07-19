@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="【课程学习笔记】信息系统安全与对抗技术课程大纲课程主要内容包括：工程系统理论及系统工程基础、信息安全与对抗知识基础、信息安全检测与攻击技术、信息安全防御与对抗技术、信息安全管理与犯罪立法、信息安全标准与风险评估、信息系统安全工程及能力等。课程有理论、有管理、有工程、有技术，重点引导学生从顶层理解和掌握信息系统与安全对抗问题，系统、全面地学习信息系统与安全对抗领域的核心概念、原理和技术，深入、先进地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术">
+<meta property="og:url" content="https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="【课程学习笔记】信息系统安全与对抗技术课程大纲课程主要内容包括：工程系统理论及系统工程基础、信息安全与对抗知识基础、信息安全检测与攻击技术、信息安全防御与对抗技术、信息安全管理与犯罪立法、信息安全标准与风险评估、信息系统安全工程及能力等。课程有理论、有管理、有工程、有技术，重点引导学生从顶层理解和掌握信息系统与安全对抗问题，系统、全面地学习信息系统与安全对抗领域的核心概念、原理和技术，深入、先进地">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213161948.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213161709.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213190632.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213192229.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213192435.png">
+<meta property="article:published_time" content="2019-12-13T11:34:07.000Z">
+<meta property="article:modified_time" content="2019-12-13T13:37:08.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Note">
+<meta property="article:tag" content="安全综合">
+<meta property="article:tag" content="更新中">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213161948.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/13/articles/2019/12/13/1576243895982.html/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/13/articles/2019/12/13/1576219402195.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&text=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&is_video=false&description=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术&body=Check out this article: https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&name=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&t=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#【课程学习笔记】信息系统安全与对抗技术"><span class="toc-number">1.</span> <span class="toc-text">【课程学习笔记】信息系统安全与对抗技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#课程大纲"><span class="toc-number">1.1.</span> <span class="toc-text">课程大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章—信息安全检测与攻击技术"><span class="toc-number">1.2.</span> <span class="toc-text">第三章—信息安全检测与攻击技术</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        [updating]【Note】MOOC学习笔记——信息系统安全与对抗技术
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-13T11:34:07.000Z" itemprop="datePublished">2019-12-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Note/" rel="tag">Note</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/" rel="tag">安全综合</a>, <a class="tag-link" href="/tags/%E6%9B%B4%E6%96%B0%E4%B8%AD/" rel="tag">更新中</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="【课程学习笔记】信息系统安全与对抗技术"><a href="#【课程学习笔记】信息系统安全与对抗技术" class="headerlink" title="【课程学习笔记】信息系统安全与对抗技术"></a>【课程学习笔记】信息系统安全与对抗技术</h1><h2 id="课程大纲"><a href="#课程大纲" class="headerlink" title="课程大纲"></a>课程大纲</h2><p>课程主要内容包括：工程系统理论及系统工程基础、信息安全与对抗知识基础、信息安全检测与攻击技术、信息安全防御与对抗技术、信息安全管理与犯罪立法、信息安全标准与风险评估、信息系统安全工程及能力等。课程有理论、有管理、有工程、有技术，重点<strong>引导学生从顶层理解和掌握信息系统与安全对抗问题，系统、全面地学习信息系统与安全对抗领域的核心概念、原理和技术，深入、先进地培养学生的系统思维和创新能力</strong>。</p>
+<p>链接：<a href="https://www.icourse163.org/course/BIT-1205992812" target="_blank" rel="noopener">https://www.icourse163.org/course/BIT-1205992812</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line">第一单元</span><br><span class="line">网络空间安全生产力：学习能力及学习方法论</span><br><span class="line"></span><br><span class="line">网络空间安全生产力：网络空间安全生态环境</span><br><span class="line"></span><br><span class="line">网络空间安全生产力：信息安全与对抗学科专业建设</span><br><span class="line"></span><br><span class="line">信息系统知识基础：信息与信息技术的概念</span><br><span class="line"></span><br><span class="line">信息系统知识基础：信息系统及其功能要素</span><br><span class="line"></span><br><span class="line">信息系统知识基础：工程系统理论基础知识</span><br><span class="line"></span><br><span class="line">第一单元测试</span><br><span class="line"></span><br><span class="line">第一单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第二单元</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息系统安全的发展历程</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息系统的不安全因素</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息系统安全的基本概念</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息安全问题主要根源</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：系统安全需求分析</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息安全战略</span><br><span class="line"></span><br><span class="line">信息安全与对抗知识基础：信息系统安全体系框架</span><br><span class="line"></span><br><span class="line">信息安全与对抗理论体系：网络空间安全与对抗理论简介</span><br><span class="line"></span><br><span class="line">第二单元测试</span><br><span class="line"></span><br><span class="line">第二单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第三单元</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：网络攻击行为过程分析</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：网络攻击技术分类</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：黑客及其行为特征</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息安全扫描技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：网络数据获取技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：计算机病毒及蠕虫</span><br><span class="line"></span><br><span class="line">第三单元测试</span><br><span class="line"></span><br><span class="line">第三单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第四单元</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：木马攻击技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息欺骗攻击技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：缓冲区溢出攻击技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：拒绝服务攻击技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：社会工程攻击技术</span><br><span class="line"></span><br><span class="line">信息安全与对抗案例分析：网店刷单兼职骗局对抗</span><br><span class="line"></span><br><span class="line">信息安全与对抗案例分析：美国诱骗中国官员事件</span><br><span class="line"></span><br><span class="line">第四单元测试</span><br><span class="line"></span><br><span class="line">第四单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第五单元</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：防御行为过程分析</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：网络安全事件分类</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：物理实体安全技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：防火墙安全技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：入侵信息检测技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：蜜罐及蜜网技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息安全取证技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：资源访问控制技术</span><br><span class="line"></span><br><span class="line">第五单元测试</span><br><span class="line"></span><br><span class="line">第四单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第六单元</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：身份认证识别技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息数字水印技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息物理隔离技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：虚拟隧道专用网技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息灾难恢复技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：无线网络安全技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：网络安全审计技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：自动响应技术</span><br><span class="line"></span><br><span class="line">信息安全检测与攻击技术：信息加密解密技术</span><br><span class="line"></span><br><span class="line">第六单元测试</span><br><span class="line"></span><br><span class="line">第六单元作业</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">第七单元</span><br><span class="line"></span><br><span class="line">信息安全管理与犯罪立法：信息安全犯罪知识基础</span><br><span class="line"></span><br><span class="line">信息安全管理与犯罪立法：信息安全犯罪相关立法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">信息安全标准与风险评估：信息安全标准规范</span><br><span class="line"></span><br><span class="line">信息安全标准与风险评估：信息安全风险评估</span><br><span class="line"></span><br><span class="line">信息系统安全工程及能力：信息系统安全工程</span><br><span class="line"></span><br><span class="line">信息系统安全工程及能力：系统安全工程能力成熟模型</span><br><span class="line"></span><br><span class="line">信息系统安全工程及能力：信息系统安全等级保护基础</span><br><span class="line"></span><br><span class="line">信息安全与对抗应用：信息安全与对抗大数据分析</span><br><span class="line"></span><br><span class="line">信息安全与对抗应用：日常生活账号密码安全常识</span><br><span class="line"></span><br><span class="line">第七单元测试</span><br><span class="line"></span><br><span class="line">第七单元作业</span><br></pre></td></tr></table></figure>
+
+<h2 id="第三章—信息安全检测与攻击技术"><a href="#第三章—信息安全检测与攻击技术" class="headerlink" title="第三章—信息安全检测与攻击技术"></a>第三章—信息安全检测与攻击技术</h2><ol>
+<li>触网即有痕迹</li>
+<li>攻击步骤<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213161948.png" alt="攻击步骤"></li>
+<li>行为分析<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213161709.png" alt="行为分析"></li>
+<li>攻击分类</li>
+</ol>
+<ul>
+<li>从国家、主机、产品开发看</li>
+<li>基于经验术语分类<ul>
+<li>Cohen攻击列表：时间炸弹、社会工程学、贿赂…</li>
+<li>Icove攻击列表：折磨、流量分析…</li>
+<li>Cheswick和Bellovin的分类：协议失效(DoS)…</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li><p>黑客技术知识需求图<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213190632.png" alt="黑客技术知识需求图"></p>
+</li>
+<li><p>扫描技术的分类<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213192229.png" alt="扫描技术分类"></p>
+</li>
+<li><p>扫描技术的比较<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191213192435.png" alt="扫描技术的比较"></p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#【课程学习笔记】信息系统安全与对抗技术"><span class="toc-number">1.</span> <span class="toc-text">【课程学习笔记】信息系统安全与对抗技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#课程大纲"><span class="toc-number">1.1.</span> <span class="toc-text">课程大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章—信息安全检测与攻击技术"><span class="toc-number">1.2.</span> <span class="toc-text">第三章—信息安全检测与攻击技术</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&text=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&is_video=false&description=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术&body=Check out this article: https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&title=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&name=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/13/articles/2019/12/13/1576236847764.html/&t=[updating]【Note】MOOC学习笔记——信息系统安全与对抗技术" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

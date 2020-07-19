@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="安全威胁情报简述该篇文章内容主要来自漏洞银行的公开课，主讲人是g3on。此篇是自己学习情报工作时，对于安全相关方向的记录，希望与你分享。 安全威胁情报简述什么是安全情报？可以分为：资产情报、事件情报、漏洞情报和威胁情报。 注意，我们常说的威胁情报，并不完全等同于安全情报。 四大类信息[2]  资产情报：主要用于确认企业自身的资产 e.g. 企业自身的数据SOC、SIEM数据日志、告警等。  事件情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全威胁情报简述">
+<meta property="og:url" content="https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="安全威胁情报简述该篇文章内容主要来自漏洞银行的公开课，主讲人是g3on。此篇是自己学习情报工作时，对于安全相关方向的记录，希望与你分享。 安全威胁情报简述什么是安全情报？可以分为：资产情报、事件情报、漏洞情报和威胁情报。 注意，我们常说的威胁情报，并不完全等同于安全情报。 四大类信息[2]  资产情报：主要用于确认企业自身的资产 e.g. 企业自身的数据SOC、SIEM数据日志、告警等。  事件情">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200211091125.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213004136.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213005401.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213103415.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213114312.png">
+<meta property="article:published_time" content="2020-02-13T03:50:57.000Z">
+<meta property="article:modified_time" content="2020-02-15T00:59:50.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="安全综合">
+<meta property="article:tag" content="威胁情报">
+<meta property="article:tag" content="情报">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200211091125.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>安全威胁情报简述</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/17/MongoDB%E5%8A%A0%E5%9B%BA%E7%AD%96%E7%95%A5/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/12/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADCMS%E7%9A%84%E7%B1%BB%E5%9E%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&text=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&is_video=false&description=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=安全威胁情报简述&body=Check out this article: https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&name=安全威胁情报简述&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&t=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安全威胁情报简述"><span class="toc-number">1.</span> <span class="toc-text">安全威胁情报简述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁情报简述-1"><span class="toc-number">1.1.</span> <span class="toc-text">安全威胁情报简述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是安全情报？"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是安全情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是攻击源画像？"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是攻击源画像？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是安全威胁情报？"><span class="toc-number">1.1.3.</span> <span class="toc-text">什么是安全威胁情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见误区"><span class="toc-number">1.1.4.</span> <span class="toc-text">常见误区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁情报的现今发展"><span class="toc-number">1.2.</span> <span class="toc-text">安全威胁情报的现今发展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#情报体系"><span class="toc-number">1.2.1.</span> <span class="toc-text">情报体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么企业需要威胁情报？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么企业需要威胁情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么从白帽子黑客转为情报员？"><span class="toc-number">1.2.3.</span> <span class="toc-text">怎么从白帽子黑客转为情报员？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#企业安全建设"><span class="toc-number">1.3.</span> <span class="toc-text">企业安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#情报收集常用方法"><span class="toc-number">1.3.1.</span> <span class="toc-text">情报收集常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#情报分类及画像"><span class="toc-number">1.3.2.</span> <span class="toc-text">情报分类及画像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同情报类型在企业的应用"><span class="toc-number">1.3.3.</span> <span class="toc-text">不同情报类型在企业的应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情报研判"><span class="toc-number">2.</span> <span class="toc-text">情报研判</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#情报收集平台"><span class="toc-number">2.1.</span> <span class="toc-text">情报收集平台</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RedQueen"><span class="toc-number">2.1.1.</span> <span class="toc-text">RedQueen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#永安在线"><span class="toc-number">2.1.2.</span> <span class="toc-text">永安在线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TreatBook"><span class="toc-number">2.1.3.</span> <span class="toc-text">TreatBook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何收集？"><span class="toc-number">2.1.4.</span> <span class="toc-text">如何收集？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互联网资源搜索"><span class="toc-number">2.2.</span> <span class="toc-text">互联网资源搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#身份类"><span class="toc-number">2.2.1.</span> <span class="toc-text">身份类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手机号"><span class="toc-number">2.2.2.</span> <span class="toc-text">手机号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#金融类"><span class="toc-number">2.2.3.</span> <span class="toc-text">金融类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图像类"><span class="toc-number">2.2.4.</span> <span class="toc-text">图像类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物品类"><span class="toc-number">2.2.5.</span> <span class="toc-text">物品类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索类"><span class="toc-number">2.2.6.</span> <span class="toc-text">搜索类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他类"><span class="toc-number">2.2.7.</span> <span class="toc-text">其他类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#情报研判详解"><span class="toc-number">2.2.8.</span> <span class="toc-text">情报研判详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">2.3.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        安全威胁情报简述
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-02-13T03:50:57.000Z" itemprop="datePublished">2020-02-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" rel="tag">威胁情报</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/" rel="tag">安全综合</a>, <a class="tag-link" href="/tags/%E6%83%85%E6%8A%A5/" rel="tag">情报</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="安全威胁情报简述"><a href="#安全威胁情报简述" class="headerlink" title="安全威胁情报简述"></a>安全威胁情报简述</h1><p>该篇文章内容主要来自<a href="https://www.bugbank.cn/" target="_blank" rel="noopener">漏洞银行</a>的公开课，主讲人是g3on。此篇是自己学习情报工作时，对于安全相关方向的记录，希望与你分享。</p>
+<h2 id="安全威胁情报简述-1"><a href="#安全威胁情报简述-1" class="headerlink" title="安全威胁情报简述"></a>安全威胁情报简述</h2><h3 id="什么是安全情报？"><a href="#什么是安全情报？" class="headerlink" title="什么是安全情报？"></a>什么是安全情报？</h3><p>可以分为：资产情报、事件情报、漏洞情报和威胁情报。</p>
+<p>注意，我们常说的威胁情报，并不完全等同于安全情报。</p>
+<p>四大类信息[2]</p>
+<ul>
+<li><p>资产情报：主要用于确认企业自身的资产</p>
+<p>e.g. 企业自身的数据SOC、SIEM数据日志、告警等。</p>
+</li>
+<li><p>事件情报：对于已经发生的安全事件的报道</p>
+</li>
+<li><p>漏洞情报：软硬件各种已知或未知的漏洞的情报</p>
+<p>e.g. cve, nday</p>
+</li>
+<li><p>威胁情报：</p>
+<p>OSINT（Open source intelligence ，公开资源情报）; 未公开数据（黑产群、社区等）。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>资产情报如何搜集？<ul>
+<li>主要来自于企业的SOC( Security Operation Center), SIEM(Security Information and Event Management)数据</li>
+<li>网络日志等</li>
+<li>告警信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么是攻击源画像？"><a href="#什么是攻击源画像？" class="headerlink" title="什么是攻击源画像？"></a>什么是攻击源画像？</h3><p>画像：根据用户社会属性、生活习惯和消费行为等信息而抽象出的一个<strong>标签化</strong>的用户模型。</p>
+<p>攻击源画像：描述攻击源的基础设施、技术风格、惯用手法等标识。</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200211091125.png"></p>
+<h3 id="什么是安全威胁情报？"><a href="#什么是安全威胁情报？" class="headerlink" title="什么是安全威胁情报？"></a>什么是安全威胁情报？</h3><p>SANS：针对安全威胁、威胁者、利用、恶意软件、漏洞和危害指标、所收集的用于评估的应用<strong>数据集</strong>。  </p>
+<p>iSight：网络威胁情报是关于已收集、分析、分发的，<strong>针对攻击者和其动机</strong>的目的手段，用于帮助所有安全级别的，和业务员工的，用于<strong>保护企业核心资产</strong>的知识。</p>
+<p>总的来说：</p>
+<p>威胁数据——&gt; SIEM（安全信息与事件管理）——&gt;安全保障</p>
+<h3 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h3><p>1.漏洞情报就是威胁情报。威胁企业的，漏洞只是一部分。漏洞知己，威胁知彼。</p>
+<p>2.威胁信息=威胁情报。 威胁情报，不仅是收集，还需要分析。情报是已经处理和分析的。</p>
+<p>3.威胁情报就是信息收集。信息收集只是威胁情报的第一部分。情报是对企业有意义的。</p>
+<h2 id="安全威胁情报的现今发展"><a href="#安全威胁情报的现今发展" class="headerlink" title="安全威胁情报的现今发展"></a>安全威胁情报的现今发展</h2><h3 id="情报体系"><a href="#情报体系" class="headerlink" title="情报体系"></a>情报体系</h3><p>行业标准：CybOX, STIX和TAXII等[3]，《网络安全威胁信息格式规范》。</p>
+<p>常规做法：渗透黑客、诈骗犯社区、漏洞平台、漏洞库、安全社区、针对性漏洞、代码研究</p>
+<p>国内厂商：微步在线、360威胁情报中心、X-Force Exchange（IBM的一个威胁情报平台，<a href="https://exchange.xforce.ibmcloud.com/" target="_blank" rel="noopener">链接</a>）、<a href="https://nosec.org/home/index" target="_blank" rel="noopener">NOSEC大数据平台</a>、<a href="https://polyswarm.io/zh-CN/" target="_blank" rel="noopener">PolySwarm</a>。</p>
+<p>监控黑灰产常用的威胁猎人。<a href="https://github.com/threathunterX/nebula" target="_blank" rel="noopener">“星云”业务风控系统</a>。TODO</p>
+<p>利用厂商的这些产品，可以更快更方便的收集整理信息，但这只是一小部分。</p>
+<h3 id="为什么企业需要威胁情报？"><a href="#为什么企业需要威胁情报？" class="headerlink" title="为什么企业需要威胁情报？"></a>为什么企业需要威胁情报？</h3><p>~提供了培养公司整体网络<strong>风险感知</strong>的指南</p>
+<p>~驱动公司<strong>安全建设</strong>方向和<strong>降低灾损</strong>危害</p>
+<p>~不再是料敌先机和被动防御，更能<strong>防守反击</strong></p>
+<h3 id="怎么从白帽子黑客转为情报员？"><a href="#怎么从白帽子黑客转为情报员？" class="headerlink" title="怎么从白帽子黑客转为情报员？"></a>怎么从白帽子黑客转为情报员？</h3><ul>
+<li><p>基本保密意识和反社工能力，善用搜索引擎和社工<strong>收集信息</strong>（最常用的）</p>
+</li>
+<li><p>热点制作与钓鱼，渗透入侵等技术手段<strong>获取敏感信息</strong></p>
+</li>
+<li><p>从海量数据中筛选分析真假数据（核心是数据分析0），生成画像<strong>溯源威胁源</strong>。使用工具收集整理和分析</p>
+</li>
+<li><p>战术开发，战略规划。（产出入侵方案和反入侵方案）</p>
+</li>
+</ul>
+<h2 id="企业安全建设"><a href="#企业安全建设" class="headerlink" title="企业安全建设"></a>企业安全建设</h2><h3 id="情报收集常用方法"><a href="#情报收集常用方法" class="headerlink" title="情报收集常用方法"></a>情报收集常用方法</h3><p>第一步，进行威胁情报信息收集。</p>
+<ul>
+<li><p>OSINT：聚合分析，情报圈，威胁情报平台，共享威胁情报[1]</p>
+<ul>
+<li>扩：聚合分析是什么——对有关数据进行内容挑选、分析、归类，对一个数据集求最大、最小、和、平均值等指标的聚合。最后能够产生标量值的数据转换过程。<br>简单地来说，就是聚集大量数据，分析和处理后，产生一个可用的结论。</li>
+</ul>
+</li>
+<li><p>未公开情报：暗网情报、黑客黑产社交社区(Telegram中存在大量的交流频道，<a href="https://www.hottg.com/" target="_blank" rel="noopener">频道搜索</a>)</p>
+</li>
+<li><p>基础情报：SIEM(Security Information and Event Management，比较有名的软件比如<a href="https://www.mcafee.com/enterprise/zh-cn/products/siem-products.html" target="_blank" rel="noopener">McFee的SIEM</a>)、FC-ISAC、日志管理器等威胁数据</p>
+</li>
+</ul>
+<h3 id="情报分类及画像"><a href="#情报分类及画像" class="headerlink" title="情报分类及画像"></a>情报分类及画像</h3><p>收集的情报会有很多，但我们需要对情报进行分类，对其重要性进行评估。也是就是对情报进行级别划分。<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213004136.png"></p>
+<ul>
+<li><p>战术级情报（标准的安全知识定义）——运营级情报（标签化的画像、场景的运用）——战略级情报（国家层面，高效的知识传递手段）  </p>
+</li>
+<li><p>威胁情报是为了解决：检测误漏、防护滞后和相应迟缓等问题。</p>
+</li>
+<li><p>威胁情报是一种<strong>知识和能力</strong>，目的也很明确，是<strong>为了企业进行更好的安全决策</strong>。</p>
+</li>
+</ul>
+<h3 id="不同情报类型在企业的应用"><a href="#不同情报类型在企业的应用" class="headerlink" title="不同情报类型在企业的应用"></a>不同情报类型在企业的应用</h3><ul>
+<li>策略情报</li>
+<li>行动情报</li>
+<li>战略情报</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213005401.png"></p>
+<hr>
+<h1 id="情报研判"><a href="#情报研判" class="headerlink" title="情报研判"></a>情报研判</h1><p>情报研判属于公安或者网安专门用于经济犯罪的情报侦缉手段。</p>
+<h2 id="情报收集平台"><a href="#情报收集平台" class="headerlink" title="情报收集平台"></a>情报收集平台</h2><p>举例，不同的情报收集平台。</p>
+<h3 id="RedQueen"><a href="#RedQueen" class="headerlink" title="RedQueen"></a>RedQueen</h3><ul>
+<li><a href="https://redqueen.tj-un.com/IntelHome.html;JSESSIONID=6d3fdffb-b493-4b3a-a993-3f48e8e30ce7" target="_blank" rel="noopener">链接</a></li>
+<li>安全情报，并不及时</li>
+</ul>
+<h3 id="永安在线"><a href="#永安在线" class="headerlink" title="永安在线"></a>永安在线</h3><ul>
+<li><p>原威胁猎人。提供黑产对抗与反欺诈服务。<a href="https://www.yazx.com/" target="_blank" rel="noopener">链接</a>。</p>
+</li>
+<li><p>产品本身不免费，但提供了一个开源的风控系统<a href="https://github.com/threathunterX/nebula" target="_blank" rel="noopener">“星云”</a></p>
+</li>
+</ul>
+<p>[TODO，看看黑灰产报告，<a href="https://zhuanlan.zhihu.com/p/34087704]" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/34087704]</a></p>
+<h3 id="TreatBook"><a href="#TreatBook" class="headerlink" title="TreatBook"></a>TreatBook</h3><ul>
+<li>微步在线<a href="https://m.threatbook.cn/" target="_blank" rel="noopener">情报社区</a></li>
+<li>提供一个域名监控功能，当一个域名发生变化的时候，平台会把监控信息发送到指定邮箱。在企业中，可以监控自身的域名资产，排查异样的情况。</li>
+<li>可视化 功能，可以看到相关域名等信息。</li>
+</ul>
+<h3 id="如何收集？"><a href="#如何收集？" class="headerlink" title="如何收集？"></a>如何收集？</h3><ul>
+<li><p>拿到数据后，从一个常见的指标进行分析：</p>
+<ul>
+<li>网络。IP，URL</li>
+<li>主机。文件哈希，动态链接库，注册表</li>
+<li>邮件</li>
+</ul>
+</li>
+<li><p>使用开源的威胁情报平台 [TODO]</p>
+</li>
+<li><p>自己搭建蜜罐、蜜网，收集攻击数据（IP，Hash，URL等）</p>
+</li>
+<li><p>对自己的已有资产进行分析建模</p>
+</li>
+</ul>
+<h2 id="互联网资源搜索"><a href="#互联网资源搜索" class="headerlink" title="互联网资源搜索"></a>互联网资源搜索</h2><h3 id="身份类"><a href="#身份类" class="headerlink" title="身份类"></a>身份类</h3><ul>
+<li>身份类信息概述<ul>
+<li>国家信息体系建设介绍</li>
+<li>政府开放信息资源介绍</li>
+</ul>
+</li>
+<li>政府开放信息查询</li>
+<li>信用信息查询</li>
+<li>法律裁判及处罚查询</li>
+<li>职业身份查询</li>
+<li>其他</li>
+</ul>
+<h3 id="手机号"><a href="#手机号" class="headerlink" title="手机号"></a>手机号</h3><ul>
+<li><p>号码归属地查询</p>
+</li>
+<li><p>持机人身份查询</p>
+</li>
+<li><p>位置查询</p>
+</li>
+<li><p>IMEI查询</p>
+</li>
+<li><p>IMSI查询</p>
+<ul>
+<li>超雪IMSI</li>
+<li>the-x</li>
+</ul>
+</li>
+<li><p>ICCID查询</p>
+<ul>
+<li>ICCID查询</li>
+<li>果粉查询</li>
+<li>卡神查询</li>
+<li>找果网</li>
+</ul>
+</li>
+<li><p>MAC查询</p>
+</li>
+<li><p>行踪查询</p>
+</li>
+</ul>
+<h3 id="金融类"><a href="#金融类" class="headerlink" title="金融类"></a>金融类</h3><p>TODO</p>
+<h3 id="图像类"><a href="#图像类" class="headerlink" title="图像类"></a>图像类</h3><ul>
+<li><p>图像识别</p>
+<ul>
+<li>以图搜图<ul>
+<li>Google 图片</li>
+<li>百度识图</li>
+<li>搜狗图片</li>
+<li>360识图</li>
+<li>汇图网</li>
+<li>淘宝网</li>
+<li>Saucenao</li>
+<li>Tineye</li>
+</ul>
+</li>
+<li>微博图片来源插件</li>
+<li>拍照识别<ul>
+<li>花伴侣</li>
+<li>形色识花</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>人脸识别对比</p>
+</li>
+<li><p>图片位置信息查看</p>
+</li>
+<li><p>图片及网页内容检测</p>
+</li>
+<li><p>超高清图像拍照</p>
+</li>
+<li><p>在线视频查看</p>
+</li>
+<li><p>模糊图像处理</p>
+</li>
+<li><p>视频编辑</p>
+</li>
+</ul>
+<h3 id="物品类"><a href="#物品类" class="headerlink" title="物品类"></a>物品类</h3><h3 id="搜索类"><a href="#搜索类" class="headerlink" title="搜索类"></a>搜索类</h3><h3 id="其他类"><a href="#其他类" class="headerlink" title="其他类"></a>其他类</h3><h3 id="情报研判详解"><a href="#情报研判详解" class="headerlink" title="情报研判详解"></a>情报研判详解</h3><p>[TODO]</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213103415.png" style="zoom:50%;" />
+
+<p>情报带来更多的是<strong>攻防思路的变化</strong>。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><p>如何学习情报分析</p>
+<p>推荐的书籍：</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200213114312.png"></p>
+</li>
+</ul>
+<ul>
+<li><p>安全威胁情报是和数字取证相关联的，数字取证获取的一部分资料，就是安全威胁情报的一部分。</p>
+</li>
+<li><p>黑客和情报员的身份是可以同时存在的。</p>
+</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1] 威胁情报的私有化生产和级联：威胁狩猎及情报共享(<a href="https://www.freebuf.com/articles/es/222359.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/es/222359.html</a>)  TODO</p>
+<p>[2] 威胁情报的层次分析(<a href="https://ti.360.net/blog/articles/level-of-threat-intelligence/" target="_blank" rel="noopener">https://ti.360.net/blog/articles/level-of-threat-intelligence/</a>)</p>
+<p>[3] About CybOX(Archive)(<a href="https://cyboxproject.github.io/about/" target="_blank" rel="noopener">https://cyboxproject.github.io/about/</a>)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安全威胁情报简述"><span class="toc-number">1.</span> <span class="toc-text">安全威胁情报简述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁情报简述-1"><span class="toc-number">1.1.</span> <span class="toc-text">安全威胁情报简述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是安全情报？"><span class="toc-number">1.1.1.</span> <span class="toc-text">什么是安全情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是攻击源画像？"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是攻击源画像？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是安全威胁情报？"><span class="toc-number">1.1.3.</span> <span class="toc-text">什么是安全威胁情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见误区"><span class="toc-number">1.1.4.</span> <span class="toc-text">常见误区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁情报的现今发展"><span class="toc-number">1.2.</span> <span class="toc-text">安全威胁情报的现今发展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#情报体系"><span class="toc-number">1.2.1.</span> <span class="toc-text">情报体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么企业需要威胁情报？"><span class="toc-number">1.2.2.</span> <span class="toc-text">为什么企业需要威胁情报？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么从白帽子黑客转为情报员？"><span class="toc-number">1.2.3.</span> <span class="toc-text">怎么从白帽子黑客转为情报员？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#企业安全建设"><span class="toc-number">1.3.</span> <span class="toc-text">企业安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#情报收集常用方法"><span class="toc-number">1.3.1.</span> <span class="toc-text">情报收集常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#情报分类及画像"><span class="toc-number">1.3.2.</span> <span class="toc-text">情报分类及画像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同情报类型在企业的应用"><span class="toc-number">1.3.3.</span> <span class="toc-text">不同情报类型在企业的应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情报研判"><span class="toc-number">2.</span> <span class="toc-text">情报研判</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#情报收集平台"><span class="toc-number">2.1.</span> <span class="toc-text">情报收集平台</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RedQueen"><span class="toc-number">2.1.1.</span> <span class="toc-text">RedQueen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#永安在线"><span class="toc-number">2.1.2.</span> <span class="toc-text">永安在线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TreatBook"><span class="toc-number">2.1.3.</span> <span class="toc-text">TreatBook</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何收集？"><span class="toc-number">2.1.4.</span> <span class="toc-text">如何收集？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#互联网资源搜索"><span class="toc-number">2.2.</span> <span class="toc-text">互联网资源搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#身份类"><span class="toc-number">2.2.1.</span> <span class="toc-text">身份类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手机号"><span class="toc-number">2.2.2.</span> <span class="toc-text">手机号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#金融类"><span class="toc-number">2.2.3.</span> <span class="toc-text">金融类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图像类"><span class="toc-number">2.2.4.</span> <span class="toc-text">图像类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物品类"><span class="toc-number">2.2.5.</span> <span class="toc-text">物品类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索类"><span class="toc-number">2.2.6.</span> <span class="toc-text">搜索类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他类"><span class="toc-number">2.2.7.</span> <span class="toc-text">其他类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#情报研判详解"><span class="toc-number">2.2.8.</span> <span class="toc-text">情报研判详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">2.3.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">2.4.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&text=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&is_video=false&description=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=安全威胁情报简述&body=Check out this article: https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&title=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&name=安全威胁情报简述&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/02/13/%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%AE%80%E8%BF%B0/&t=安全威胁情报简述" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

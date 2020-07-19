@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="移动恶意应用分析图：背景 恶意代码分析背景概述背景1.全面的移动威胁2.移动生态环节面临的安全威胁表面：黑灰产里面：国家队3.攻击手段的持续进化4.恶意色情软件增长趋势一般不用支付宝、微信，使用第三方5.地下社工库  完成原始数据积累 完善的黑产分工协作体系  6.持续扩大的威胁面 7.移动威胁从个人向组织迁移 基本概念1.和产业链高度依存2.生物学悖论破坏性越大，传播性越差3.病毒的生命周期一般">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动恶意代码分析及威胁情报">
+<meta property="og:url" content="https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="移动恶意应用分析图：背景 恶意代码分析背景概述背景1.全面的移动威胁2.移动生态环节面临的安全威胁表面：黑灰产里面：国家队3.攻击手段的持续进化4.恶意色情软件增长趋势一般不用支付宝、微信，使用第三方5.地下社工库  完成原始数据积累 完善的黑产分工协作体系  6.持续扩大的威胁面 7.移动威胁从个人向组织迁移 基本概念1.和产业链高度依存2.生物学悖论破坏性越大，传播性越差3.病毒的生命周期一般">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115220552.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115095230.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115134913.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115134943.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115200355.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115212401.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115141615.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115145755.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115152552.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153302.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153450.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153539.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154005.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154201.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153822.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154800.png">
+<meta property="article:published_time" content="2020-01-15T15:45:58.000Z">
+<meta property="article:modified_time" content="2020-01-15T15:46:37.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="移动安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115220552.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>移动恶意代码分析及威胁情报</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/17/%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E9%80%86%E5%90%91/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/01/13/articles/2020/01/13/1578910728428.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&text=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&is_video=false&description=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=移动恶意代码分析及威胁情报&body=Check out this article: https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&name=移动恶意代码分析及威胁情报&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&t=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#移动恶意应用分析"><span class="toc-number">1.</span> <span class="toc-text">移动恶意应用分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析背景概述"><span class="toc-number">1.1.</span> <span class="toc-text">恶意代码分析背景概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-number">1.1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.1.2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关术语"><span class="toc-number">1.1.3.</span> <span class="toc-text">相关术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命名体系"><span class="toc-number">1.1.4.</span> <span class="toc-text">命名体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#趋势"><span class="toc-number">1.1.5.</span> <span class="toc-text">趋势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安卓病毒分析"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安卓病毒分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APK格式介绍"><span class="toc-number">1.2.1.</span> <span class="toc-text">APK格式介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恶意行为汇总"><span class="toc-number">1.2.2.</span> <span class="toc-text">恶意行为汇总</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">1.2.3.</span> <span class="toc-text">静态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工具"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态分析"><span class="toc-number">1.2.4.</span> <span class="toc-text">动态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工具-技术"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">工具&#x2F;技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#技术"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析系统（沙盒系统）"><span class="toc-number">1.2.5.</span> <span class="toc-text">分析系统（沙盒系统）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工分析实践知识"><span class="toc-number">1.2.6.</span> <span class="toc-text">人工分析实践知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模拟器"><span class="toc-number">1.2.6.1.</span> <span class="toc-text">模拟器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据包"><span class="toc-number">1.2.6.2.</span> <span class="toc-text">数据包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工具am"><span class="toc-number">1.2.6.3.</span> <span class="toc-text">工具am</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IDA动静态"><span class="toc-number">1.2.6.4.</span> <span class="toc-text">IDA动静态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在线系统"><span class="toc-number">1.2.6.5.</span> <span class="toc-text">在线系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-反病毒引擎"><span class="toc-number">1.3.</span> <span class="toc-text">2. 反病毒引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引擎结构"><span class="toc-number">1.3.1.</span> <span class="toc-text">引擎结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征库"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">1.3.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地检测技术"><span class="toc-number">1.3.4.</span> <span class="toc-text">本地检测技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基础"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#符号"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">符号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">动态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#体系建设"><span class="toc-number">1.3.5.</span> <span class="toc-text">体系建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL引擎本地检测逻辑"><span class="toc-number">1.3.6.</span> <span class="toc-text">AVL引擎本地检测逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#大数据"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">大数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-移动威胁情报"><span class="toc-number">1.4.</span> <span class="toc-text">3. 移动威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报的定义"><span class="toc-number">1.4.1.</span> <span class="toc-text">威胁情报的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报的体系"><span class="toc-number">1.4.2.</span> <span class="toc-text">威胁情报的体系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#面向威胁情报的大数据体系"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">面向威胁情报的大数据体系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动化与人工结合的分析运行体系（情报驱动安全）"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">自动化与人工结合的分析运行体系（情报驱动安全）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#威胁情报的困难金字塔"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">威胁情报的困难金字塔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-恶意代码高级对抗"><span class="toc-number">1.5.</span> <span class="toc-text">4. 恶意代码高级对抗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对抗分析工具（不让反编译等）"><span class="toc-number">1.5.1.</span> <span class="toc-text">对抗分析工具（不让反编译等）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对抗用户感知（不让用户知道）"><span class="toc-number">1.5.2.</span> <span class="toc-text">对抗用户感知（不让用户知道）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反追踪（不让自己被追踪）"><span class="toc-number">1.5.3.</span> <span class="toc-text">反追踪（不让自己被追踪）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境对抗"><span class="toc-number">1.5.4.</span> <span class="toc-text">环境对抗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#银弹"><span class="toc-number">1.5.5.</span> <span class="toc-text">银弹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application层"><span class="toc-number">1.5.6.</span> <span class="toc-text">Application层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework层"><span class="toc-number">1.5.7.</span> <span class="toc-text">Framework层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernel层"><span class="toc-number">1.5.8.</span> <span class="toc-text">Kernel层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例：RottlenSys"><span class="toc-number">1.5.9.</span> <span class="toc-text">案例：RottlenSys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-威胁情报与溯源"><span class="toc-number">1.6.</span> <span class="toc-text">5. 威胁情报与溯源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击工具持续演变"><span class="toc-number">1.6.1.</span> <span class="toc-text">攻击工具持续演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动终端已经成为APT的新战场"><span class="toc-number">1.6.2.</span> <span class="toc-text">移动终端已经成为APT的新战场</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本规律"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">基本规律</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三个特点"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">三个特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移动APT攻击"><span class="toc-number">1.6.2.3.</span> <span class="toc-text">移动APT攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#攻击植入方式"><span class="toc-number">1.6.2.4.</span> <span class="toc-text">攻击植入方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例：乌克兰"><span class="toc-number">1.6.2.5.</span> <span class="toc-text">案例：乌克兰</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析攻击思路与流程"><span class="toc-number">1.6.3.</span> <span class="toc-text">分析攻击思路与流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Android-高价值样本发现"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">Android 高价值样本发现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Android证书分析"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">Android证书分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同源性检测"><span class="toc-number">1.6.4.</span> <span class="toc-text">同源性检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#家族同源性检测"><span class="toc-number">1.6.4.1.</span> <span class="toc-text">家族同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源同源性检测"><span class="toc-number">1.6.4.2.</span> <span class="toc-text">资源同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件"><span class="toc-number">1.6.4.3.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码同源性检测"><span class="toc-number">1.6.4.4.</span> <span class="toc-text">代码同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传播同源性检测"><span class="toc-number">1.6.4.5.</span> <span class="toc-text">传播同源性检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报平台"><span class="toc-number">1.6.5.</span> <span class="toc-text">威胁情报平台</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#VirusTotal"><span class="toc-number">1.6.5.1.</span> <span class="toc-text">VirusTotal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安天insight-（安天内部）"><span class="toc-number">1.6.5.2.</span> <span class="toc-text">安天insight （安天内部）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微步在线"><span class="toc-number">1.6.5.3.</span> <span class="toc-text">微步在线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#360威胁情报平台"><span class="toc-number">1.6.5.4.</span> <span class="toc-text">360威胁情报平台</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#画像分析"><span class="toc-number">1.6.6.</span> <span class="toc-text">画像分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#装机列表"><span class="toc-number">1.6.6.1.</span> <span class="toc-text">装机列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP轨迹"><span class="toc-number">1.6.6.2.</span> <span class="toc-text">IP轨迹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CC信息分析"><span class="toc-number">1.6.7.</span> <span class="toc-text">CC信息分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#社交网络等"><span class="toc-number">1.6.8.</span> <span class="toc-text">社交网络等</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#社交网络："><span class="toc-number">1.6.8.1.</span> <span class="toc-text">社交网络：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索引擎"><span class="toc-number">1.6.8.2.</span> <span class="toc-text">搜索引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网站历史记录"><span class="toc-number">1.6.8.3.</span> <span class="toc-text">网站历史记录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯分析"><span class="toc-number">1.6.9.</span> <span class="toc-text">回溯分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#难点"><span class="toc-number">1.6.9.1.</span> <span class="toc-text">难点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#国际网络军火库"><span class="toc-number">1.6.10.</span> <span class="toc-text">国际网络军火库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-美国"><span class="toc-number">1.6.11.</span> <span class="toc-text">[1]美国</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-俄国"><span class="toc-number">1.6.12.</span> <span class="toc-text">[2]俄国</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#综合"><span class="toc-number">1.6.13.</span> <span class="toc-text">综合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知识库"><span class="toc-number">1.6.14.</span> <span class="toc-text">知识库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从威胁情报看移动威胁分析"><span class="toc-number">1.6.14.1.</span> <span class="toc-text">从威胁情报看移动威胁分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主动发现"><span class="toc-number">1.6.15.</span> <span class="toc-text">主动发现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-机器学习应用"><span class="toc-number">1.7.</span> <span class="toc-text">6. 机器学习应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件相似性检测"><span class="toc-number">1.7.1.</span> <span class="toc-text">文件相似性检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚类分析"><span class="toc-number">1.7.2.</span> <span class="toc-text">聚类分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机性识别"><span class="toc-number">1.7.3.</span> <span class="toc-text">随机性识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#色情应用识别"><span class="toc-number">1.7.4.</span> <span class="toc-text">色情应用识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.7.5.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-基于样本运营的互联网风控（风控方面）"><span class="toc-number">1.8.</span> <span class="toc-text">7. 基于样本运营的互联网风控（风控方面）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#黑灰产现状"><span class="toc-number">1.8.1.</span> <span class="toc-text">黑灰产现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#领域"><span class="toc-number">1.8.2.</span> <span class="toc-text">领域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具-1"><span class="toc-number">1.8.3.</span> <span class="toc-text">工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#黑化-行话"><span class="toc-number">1.8.3.1.</span> <span class="toc-text">黑化&#x2F;行话</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL的识别思路"><span class="toc-number">1.8.4.</span> <span class="toc-text">AVL的识别思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#未来工作"><span class="toc-number">1.8.5.</span> <span class="toc-text">未来工作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-现状"><span class="toc-number">1.9.</span> <span class="toc-text">8. 现状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#海量设备应对"><span class="toc-number">1.9.1.</span> <span class="toc-text">海量设备应对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#云与本地查杀"><span class="toc-number">1.9.2.</span> <span class="toc-text">云与本地查杀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#个体的价值"><span class="toc-number">1.9.3.</span> <span class="toc-text">个体的价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评价体系不一致"><span class="toc-number">1.9.4.</span> <span class="toc-text">评价体系不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#木桶效应"><span class="toc-number">1.9.5.</span> <span class="toc-text">木桶效应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击过程专业化"><span class="toc-number">1.9.6.</span> <span class="toc-text">攻击过程专业化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻受不对称"><span class="toc-number">1.9.7.</span> <span class="toc-text">攻受不对称</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.10.</span> <span class="toc-text">Reference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#学习资源"><span class="toc-number">1.10.1.</span> <span class="toc-text">学习资源</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        移动恶意代码分析及威胁情报
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-15T15:45:58.000Z" itemprop="datePublished">2020-01-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" rel="tag">移动安全</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="移动恶意应用分析"><a href="#移动恶意应用分析" class="headerlink" title="移动恶意应用分析"></a>移动恶意应用分析</h1><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115220552.png"><br>图：背景</p>
+<h2 id="恶意代码分析背景概述"><a href="#恶意代码分析背景概述" class="headerlink" title="恶意代码分析背景概述"></a>恶意代码分析背景概述</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>1.全面的移动威胁<br>2.移动生态环节面临的安全威胁<br>表面：黑灰产<br>里面：国家队<br>3.攻击手段的持续进化<br>4.恶意色情软件增长趋势<br>一般不用支付宝、微信，使用第三方<br>5.地下社工库</p>
+<ul>
+<li>完成原始数据积累</li>
+<li>完善的黑产分工协作体系</li>
+</ul>
+<p>6.持续扩大的威胁面<br><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115095230.png" style="zoom: 25%;" /></p>
+<p>7.移动威胁从个人向组织迁移</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>1.和产业链高度依存<br>2.生物学悖论<br>破坏性越大，传播性越差<br>3.病毒的生命周期<br>一般是1～2个月不到<br>4.国家意志</p>
+<h3 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h3><ul>
+<li>木马</li>
+<li>蠕虫<ul>
+<li>蓝牙蠕虫</li>
+</ul>
+</li>
+<li>后门</li>
+<li>工具</li>
+</ul>
+<h3 id="命名体系"><a href="#命名体系" class="headerlink" title="命名体系"></a>命名体系</h3><p>一般格式为：&lt;病毒前缀&gt;.&lt;病毒名&gt;.&lt;病毒后缀&gt;<br>e.g. Worm.Sasser.b</p>
+<h3 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h3><ul>
+<li>恶意代码规模保持稳定增长</li>
+<li>恶意代码高度产业化<ul>
+<li>东南亚 </li>
+</ul>
+</li>
+<li>移动端成为APT新战场</li>
+</ul>
+<h2 id="1-安卓病毒分析"><a href="#1-安卓病毒分析" class="headerlink" title="1. 安卓病毒分析"></a>1. 安卓病毒分析</h2><h3 id="APK格式介绍"><a href="#APK格式介绍" class="headerlink" title="APK格式介绍"></a>APK格式介绍</h3><p>参考前两天</p>
+<h3 id="恶意行为汇总"><a href="#恶意行为汇总" class="headerlink" title="恶意行为汇总"></a>恶意行为汇总</h3><h3 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h3><h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><ul>
+<li>Smaliviewer</li>
+<li>APKTool</li>
+<li>Dex2jar</li>
+<li>JEB</li>
+<li>IDA</li>
+<li>AndroidKiller</li>
+<li>AndroidGuard # 偏学术性质</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p>可参考绿盟的<a href="http://blog.nsfocus.net/tag/%E6%81%B6%E6%84%8F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90%E6%89%8B%E5%86%8C/" target="_blank" rel="noopener">手册</a></p>
+<ul>
+<li><p>快读定位法</p>
+<ul>
+<li>敏感API搜索</li>
+</ul>
+</li>
+<li><p>对比法</p>
+</li>
+<li><p>代码流程法</p>
+<ul>
+<li>从Mainfest开始一步步看 </li>
+</ul>
+</li>
+<li><p>遍历法</p>
+<ul>
+<li>JEB有重命名功能，一个个功能死磕，一般针对混淆非常严重的代码 </li>
+</ul>
+</li>
+</ul>
+<h3 id="动态分析"><a href="#动态分析" class="headerlink" title="动态分析"></a>动态分析</h3><h4 id="工具-技术"><a href="#工具-技术" class="headerlink" title="工具/技术"></a>工具/技术</h4><ul>
+<li>Andebug</li>
+<li>IDA</li>
+<li>Frida/XPosed/..</li>
+<li>Wireshark/tcpdump/..</li>
+</ul>
+<h4 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h4><ul>
+<li>Smali Hook</li>
+<li>Xposed Hook<ul>
+<li>Tips：忽略系统文件</li>
+<li>Tips：不要hook资源文件，可能失效</li>
+</ul>
+</li>
+<li>Substrate native hook</li>
+<li>Frida hook    # 建议使用Frida</li>
+</ul>
+<h3 id="分析系统（沙盒系统）"><a href="#分析系统（沙盒系统）" class="headerlink" title="分析系统（沙盒系统）"></a>分析系统（沙盒系统）</h3><ul>
+<li>DroidBox</li>
+<li>AndroGuard</li>
+<li>Inspeckage    # 基于xposed</li>
+<li>RMS(antiy)</li>
+<li>cuckoo <a href="https://cuckoosandbox.org/" target="_blank" rel="noopener">https://cuckoosandbox.org/</a><ul>
+<li>布谷鸟</li>
+</ul>
+</li>
+</ul>
+<h3 id="人工分析实践知识"><a href="#人工分析实践知识" class="headerlink" title="人工分析实践知识"></a>人工分析实践知识</h3><h4 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h4><h4 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h4><p>联网请求数据包实例（Wireshark抓包）<br>寻找情报来源</p>
+<h4 id="工具am"><a href="#工具am" class="headerlink" title="工具am"></a>工具am</h4><p>用talent模拟短信</p>
+<h4 id="IDA动静态"><a href="#IDA动静态" class="headerlink" title="IDA动静态"></a>IDA动静态</h4><p>一般对</p>
+<h4 id="在线系统"><a href="#在线系统" class="headerlink" title="在线系统"></a>在线系统</h4><ul>
+<li>VS</li>
+<li>Sandroid    # 学术项目</li>
+<li>Koodous    # 交流、分享，<a href="https://koodous.com/" target="_blank" rel="noopener">链接</a></li>
+<li>Janus</li>
+</ul>
+<h2 id="2-反病毒引擎"><a href="#2-反病毒引擎" class="headerlink" title="2. 反病毒引擎"></a>2. 反病毒引擎</h2><h3 id="引擎结构"><a href="#引擎结构" class="headerlink" title="引擎结构"></a>引擎结构</h3><p>1.对象获取：各种资源文件的获取</p>
+<p>2.对象检测：各种分析模式、脱壳、解包</p>
+<p>3.对象处理：告知与处理</p>
+<p>4.病毒库：基于知识积累的数据保障</p>
+<h3 id="特征库"><a href="#特征库" class="headerlink" title="特征库"></a>特征库</h3><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><hr>
+<h3 id="本地检测技术"><a href="#本地检测技术" class="headerlink" title="本地检测技术"></a>本地检测技术</h3><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><p>应用的基础特征：文件Hash、内嵌文件Hash、证书等</p>
+<h4 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h4><p>应用内所包含的各类符号特征：配置符号信息、dex符号信息、其他可执行文件符号信息</p>
+<h4 id="动态"><a href="#动态" class="headerlink" title="动态"></a>动态</h4><p>基于行为的模型检测：行为监控、行为建模</p>
+<hr>
+<h3 id="体系建设"><a href="#体系建设" class="headerlink" title="体系建设"></a>体系建设</h3><p>尽可能基于代码、已有的基础，进行拆解，二次分析</p>
+<hr>
+<h3 id="AVL引擎本地检测逻辑"><a href="#AVL引擎本地检测逻辑" class="headerlink" title="AVL引擎本地检测逻辑"></a>AVL引擎本地检测逻辑</h3><h4 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h4><p>1.降维<br>基于应用指纹的分类策略</p>
+<p>2.实际运用</p>
+<ul>
+<li>证书随机化特征</li>
+<li>应用执行文件结构</li>
+<li>基于图标的色情检测</li>
+<li>基于文件的组织结构特征</li>
+<li>基于决策树的行为检测模型</li>
+</ul>
+<h2 id="3-移动威胁情报"><a href="#3-移动威胁情报" class="headerlink" title="3. 移动威胁情报"></a>3. 移动威胁情报</h2><h3 id="威胁情报的定义"><a href="#威胁情报的定义" class="headerlink" title="威胁情报的定义"></a>威胁情报的定义</h3><p>威胁情报是基于证据的知识，包括场景、机制、指标、含义和可操作的建议。 </p>
+<p>这些知识是关于现存的、或者是即将出现的针对资产的威胁或危险的，可为主体响应相关威胁或危险提供决策信息。 </p>
+<p>决策 —— 情报 —— 信息 —— 数据  </p>
+<h3 id="威胁情报的体系"><a href="#威胁情报的体系" class="headerlink" title="威胁情报的体系"></a>威胁情报的体系</h3><ul>
+<li><p>强烈的外在和内在的面向威胁的知识管理体系方法</p>
+</li>
+<li><p>情报是高度具备驱动力的数据流转和响应驱动体系</p>
+</li>
+</ul>
+<h4 id="面向威胁情报的大数据体系"><a href="#面向威胁情报的大数据体系" class="headerlink" title="面向威胁情报的大数据体系"></a>面向威胁情报的大数据体系</h4><ul>
+<li>数据采集 —— 数据萃取 —— 数据结构化 —— 归一化设计 —— 数据采集迭代</li>
+</ul>
+<ul>
+<li>通过邮件和短信进行，在流量出口做检测</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115134913.png"></p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115134943.png"></p>
+<h4 id="自动化与人工结合的分析运行体系（情报驱动安全）"><a href="#自动化与人工结合的分析运行体系（情报驱动安全）" class="headerlink" title="自动化与人工结合的分析运行体系（情报驱动安全）"></a>自动化与人工结合的分析运行体系（情报驱动安全）</h4><p>1.自动化流水线的检测和判别体系，大大减少人工作业的工作量</p>
+<p>2.自动化动态分析</p>
+<ul>
+<li>典型事件触发</li>
+<li>行为事件监控 </li>
+</ul>
+<p>3.分析组</p>
+<ul>
+<li>引擎工作引擎</li>
+<li>基于<strong>归一化</strong>（标签类）数据结构的文件分类器</li>
+</ul>
+<p>4.智能分析系统—— 静态 ｜ 动态 ｜ 机器学习 —— 相互补充</p>
+<h4 id="威胁情报的困难金字塔"><a href="#威胁情报的困难金字塔" class="headerlink" title="威胁情报的困难金字塔"></a>威胁情报的困难金字塔</h4><p>隐晦 —— Incident （最难）</p>
+<p>复杂 —— TTP Relation</p>
+<p>高对抗 —— TTP/Exploit, Malware</p>
+<p>穿透 —— Evil Device(Mobile/IOT)</p>
+<p>不可控 —— SDK/Third Parth</p>
+<p>方式多样性 —— C2(Network/Other)</p>
+<p>符号多样性 —— Symbol</p>
+<p>繁琐，低效 —— Hash （最容易）</p>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115200355.png" style="zoom: 33%;" />
+
+
+<ul>
+<li>有代码复用</li>
+<li>对日志分析</li>
+</ul>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>1.体系化建设是根本<br>2.多方位合作（国*局也要和其他厂商进一步合作）<br>3.找到适合自己的方式（找到自己的优势）<br>4.多体系合作</p>
+<h2 id="4-恶意代码高级对抗"><a href="#4-恶意代码高级对抗" class="headerlink" title="4. 恶意代码高级对抗"></a>4. 恶意代码高级对抗</h2><h3 id="对抗分析工具（不让反编译等）"><a href="#对抗分析工具（不让反编译等）" class="headerlink" title="对抗分析工具（不让反编译等）"></a>对抗分析工具（不让反编译等）</h3><ul>
+<li>Ptrace自身<br>…</li>
+</ul>
+<h3 id="对抗用户感知（不让用户知道）"><a href="#对抗用户感知（不让用户知道）" class="headerlink" title="对抗用户感知（不让用户知道）"></a>对抗用户感知（不让用户知道）</h3><ul>
+<li>隐藏图标</li>
+<li>透明图标</li>
+<li>静默下载/安装</li>
+<li>预装（二次换装比较多）</li>
+<li>植入知名应用</li>
+<li>伪装系统应用</li>
+<li>ISP（互联网服务提供商）劫持</li>
+<li>邮件</li>
+<li>社工</li>
+</ul>
+<h3 id="反追踪（不让自己被追踪）"><a href="#反追踪（不让自己被追踪）" class="headerlink" title="反追踪（不让自己被追踪）"></a>反追踪（不让自己被追踪）</h3><ul>
+<li>利用短链接</li>
+<li>域名隐私保护</li>
+<li>伪基站</li>
+<li>动态DNS</li>
+<li>盗用他人信息</li>
+<li>使用云服务</li>
+<li>入侵无关网站</li>
+</ul>
+<h3 id="环境对抗"><a href="#环境对抗" class="headerlink" title="环境对抗"></a>环境对抗</h3><ul>
+<li>沙箱检测</li>
+<li>条件触发</li>
+<li>结束杀软</li>
+<li>动态加载</li>
+<li>ROOT提权（现在较难）</li>
+<li>杀软检测</li>
+</ul>
+<h3 id="银弹"><a href="#银弹" class="headerlink" title="银弹"></a>银弹</h3><p>能力较弱，需要APT的情况下，购买第三方的情报</p>
+<p>代码相同，需要客户侧写</p>
+<h3 id="Application层"><a href="#Application层" class="headerlink" title="Application层"></a>Application层</h3><ul>
+<li>范围：各种APP</li>
+</ul>
+<h3 id="Framework层"><a href="#Framework层" class="headerlink" title="Framework层"></a>Framework层</h3><ul>
+<li><p>范围：各种API</p>
+</li>
+<li><p>案例：各种RAT（间*谍*软件）</p>
+</li>
+</ul>
+<h3 id="Kernel层"><a href="#Kernel层" class="headerlink" title="Kernel层"></a>Kernel层</h3><ul>
+<li>范围：系统各种驱动</li>
+<li>案例：hackteam exploit</li>
+</ul>
+<h3 id="案例：RottlenSys"><a href="#案例：RottlenSys" class="headerlink" title="案例：RottlenSys"></a>案例：RottlenSys</h3><h2 id="5-威胁情报与溯源"><a href="#5-威胁情报与溯源" class="headerlink" title="5. 威胁情报与溯源"></a>5. 威胁情报与溯源</h2><h3 id="攻击工具持续演变"><a href="#攻击工具持续演变" class="headerlink" title="攻击工具持续演变"></a>攻击工具持续演变</h3><p>萌芽期 —— 发展期（加壳）—— 中后期 —— 后移动攻防时代</p>
+<p>中后期后面，武器化，漏洞，移动攻击开始武器化、定向化和组织化</p>
+<h3 id="移动终端已经成为APT的新战场"><a href="#移动终端已经成为APT的新战场" class="headerlink" title="移动终端已经成为APT的新战场"></a>移动终端已经成为APT的新战场</h3><h4 id="基本规律"><a href="#基本规律" class="headerlink" title="基本规律"></a>基本规律</h4><p>只与目标承载的资产资源和与更重要目标的关联度有关，基本不考虑难易</p>
+<h4 id="三个特点"><a href="#三个特点" class="headerlink" title="三个特点"></a>三个特点</h4><p>1.对移动应用<br>2.长期<br>3 应用高级攻击技术</p>
+<h4 id="移动APT攻击"><a href="#移动APT攻击" class="headerlink" title="移动APT攻击"></a>移动APT攻击</h4><p>攻击者 ——&gt; 手机终端 &lt;——&gt; 攻击对象<br> <img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115212401.png"></p>
+<h4 id="攻击植入方式"><a href="#攻击植入方式" class="headerlink" title="攻击植入方式"></a>攻击植入方式</h4><p>1.鱼叉攻击</p>
+<ul>
+<li>邮件</li>
+<li>网站</li>
+<li>短信</li>
+</ul>
+<p>2.应用市场<br>3.论坛<br>4.应用市场<br>5.远程漏洞或intent schema url<br>6….</p>
+<p>通常我们更关心木马、后门、间*谍软件类的窃取人人的行为和信息的恶意代码。<br>社交网络的渗透可以进行用户侧写，使话术更加完美。  </p>
+<h4 id="案例：乌克兰"><a href="#案例：乌克兰" class="headerlink" title="案例：乌克兰"></a>案例：乌克兰</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115141615.png"></p>
+<h3 id="分析攻击思路与流程"><a href="#分析攻击思路与流程" class="headerlink" title="分析攻击思路与流程"></a>分析攻击思路与流程</h3><ol>
+<li>公开情报</li>
+<li>主动发现</li>
+</ol>
+<img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115145755.png" style="zoom:50%;" />
+
+<p>国内未经授权的反制都是违法的</p>
+<hr>
+<h4 id="Android-高价值样本发现"><a href="#Android-高价值样本发现" class="headerlink" title="Android 高价值样本发现"></a>Android 高价值样本发现</h4><p>溯源</p>
+<p>复盘</p>
+<p>场景</p>
+<p>意图</p>
+<h4 id="Android证书分析"><a href="#Android证书分析" class="headerlink" title="Android证书分析"></a>Android证书分析</h4><p>1.签名证书<br>2.时间<br>判断时间纬度，开发者在哪个时区，但不可信，可以被篡改、伪造</p>
+<h3 id="同源性检测"><a href="#同源性检测" class="headerlink" title="同源性检测"></a>同源性检测</h3><h4 id="家族同源性检测"><a href="#家族同源性检测" class="headerlink" title="家族同源性检测"></a>家族同源性检测</h4><p>1.恶意行为</p>
+<p>2.攻击方式</p>
+<p>3.攻击目标</p>
+<ul>
+<li>地域</li>
+<li>目标人群</li>
+<li>特定行业</li>
+</ul>
+<h4 id="资源同源性检测"><a href="#资源同源性检测" class="headerlink" title="资源同源性检测"></a>资源同源性检测</h4><p>1.控制域</p>
+<ul>
+<li>Whois信息</li>
+<li>注册者</li>
+<li>有效期</li>
+</ul>
+<p>2.服务提供商及手机号</p>
+<ul>
+<li>归属地</li>
+<li>背景信息</li>
+</ul>
+<p>3.邮箱</p>
+<p>4.载荷</p>
+<ul>
+<li>运行方式</li>
+<li>关键行为</li>
+</ul>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>1.衍生物</p>
+<ul>
+<li>可执行文件</li>
+</ul>
+<p>2.程序资源文件</p>
+<ul>
+<li>关键性界面布局</li>
+<li>图片、音频和视频</li>
+<li>核心文件</li>
+</ul>
+<p>3.关键配置文件</p>
+<p>4.文件大小</p>
+<ul>
+<li>文件大小可以做参考，但不一定准确（但注意，威胁情报这快的一个原则就是，所有的信息都是不可信的，都需要进行交叉验证）</li>
+</ul>
+<h4 id="代码同源性检测"><a href="#代码同源性检测" class="headerlink" title="代码同源性检测"></a>代码同源性检测</h4><p>1.程序名</p>
+<p>2.签名证书</p>
+<ul>
+<li>注意签名证书的时间，时区，判断其来源，但可伪造并不一定可信</li>
+</ul>
+<p>3.核心流程</p>
+<p>4.程序模块</p>
+<p>5.编译信息</p>
+<ul>
+<li>编译时间</li>
+<li>编译器信息</li>
+</ul>
+<p>6.作者信息</p>
+<p>7.版权信息</p>
+<p>8.文件大小</p>
+<p>在分析代码流程时，最好移除第三方库，排除其他的关联。</p>
+<h4 id="传播同源性检测"><a href="#传播同源性检测" class="headerlink" title="传播同源性检测"></a>传播同源性检测</h4><p>1.传播源</p>
+<ul>
+<li>同域名</li>
+<li>同手机</li>
+</ul>
+<p>2.传播方式</p>
+<ul>
+<li>短信</li>
+<li>邮箱</li>
+<li>网络推送</li>
+</ul>
+<p>不要把第三方的二级域名等加入，这样溯源的关联会无限放大。</p>
+<h3 id="威胁情报平台"><a href="#威胁情报平台" class="headerlink" title="威胁情报平台"></a>威胁情报平台</h3><h4 id="VirusTotal"><a href="#VirusTotal" class="headerlink" title="VirusTotal"></a>VirusTotal</h4><p>国际最大的恶意代码库</p>
+<p><a href="https://www.virustotal.com/gui/home/upload" target="_blank" rel="noopener">https://www.virustotal.com/gui/home/upload</a></p>
+<h4 id="安天insight-（安天内部）"><a href="#安天insight-（安天内部）" class="headerlink" title="安天insight （安天内部）"></a>安天insight （安天内部）</h4><h4 id="微步在线"><a href="#微步在线" class="headerlink" title="微步在线"></a>微步在线</h4><h4 id="360威胁情报平台"><a href="#360威胁情报平台" class="headerlink" title="360威胁情报平台"></a>360威胁情报平台</h4><h3 id="画像分析"><a href="#画像分析" class="headerlink" title="画像分析"></a>画像分析</h3><h4 id="装机列表"><a href="#装机列表" class="headerlink" title="装机列表"></a>装机列表</h4><p>// 安全行业的人，不要带着工作机去美国</p>
+<ul>
+<li><p>身份、职业、性别、语言、偏好</p>
+</li>
+<li><p>设备类型：测试机、备用机、常用机</p>
+</li>
+<li><p><strong>匿名通信、安全通信、VPN</strong></p>
+</li>
+<li><p><strong>开发测试的木马</strong></p>
+</li>
+</ul>
+<h4 id="IP轨迹"><a href="#IP轨迹" class="headerlink" title="IP轨迹"></a>IP轨迹</h4><ul>
+<li>活动区域</li>
+<li><strong>V*P&amp;N记录</strong></li>
+</ul>
+<h3 id="CC信息分析"><a href="#CC信息分析" class="headerlink" title="CC信息分析"></a>CC信息分析</h3><ul>
+<li>什么是CC服务器？</li>
+</ul>
+<p><a href="https://www.secpod.com/blog/command-and-control-servers-things-you-should-know/" target="_blank" rel="noopener">链接</a></p>
+<ul>
+<li><p>命令：nslookup, dig, whois</p>
+</li>
+<li><p>查询网站<strong>（谨慎：线索泄漏）</strong>：</p>
+<ul>
+<li><a href="http://domainbigdata.com/" target="_blank" rel="noopener">http://domainbigdata.com</a></li>
+<li><a href="http://ipinfo.io/" target="_blank" rel="noopener">http://ipinfo.io</a></li>
+<li><a href="http://www.virustotal.com/" target="_blank" rel="noopener">http://www.virustotal.com</a></li>
+</ul>
+</li>
+<li><p>搜索引擎查询</p>
+</li>
+</ul>
+<h3 id="社交网络等"><a href="#社交网络等" class="headerlink" title="社交网络等"></a>社交网络等</h3><p>社交网络是一个比较方便的挖掘攻击者或组织身份的一个手段</p>
+<h4 id="社交网络："><a href="#社交网络：" class="headerlink" title="社交网络："></a>社交网络：</h4><ul>
+<li><p>Linkdin</p>
+</li>
+<li><p>Facebook/Twitter</p>
+</li>
+<li><p>Weibo</p>
+</li>
+</ul>
+<h4 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h4><ul>
+<li>Google cache</li>
+</ul>
+<h4 id="网站历史记录"><a href="#网站历史记录" class="headerlink" title="网站历史记录"></a>网站历史记录</h4><ul>
+<li>archive.org</li>
+</ul>
+<h3 id="回溯分析"><a href="#回溯分析" class="headerlink" title="回溯分析"></a>回溯分析</h3><ul>
+<li><p>攻击的时间跨度</p>
+</li>
+<li><p>通过遗留的信息回溯可能的攻击者</p>
+<p>通过CC信息（Command&amp;Control）回溯可能的攻击组织</p>
+</li>
+<li><p>通过语言、命名特点、时区</p>
+</li>
+<li><p>攻击技术和手法的演变、复杂度和拥有的资源</p>
+</li>
+</ul>
+<h4 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h4><ul>
+<li>IDC服务器，更换IP太过频繁<ul>
+<li>域名历史记录&amp;样本制作时间</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115152552.png"></p>
+<h3 id="国际网络军火库"><a href="#国际网络军火库" class="headerlink" title="国际网络军火库"></a>国际网络军火库</h3><p>在各个国家，对各个公司、组织进行侧写，方便以后快速进行定位和分析，需要依靠大量的数据</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153302.png"></p>
+<h3 id="1-美国"><a href="#1-美国" class="headerlink" title="[1]美国"></a>[1]美国</h3><p>分工明确、产业化做得比较好</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153450.png"></p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153539.png"></p>
+<h3 id="2-俄国"><a href="#2-俄国" class="headerlink" title="[2]俄国"></a>[2]俄国</h3><h3 id="综合"><a href="#综合" class="headerlink" title="综合"></a>综合</h3><p>高度武器化</p>
+<p>其中Xagent系列</p>
+<h3 id="知识库"><a href="#知识库" class="headerlink" title="知识库"></a>知识库</h3><h4 id="从威胁情报看移动威胁分析"><a href="#从威胁情报看移动威胁分析" class="headerlink" title="从威胁情报看移动威胁分析"></a>从威胁情报看移动威胁分析</h4><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154005.png"></p>
+<h3 id="主动发现"><a href="#主动发现" class="headerlink" title="主动发现"></a>主动发现</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154201.png"></p>
+<h2 id="6-机器学习应用"><a href="#6-机器学习应用" class="headerlink" title="6. 机器学习应用"></a>6. 机器学习应用</h2><p>误差往往不能接受，所以不能直接应用，需要配合人工</p>
+<h3 id="文件相似性检测"><a href="#文件相似性检测" class="headerlink" title="文件相似性检测"></a>文件相似性检测</h3><p>将文件抽象成树、图，从而通过比较树的相似性（这快比较成熟）来判断文件相似性</p>
+<p>有结点、有权值的树来判断，避免了特征库的膨胀。</p>
+<p>[QS]如何抽象？</p>
+<h3 id="聚类分析"><a href="#聚类分析" class="headerlink" title="聚类分析"></a>聚类分析</h3><p>凡是可以量化，就可以聚类分析。</p>
+<p>如何量化？如何提取特征？</p>
+<p>每个APK对应成一个向量，从而简易地进行聚类分析。</p>
+<p>前置条件：样本有限；过滤有效（白名单，去掉不参与计算的），不能全部样本参与；28原则，头部准确，尾部无效且占比大</p>
+<h3 id="随机性识别"><a href="#随机性识别" class="headerlink" title="随机性识别"></a>随机性识别</h3><p>信息熵：对我们司空见惯的“不确定现象”的数学化度量</p>
+<p>转移概率，由于人类的特定习惯，导致一些惯用的现象产生</p>
+<p>算出正常文本的两个符号之间的平均转移概率。</p>
+<p>利用文件的平均转移概率 —— 判断机器产生的情况 —— 判断机器产生恶意签名</p>
+<h3 id="色情应用识别"><a href="#色情应用识别" class="headerlink" title="色情应用识别"></a>色情应用识别</h3><p>内容风控</p>
+<p>包名随机、程序随机，通过对图片等的识别 —— 来识别应用</p>
+<p>D Hash </p>
+<p>Not suit for work Yahoo的一个色情内容识别库</p>
+<p><a href="https://github.com/yahoo/open_nsfw" target="_blank" rel="noopener">https://github.com/yahoo/open_nsfw</a></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>扩： [IMP]目标侧写、与预计之间的偏差，情报工作需要进行大量的交叉验证，任何信息都是不可信的！</p>
+<h2 id="7-基于样本运营的互联网风控（风控方面）"><a href="#7-基于样本运营的互联网风控（风控方面）" class="headerlink" title="7. 基于样本运营的互联网风控（风控方面）"></a>7. 基于样本运营的互联网风控（风控方面）</h2><h3 id="黑灰产现状"><a href="#黑灰产现状" class="headerlink" title="黑灰产现状"></a>黑灰产现状</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115153822.png"></p>
+<p>是个非常庞大的产业链，超过150W人</p>
+<p>全控，QQ搜</p>
+<h3 id="领域"><a href="#领域" class="headerlink" title="领域"></a>领域</h3><p>1.电商</p>
+<p>2.视频</p>
+<p>3.其他</p>
+<h3 id="工具-1"><a href="#工具-1" class="headerlink" title="工具"></a>工具</h3><p>代理</p>
+<p>隐藏真实IP</p>
+<p>改机工具</p>
+<p>更改串号</p>
+<p>群控工具</p>
+<p>根据指令执行对应操作设备农场</p>
+<h4 id="黑化-行话"><a href="#黑化-行话" class="headerlink" title="黑化/行话"></a>黑化/行话</h4><p>接码平台</p>
+<p>猫池</p>
+<p>卡商</p>
+<p>养号</p>
+<p>死粉/活粉/出粉</p>
+<p>协议破解</p>
+<p>设备农场/手机墙</p>
+<h3 id="AVL的识别思路"><a href="#AVL的识别思路" class="headerlink" title="AVL的识别思路"></a>AVL的识别思路</h3><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200115154800.png"></p>
+<ul>
+<li>应用 —— 装机列表 —— 设备指纹 —— IP</li>
+<li>高 —————可信程度————— 低</li>
+</ul>
+<p>风控部门，风险控制，置信区间</p>
+<p>通过应用识别撞库、薅羊毛、代刷、网赚等，是一套乙方的风控体系</p>
+<h3 id="未来工作"><a href="#未来工作" class="headerlink" title="未来工作"></a>未来工作</h3><p>1.设备指纹不可信/逐渐不可取</p>
+<p>2.日志上传不及时</p>
+<p>3.情报能力存疑</p>
+<p>4.基础设置能力欠缺</p>
+<hr>
+<p>1.SDK改造</p>
+<p>网络状态识别</p>
+<p>唯一标识符设计</p>
+<p>特殊规则检出</p>
+<p>2.扫描器研发</p>
+<p>代理识别</p>
+<p>VPN识别</p>
+<p>生命周期验证（需要探活）</p>
+<p>3.资源补充</p>
+<p>接码接口（根据后台日志做碰撞，二次校验，交叉认证）</p>
+<p>代理IP</p>
+<p>黑卡获取</p>
+<p>4.场景验证</p>
+<h2 id="8-现状"><a href="#8-现状" class="headerlink" title="8. 现状"></a>8. 现状</h2><h3 id="海量设备应对"><a href="#海量设备应对" class="headerlink" title="海量设备应对"></a>海量设备应对</h3><p>万分之三的误报率已经很低，但是基数很大</p>
+<h3 id="云与本地查杀"><a href="#云与本地查杀" class="headerlink" title="云与本地查杀"></a>云与本地查杀</h3><p>云适合消费场景，本地适合对安全要求高的场景</p>
+<h3 id="个体的价值"><a href="#个体的价值" class="headerlink" title="个体的价值"></a>个体的价值</h3><p>如何从个体的价值放大到高价值的云上</p>
+<h3 id="评价体系不一致"><a href="#评价体系不一致" class="headerlink" title="评价体系不一致"></a>评价体系不一致</h3><p>《移动互联网恶意代码描述规范》<br>中国互联网协会反网络病毒联盟<br>国外暂时没有统一的标准</p>
+<h3 id="木桶效应"><a href="#木桶效应" class="headerlink" title="木桶效应"></a>木桶效应</h3><p>互联网3G原则：girl， game，gamble<br>用户对提醒不在乎，中过病毒的人，反倒更可能再次中（使用习惯等原因）<br>信息泄漏（和社工结合危害更大</p>
+<h3 id="攻击过程专业化"><a href="#攻击过程专业化" class="headerlink" title="攻击过程专业化"></a>攻击过程专业化</h3><p>国家力量的加入</p>
+<h3 id="攻受不对称"><a href="#攻受不对称" class="headerlink" title="攻受不对称"></a>攻受不对称</h3><p>只能看见子弹打中了人，但不知道弹道、武器等</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h3><p>[1]<a href="https://www.k0rz3n.com/2019/03/19/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E6%A6%82%E5%BF%B5%E4%B8%8EAPT%E4%BA%8B%E4%BB%B6%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0/" target="_blank" rel="noopener">链接1</a></p>
+<p>[2]<a href="https://www.google.com/search?sxsrf=ACYBGNTwLAVG06NvPj2R_4wMdv81k5y6-Q%253A1579058601026&source=hp&ei=qIUeXoy0PKuymAW0rr_wCg&q=%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%9A%84%E5%9B%B0%E9%9A%BE%E9%87%91%E5%AD%97%E5%A1%94&oq=%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5%E7%9A%84%E5%9B%B0%E9%9A%BE%E9%87%91%E5%AD%97%E5%A1%94&gs_l=psy-ab.3..35i362i39l10.2042.2042..2197...2.0..0.0.0.......0....2j1..gws-wiz.....10.P-7-oX7kiGY&ved=0ahUKEwiMqPfX04TnAhUrGaYKHTTXD64Q4dUDCAY&uact=5" target="_blank" rel="noopener">链接2</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#移动恶意应用分析"><span class="toc-number">1.</span> <span class="toc-text">移动恶意应用分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#恶意代码分析背景概述"><span class="toc-number">1.1.</span> <span class="toc-text">恶意代码分析背景概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-number">1.1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">1.1.2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关术语"><span class="toc-number">1.1.3.</span> <span class="toc-text">相关术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命名体系"><span class="toc-number">1.1.4.</span> <span class="toc-text">命名体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#趋势"><span class="toc-number">1.1.5.</span> <span class="toc-text">趋势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安卓病毒分析"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安卓病毒分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APK格式介绍"><span class="toc-number">1.2.1.</span> <span class="toc-text">APK格式介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恶意行为汇总"><span class="toc-number">1.2.2.</span> <span class="toc-text">恶意行为汇总</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">1.2.3.</span> <span class="toc-text">静态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工具"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态分析"><span class="toc-number">1.2.4.</span> <span class="toc-text">动态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#工具-技术"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">工具&#x2F;技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#技术"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析系统（沙盒系统）"><span class="toc-number">1.2.5.</span> <span class="toc-text">分析系统（沙盒系统）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工分析实践知识"><span class="toc-number">1.2.6.</span> <span class="toc-text">人工分析实践知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模拟器"><span class="toc-number">1.2.6.1.</span> <span class="toc-text">模拟器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据包"><span class="toc-number">1.2.6.2.</span> <span class="toc-text">数据包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工具am"><span class="toc-number">1.2.6.3.</span> <span class="toc-text">工具am</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IDA动静态"><span class="toc-number">1.2.6.4.</span> <span class="toc-text">IDA动静态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在线系统"><span class="toc-number">1.2.6.5.</span> <span class="toc-text">在线系统</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-反病毒引擎"><span class="toc-number">1.3.</span> <span class="toc-text">2. 反病毒引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引擎结构"><span class="toc-number">1.3.1.</span> <span class="toc-text">引擎结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征库"><span class="toc-number">1.3.2.</span> <span class="toc-text">特征库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">1.3.3.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地检测技术"><span class="toc-number">1.3.4.</span> <span class="toc-text">本地检测技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基础"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#符号"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">符号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">动态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#体系建设"><span class="toc-number">1.3.5.</span> <span class="toc-text">体系建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL引擎本地检测逻辑"><span class="toc-number">1.3.6.</span> <span class="toc-text">AVL引擎本地检测逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#大数据"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">大数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-移动威胁情报"><span class="toc-number">1.4.</span> <span class="toc-text">3. 移动威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报的定义"><span class="toc-number">1.4.1.</span> <span class="toc-text">威胁情报的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报的体系"><span class="toc-number">1.4.2.</span> <span class="toc-text">威胁情报的体系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#面向威胁情报的大数据体系"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">面向威胁情报的大数据体系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动化与人工结合的分析运行体系（情报驱动安全）"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">自动化与人工结合的分析运行体系（情报驱动安全）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#威胁情报的困难金字塔"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">威胁情报的困难金字塔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-恶意代码高级对抗"><span class="toc-number">1.5.</span> <span class="toc-text">4. 恶意代码高级对抗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对抗分析工具（不让反编译等）"><span class="toc-number">1.5.1.</span> <span class="toc-text">对抗分析工具（不让反编译等）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对抗用户感知（不让用户知道）"><span class="toc-number">1.5.2.</span> <span class="toc-text">对抗用户感知（不让用户知道）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#反追踪（不让自己被追踪）"><span class="toc-number">1.5.3.</span> <span class="toc-text">反追踪（不让自己被追踪）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境对抗"><span class="toc-number">1.5.4.</span> <span class="toc-text">环境对抗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#银弹"><span class="toc-number">1.5.5.</span> <span class="toc-text">银弹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application层"><span class="toc-number">1.5.6.</span> <span class="toc-text">Application层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Framework层"><span class="toc-number">1.5.7.</span> <span class="toc-text">Framework层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernel层"><span class="toc-number">1.5.8.</span> <span class="toc-text">Kernel层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例：RottlenSys"><span class="toc-number">1.5.9.</span> <span class="toc-text">案例：RottlenSys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-威胁情报与溯源"><span class="toc-number">1.6.</span> <span class="toc-text">5. 威胁情报与溯源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击工具持续演变"><span class="toc-number">1.6.1.</span> <span class="toc-text">攻击工具持续演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移动终端已经成为APT的新战场"><span class="toc-number">1.6.2.</span> <span class="toc-text">移动终端已经成为APT的新战场</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本规律"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">基本规律</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三个特点"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">三个特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移动APT攻击"><span class="toc-number">1.6.2.3.</span> <span class="toc-text">移动APT攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#攻击植入方式"><span class="toc-number">1.6.2.4.</span> <span class="toc-text">攻击植入方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#案例：乌克兰"><span class="toc-number">1.6.2.5.</span> <span class="toc-text">案例：乌克兰</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析攻击思路与流程"><span class="toc-number">1.6.3.</span> <span class="toc-text">分析攻击思路与流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Android-高价值样本发现"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">Android 高价值样本发现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Android证书分析"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">Android证书分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同源性检测"><span class="toc-number">1.6.4.</span> <span class="toc-text">同源性检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#家族同源性检测"><span class="toc-number">1.6.4.1.</span> <span class="toc-text">家族同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源同源性检测"><span class="toc-number">1.6.4.2.</span> <span class="toc-text">资源同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件"><span class="toc-number">1.6.4.3.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码同源性检测"><span class="toc-number">1.6.4.4.</span> <span class="toc-text">代码同源性检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传播同源性检测"><span class="toc-number">1.6.4.5.</span> <span class="toc-text">传播同源性检测</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁情报平台"><span class="toc-number">1.6.5.</span> <span class="toc-text">威胁情报平台</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#VirusTotal"><span class="toc-number">1.6.5.1.</span> <span class="toc-text">VirusTotal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安天insight-（安天内部）"><span class="toc-number">1.6.5.2.</span> <span class="toc-text">安天insight （安天内部）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#微步在线"><span class="toc-number">1.6.5.3.</span> <span class="toc-text">微步在线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#360威胁情报平台"><span class="toc-number">1.6.5.4.</span> <span class="toc-text">360威胁情报平台</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#画像分析"><span class="toc-number">1.6.6.</span> <span class="toc-text">画像分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#装机列表"><span class="toc-number">1.6.6.1.</span> <span class="toc-text">装机列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP轨迹"><span class="toc-number">1.6.6.2.</span> <span class="toc-text">IP轨迹</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CC信息分析"><span class="toc-number">1.6.7.</span> <span class="toc-text">CC信息分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#社交网络等"><span class="toc-number">1.6.8.</span> <span class="toc-text">社交网络等</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#社交网络："><span class="toc-number">1.6.8.1.</span> <span class="toc-text">社交网络：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索引擎"><span class="toc-number">1.6.8.2.</span> <span class="toc-text">搜索引擎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网站历史记录"><span class="toc-number">1.6.8.3.</span> <span class="toc-text">网站历史记录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯分析"><span class="toc-number">1.6.9.</span> <span class="toc-text">回溯分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#难点"><span class="toc-number">1.6.9.1.</span> <span class="toc-text">难点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#国际网络军火库"><span class="toc-number">1.6.10.</span> <span class="toc-text">国际网络军火库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-美国"><span class="toc-number">1.6.11.</span> <span class="toc-text">[1]美国</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-俄国"><span class="toc-number">1.6.12.</span> <span class="toc-text">[2]俄国</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#综合"><span class="toc-number">1.6.13.</span> <span class="toc-text">综合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知识库"><span class="toc-number">1.6.14.</span> <span class="toc-text">知识库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从威胁情报看移动威胁分析"><span class="toc-number">1.6.14.1.</span> <span class="toc-text">从威胁情报看移动威胁分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主动发现"><span class="toc-number">1.6.15.</span> <span class="toc-text">主动发现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-机器学习应用"><span class="toc-number">1.7.</span> <span class="toc-text">6. 机器学习应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件相似性检测"><span class="toc-number">1.7.1.</span> <span class="toc-text">文件相似性检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚类分析"><span class="toc-number">1.7.2.</span> <span class="toc-text">聚类分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机性识别"><span class="toc-number">1.7.3.</span> <span class="toc-text">随机性识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#色情应用识别"><span class="toc-number">1.7.4.</span> <span class="toc-text">色情应用识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.7.5.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-基于样本运营的互联网风控（风控方面）"><span class="toc-number">1.8.</span> <span class="toc-text">7. 基于样本运营的互联网风控（风控方面）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#黑灰产现状"><span class="toc-number">1.8.1.</span> <span class="toc-text">黑灰产现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#领域"><span class="toc-number">1.8.2.</span> <span class="toc-text">领域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具-1"><span class="toc-number">1.8.3.</span> <span class="toc-text">工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#黑化-行话"><span class="toc-number">1.8.3.1.</span> <span class="toc-text">黑化&#x2F;行话</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AVL的识别思路"><span class="toc-number">1.8.4.</span> <span class="toc-text">AVL的识别思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#未来工作"><span class="toc-number">1.8.5.</span> <span class="toc-text">未来工作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-现状"><span class="toc-number">1.9.</span> <span class="toc-text">8. 现状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#海量设备应对"><span class="toc-number">1.9.1.</span> <span class="toc-text">海量设备应对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#云与本地查杀"><span class="toc-number">1.9.2.</span> <span class="toc-text">云与本地查杀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#个体的价值"><span class="toc-number">1.9.3.</span> <span class="toc-text">个体的价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评价体系不一致"><span class="toc-number">1.9.4.</span> <span class="toc-text">评价体系不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#木桶效应"><span class="toc-number">1.9.5.</span> <span class="toc-text">木桶效应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻击过程专业化"><span class="toc-number">1.9.6.</span> <span class="toc-text">攻击过程专业化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#攻受不对称"><span class="toc-number">1.9.7.</span> <span class="toc-text">攻受不对称</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.10.</span> <span class="toc-text">Reference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#学习资源"><span class="toc-number">1.10.1.</span> <span class="toc-text">学习资源</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&text=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&is_video=false&description=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=移动恶意代码分析及威胁情报&body=Check out this article: https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&title=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&name=移动恶意代码分析及威胁情报&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/01/15/%E7%A7%BB%E5%8A%A8%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/&t=移动恶意代码分析及威胁情报" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="为什么内网渗透比赛时虚拟机要用NAT模式？在学习了一点渗透的皮毛后，发现对计算机网络的了解很大程度上会帮助我们渗透摸清方向。而自己在学习计网时很多知识都遗忘或者没有掌握好（理论真的是内功心法，决定你的武功的高度），对比赛时的网络配置都不太了解，需要反思。因此做了以下笔记，希望能帮助大家、帮助自己理解内网渗透（比赛）时的网络拓扑以及虚拟机网络配置问题。 虚拟机三种网络模式（Bridged, NAT,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Note】为什么内网渗透比赛时虚拟机要用NAT模式？">
+<meta property="og:url" content="https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="为什么内网渗透比赛时虚拟机要用NAT模式？在学习了一点渗透的皮毛后，发现对计算机网络的了解很大程度上会帮助我们渗透摸清方向。而自己在学习计网时很多知识都遗忘或者没有掌握好（理论真的是内功心法，决定你的武功的高度），对比赛时的网络配置都不太了解，需要反思。因此做了以下笔记，希望能帮助大家、帮助自己理解内网渗透（比赛）时的网络拓扑以及虚拟机网络配置问题。 虚拟机三种网络模式（Bridged, NAT,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191206094309.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191206095303.png">
+<meta property="article:published_time" content="2019-12-06T07:06:30.000Z">
+<meta property="article:modified_time" content="2019-12-09T16:24:48.000Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Note">
+<meta property="article:tag" content="安全综合">
+<meta property="article:tag" content="渗透测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191206094309.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>【Note】为什么内网渗透比赛时虚拟机要用NAT模式？</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/06/%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E8%A6%81%E7%94%A8NAT%E6%A8%A1%E5%BC%8F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/02/articles/2019/12/02/1575275168127.html/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&text=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&is_video=false&description=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？&body=Check out this article: https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&name=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&t=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么内网渗透比赛时虚拟机要用NAT模式？"><span class="toc-number">1.</span> <span class="toc-text">为什么内网渗透比赛时虚拟机要用NAT模式？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机三种网络模式（Bridged-NAT-Host-Only）"><span class="toc-number">1.1.</span> <span class="toc-text">虚拟机三种网络模式（Bridged, NAT, Host Only）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Bridged（桥接）"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. Bridged（桥接）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">⚠️注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#🎯与内网渗透相关的"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">🎯与内网渗透相关的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-NAT-Network-Address-Translation-网络地址转换"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. NAT(Network Address Translation, 网络地址转换)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意："><span class="toc-number">1.1.2.1.</span> <span class="toc-text">⚠️注意：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Host-Only（仅主机模式）"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. Host Only（仅主机模式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意：-1"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">⚠️注意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-自定义网络连接配置"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">4. 自定义网络连接配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个形象的比喻"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">一个形象的比喻</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么优先用NAT"><span class="toc-number">1.2.</span> <span class="toc-text">为什么优先用NAT?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【Note】为什么内网渗透比赛时虚拟机要用NAT模式？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-06T07:06:30.000Z" itemprop="datePublished">2019-12-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Note/" rel="tag">Note</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/" rel="tag">安全综合</a>, <a class="tag-link" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag">渗透测试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="为什么内网渗透比赛时虚拟机要用NAT模式？"><a href="#为什么内网渗透比赛时虚拟机要用NAT模式？" class="headerlink" title="为什么内网渗透比赛时虚拟机要用NAT模式？"></a>为什么内网渗透比赛时虚拟机要用NAT模式？</h1><p>在学习了一点渗透的皮毛后，发现对计算机网络的了解很大程度上会帮助我们渗透摸清方向。而自己在学习计网时很多知识都遗忘或者没有掌握好（理论真的是内功心法，决定你的武功的高度），对比赛时的网络配置都不太了解，需要反思。<br>因此做了以下笔记，希望能帮助大家、帮助自己理解内网渗透（比赛）时的网络拓扑以及虚拟机网络配置问题。</p>
+<h2 id="虚拟机三种网络模式（Bridged-NAT-Host-Only）"><a href="#虚拟机三种网络模式（Bridged-NAT-Host-Only）" class="headerlink" title="虚拟机三种网络模式（Bridged, NAT, Host Only）"></a>虚拟机三种网络模式（Bridged, NAT, Host Only）</h2><h3 id="1-Bridged（桥接）"><a href="#1-Bridged（桥接）" class="headerlink" title="1. Bridged（桥接）"></a>1. Bridged（桥接）</h3><blockquote>
+<p>桥接网络是指本地物理网卡和虚拟网卡通过VMnet0虚拟交换机进行桥接，物理网卡和虚拟网卡在拓扑图上处于同等地位，那么物理网卡和虚拟网卡就相当于处于同一个网段，虚拟交换机就相当于一台现实网络中的交换机,所以两个网卡的IP地址也要设置为同一网段。</p>
+<p>类似于把物理主机虚拟为一个交换机，所有桥接设置的虚拟机连接到这个交换机的一个接口上，物理主机也同样插在这个交换机当中，所以所有桥接下的网卡与网卡都是交换模式的，相互可以访问而不干扰。</p>
+</blockquote>
+<p>简单来说，桥接网络就是通过虚拟网卡，把虚拟机放到宿主机的局域网网络内，将其视为一个独立的，真实存在的局域网主机。因此该局域网内的主机和虚拟机都可以互相访问。</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191206094309.png" alt="桥接模式的网络拓扑图"><br>图：桥接的网络拓扑图  </p>
+<h4 id="⚠️注意"><a href="#⚠️注意" class="headerlink" title="⚠️注意"></a>⚠️注意</h4><ol>
+<li>此时虚拟网卡和物理网卡（宿主机）在网络拓扑上处于同等地位。  </li>
+<li>此时，虚拟机上的虚拟网卡连接到虚拟交换机。虚拟交换机通过虚拟网桥连接到主机物理网卡。此时，虚拟机的IP必须与主机在<strong>同一网段，且子网掩码、网关（Gateway）以及DNS也需要与主机保持一致。</strong>  </li>
+</ol>
+<h4 id="🎯与内网渗透相关的"><a href="#🎯与内网渗透相关的" class="headerlink" title="🎯与内网渗透相关的"></a>🎯与内网渗透相关的</h4><p>在做内网渗透时，主机网络经常需要进行手动设置（manual），此时，虚拟机如果要采用桥接的方式，则在虚拟机里要对注意中的网络配置进行再次的修改。</p>
+<h3 id="2-NAT-Network-Address-Translation-网络地址转换"><a href="#2-NAT-Network-Address-Translation-网络地址转换" class="headerlink" title="2. NAT(Network Address Translation, 网络地址转换)"></a>2. NAT(Network Address Translation, 网络地址转换)</h3><blockquote>
+<p>NAT模式中，就是让虚拟机借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。<br>NAT模式中，虚拟机的网卡和物理网卡的网络，不在同一个网络，虚拟机的网卡，是虚拟机软件提供的一个虚拟网络。</p>
+</blockquote>
+<blockquote>
+<p>虚拟机向外部网络发送的请求数据”包裹”，都会交由NAT网络适配器加上”特殊标记”并以主机的名义转发出去，外部网络返回的响应数据”包裹”，也是先由主机接收，然后交由NAT网络适配器根据”特殊标记”进行识别并转发给对应的虚拟机，因此，虚拟机在外部网络中不必具有自己的IP地址。从外部网络来看，虚拟机和主机在共享一个IP地址，默认情况下，外部网络终端也无法访问到虚拟机。</p>
+</blockquote>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20191206095303.png" alt="NAT模式的网络拓扑图"><br>图：NAT模式的网络拓扑图  </p>
+<h4 id="⚠️注意："><a href="#⚠️注意：" class="headerlink" title="⚠️注意："></a>⚠️注意：</h4><ul>
+<li>NAT由于是在一个虚拟网络里面的，所以虚拟机与局域网其他主机无法互相访问，<strong>但与宿主机互通</strong>。但也可设置端口转发，让外部网络的主机通过宿主机上建立的转发端口间接与虚拟机进行通信</li>
+<li>从外部网络看，虚拟机和宿主机共享一个IP</li>
+<li>虚拟机和宿主机使用同一个TCP/IP配置</li>
+<li>虚拟机内部是一个独立的局域网络，由虚拟DHCP服务器提供，并且通过虚拟网络地址转换器直接连接到主机网卡</li>
+</ul>
+<h3 id="3-Host-Only（仅主机模式）"><a href="#3-Host-Only（仅主机模式）" class="headerlink" title="3. Host Only（仅主机模式）"></a>3. Host Only（仅主机模式）</h3><p>这个模式理解相对简单，仅主机模式，是一种比NAT模式更加封闭的的网络连接模式，它将创建<strong>完全包含在主机中的专用网络</strong>。仅主机模式的虚拟网络适配器仅对主机可见，并在虚拟机和主机系统之间提供网络连接。无法连接外网。</p>
+<h4 id="⚠️注意：-1"><a href="#⚠️注意：-1" class="headerlink" title="⚠️注意："></a>⚠️注意：</h4><ul>
+<li>同一台主机上可以创建多个Host Only主机模式的<strong>虚拟网络</strong>，处于同一个Host Only虚拟网络中的虚拟机可以互相通信。如果它们处于不同的虚拟网络，则默认无法进行通信（可设置路由进行通信）。</li>
+</ul>
+<h4 id="4-自定义网络连接配置"><a href="#4-自定义网络连接配置" class="headerlink" title="4. 自定义网络连接配置"></a>4. 自定义网络连接配置</h4><p>利用虚拟机软件提供的虚拟网络连接组件，可以创建复杂的虚拟网络。</p>
+<h4 id="一个形象的比喻"><a href="#一个形象的比喻" class="headerlink" title="一个形象的比喻"></a>一个形象的比喻</h4><blockquote>
+<p>桥接模式的虚拟机，就像一个在路由器”民政局”那里”上过户口”的成年人，有自己单独的居住地址，虽然和主机住在同一个大院里，但好歹是有户口的人，可以大摇大摆地直接和外面通信。<br> NAT模式的虚拟机，纯粹就是一个没上过户口的黑户，路由器”民政局”根本不知道有这么个人，自然也不会主动和它通信。即使虚拟机偶尔要向外面发送点的信件，都得交给主机以主机的名义转发出去，主机还专门请了一位叫做NAT的老大爷来专门负责这些虚拟机的发信、收信事宜。<br>仅主机模式的虚拟机，纯粹是一个彻彻底底的黑奴，不仅没有户口、路由器”民政局”不知道这么号人，还被主机关在小黑屋里，连信件也不准往外发。</p>
+</blockquote>
+<h2 id="为什么优先用NAT"><a href="#为什么优先用NAT" class="headerlink" title="为什么优先用NAT?"></a>为什么优先用NAT?</h2><p>介绍了以上几种虚拟机网络配置，那么我们在做内网渗透（比赛）时，为什么推荐用NAT呢？其实答案就在上面的⚠️注意 里面了：  </p>
+<ol>
+<li>桥接模式，虚拟机的IP必须与主机在<strong>同一网段，且子网掩码、网关（Gateway）以及DNS也需要与主机保持一致。</strong> 因此需要额外进行设置，且黑盒情况网络状况检查比较困难。而NAT模式，从外部网络看，虚拟机和宿主机共享一个IP，且其使用同一个TCP/IP配置。因此虚拟机使用NAT模式时，主机做好网络配置后，就不需要再在虚拟机里进行设置。</li>
+<li>因为从外部网络看，虚拟机和宿主机共享一个IP，有时内网渗透比赛时，🎯<strong>标靶可能对客户机IP做了防火墙限制</strong>，此时使用桥接模式无法很好进行</li>
+<li>Host Only模式，必须要主机都在同一<strong>虚拟网络</strong>里才能进行</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://zhuanlan.zhihu.com/p/56658358" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/56658358</a><br><a href="https://www.cnblogs.com/xuliangxing/p/7027124.html" target="_blank" rel="noopener">https://www.cnblogs.com/xuliangxing/p/7027124.html</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么内网渗透比赛时虚拟机要用NAT模式？"><span class="toc-number">1.</span> <span class="toc-text">为什么内网渗透比赛时虚拟机要用NAT模式？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机三种网络模式（Bridged-NAT-Host-Only）"><span class="toc-number">1.1.</span> <span class="toc-text">虚拟机三种网络模式（Bridged, NAT, Host Only）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Bridged（桥接）"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. Bridged（桥接）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">⚠️注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#🎯与内网渗透相关的"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">🎯与内网渗透相关的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-NAT-Network-Address-Translation-网络地址转换"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. NAT(Network Address Translation, 网络地址转换)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意："><span class="toc-number">1.1.2.1.</span> <span class="toc-text">⚠️注意：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Host-Only（仅主机模式）"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. Host Only（仅主机模式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#⚠️注意：-1"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">⚠️注意：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-自定义网络连接配置"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">4. 自定义网络连接配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个形象的比喻"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">一个形象的比喻</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么优先用NAT"><span class="toc-number">1.2.</span> <span class="toc-text">为什么优先用NAT?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">1.3.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&text=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&is_video=false&description=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？&body=Check out this article: https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&title=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&name=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2019/12/06/articles/2019/12/06/1575615990696.html/&t=【Note】为什么内网渗透比赛时虚拟机要用NAT模式？" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="https://y1ng.org/TheRoadOfSO/">安全运营之路</a></li>
+         
+          <li><a href="https://cissp-wiki.ml/" target="_blank" rel="noopener">CISSP学习指南</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
