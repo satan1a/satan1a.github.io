@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>理解scroll_search</title>
+      <link href="/2020/07/24/scroll-search/"/>
+      <url>/2020/07/24/scroll-search/</url>
+      
+        <content type="html"><![CDATA[<h1 id="理解Scroll-Search"><a href="#理解Scroll-Search" class="headerlink" title="理解Scroll Search"></a>理解Scroll Search</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote><p>  ES的搜索是分2个阶段进行的，即Query阶段和Fetch阶段。 Query阶段比较轻量级，通过查询倒排索引，获取满足查询结果的文档ID列表。 而Fetch阶段比较重，需要将每个shard的结果取回，在协调结点进行<strong>全局</strong>排序。 通过From+size这种方式分批获取数据的时候，随着from加大，需要全局排序并丢弃的结果数量随之上升，性能越来越差。</p><p>  而Scroll查询，先做轻量级的Query阶段以后，免去了繁重的全局排序过程。 它只是将查询结果集，也就是doc id列表保留在一个上下文里， 之后每次分批取回的时候，只需根据设置的size，在每个shard内部按照一定顺序（默认doc_id续)， 取回这个size数量的文档即可。 </p><p>  由此也可以看出scroll不适合支持那种实时的和用户交互的前端分页工作，其主要用途用于从ES集群分批拉取大量结果集的情况，一般都是offline的应用场景。 比如需要将非常大的结果集拉取出来，存放到其他系统处理，或者需要做大索引的reindex等等。</p><p>  <a href="https://elasticsearch.cn/people/wood" target="_blank" rel="noopener"><br>  kennywu76</a>，<a href="https://elasticsearch.cn/question/2935" target="_blank" rel="noopener">https://elasticsearch.cn/question/2935</a></p></blockquote><h2 id="方法比较"><a href="#方法比较" class="headerlink" title="方法比较"></a>方法比较</h2><h3 id="与常规search相比"><a href="#与常规search相比" class="headerlink" title="与常规search相比"></a>与常规search相比</h3><p>首先，我们要记住ES的搜索是分两步进行的，第一步相当于更具倒排索引找对应数据的ID，第二步是从各个分片中取回ID对应的数据。</p><p>第一个阶段较为轻量化，因为是只是在倒排索引里找。第二个阶段比较重量，因为其不仅需要到各个分片中取回数据，还需要在进行全局排序（因为从各个分片中取回的数据可能是散乱的），因为我们需要找到在查询的时间内变化的结果，如果变化则丢弃。</p><p>而滚动查询（scroll search）则面去了全局排序的过程，fetch到结果后，直接保存在查询结果集，到设置到的size后直接取回，此时并不考虑已经取回的数据是否变化了。</p><p>在数据量非常大的情况下，size也相对较小的话，会产生一种滚动显示的效果，但要记住滚动并不是为了实时的用户响应，而是为了处理大量的数据。并且scroll也很难</p><h3 id="与Scan相比"><a href="#与Scan相比" class="headerlink" title="与Scan相比"></a>与Scan相比</h3><p>相比于常规的search，scroll search虽说在不进行全局排序的，但在每个size内进行搜索得到结果时也是会进行排序的。如果我们不考虑排序，只想要找有对应的数据，那么可以用scan。scan模式不进行全局排序，也不进行“分步”排序。</p><h2 id="为什么要排序？"><a href="#为什么要排序？" class="headerlink" title="为什么要排序？"></a>为什么要排序？</h2><p>为什么常规的search和scroll search都要进行排序呢？因为在真实环境中我们有很多复杂的需求，不是每次查询都能跑一遍全部的量的</p><p>例如，企业级日志的数量每天都有成千上万条，如果我们需要在一个月内的日志数据（分布式存储）中，找到某一个时间段的全部请求IP，如果不排序，我们就无法定位到一个具体的时间段。因为分布式存储时，每个数据都在一个切片中，在搜索时，需要对每个切片进行一下排序，才能知道，第XXX条就是我们要查的开始文档，每个切片都要排序，然后在常规search后又要进行进行一次全局排序来汇总。</p><p>如果此时使用scan方式，那么相当于我们在每个切片中都进行着内容匹配，不作任何排序，从头到尾地进行着比对。这个是不现实的，也是不符合需求的。</p><p>此时，我们就可以使用scroll search，为什么呢？理由有4点：</p><ul><li>数据量很大，scroll search减少了全局排序的时间</li><li>数据是冷的，过往时间的日志数据不会变动</li><li>我们的目的是找数据，不是有边查边改动或者其他复杂的需求</li><li>我们要设置在一定的范围，需要在查询时进行过滤设置</li></ul><h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><ul><li>最好是冷数据，或者数据变动不是非常频繁</li><li>数据量很大，我们需要减少时间</li><li>目的是拉取结果集</li></ul><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET trans_0x0/_search?scroll=1m&amp;pretty=<span class="literal">true</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"query"</span>: &#123;</span><br><span class="line">    <span class="string">"match"</span>: &#123;</span><br><span class="line">      <span class="string">"dip.keyword"</span>: <span class="string">"202.75.106.45"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  , <span class="string">"size"</span>: 20</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在上述的例子中，我们在<code>_search</code>接口后添加参数<code>scroll</code>并设置其为1分钟。代表在1分钟内我们认为数据不发生改动，即索引维持的时间。如果需要断点下载，在真实网络环境中情况复杂，网速并没有那么好，那么我们可以设置得长一点。</p><p>然后请求体中，我们查询dip.keyword符合”202.75.106.45”这个IP的结果。</p><p>设置size为20表示每次查询的结果，获取的、显示的结果为20条文档。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ElasticSearch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ELK </tag>
+            
+            <tag> Notes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据驱动安全概要</title>
       <link href="/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/"/>
       <url>/2020/06/02/security/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E5%AE%89%E5%85%A8%E5%85%A5%E9%97%A8%E6%A6%82%E8%A7%88/</url>
