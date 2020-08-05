@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://y1ng.org/"/>
-  <updated>2020-07-24T04:11:41.923Z</updated>
+  <updated>2020-08-05T10:39:48.143Z</updated>
   <id>https://y1ng.org/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>研究和业务</title>
+    <link href="https://y1ng.org/2020/08/05/%E7%A0%94%E7%A9%B6%E5%92%8C%E4%B8%9A%E5%8A%A1/"/>
+    <id>https://y1ng.org/2020/08/05/%E7%A0%94%E7%A9%B6%E5%92%8C%E4%B8%9A%E5%8A%A1/</id>
+    <published>2020-08-05T10:37:10.000Z</published>
+    <updated>2020-08-05T10:39:48.143Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+      <category term="工作" scheme="https://y1ng.org/categories/%E5%B7%A5%E4%BD%9C/"/>
+    
+    
+      <category term="感了个悟" scheme="https://y1ng.org/tags/%E6%84%9F%E4%BA%86%E4%B8%AA%E6%82%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>理解scroll search</title>
@@ -490,29 +517,6 @@
     
     
       <category term="安全运维" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>物联网导论</title>
-    <link href="https://y1ng.org/2020/02/18/%E7%89%A9%E8%81%94%E7%BD%91%E5%AF%BC%E8%AE%BA/"/>
-    <id>https://y1ng.org/2020/02/18/%E7%89%A9%E8%81%94%E7%BD%91%E5%AF%BC%E8%AE%BA/</id>
-    <published>2020-02-18T03:44:03.000Z</published>
-    <updated>2020-02-25T04:52:19.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
