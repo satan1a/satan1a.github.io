@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://y1ng.org/"/>
-  <updated>2020-08-05T10:41:13.610Z</updated>
+  <updated>2020-08-12T04:00:09.053Z</updated>
   <id>https://y1ng.org/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CMM-能力成熟度模型</title>
+    <link href="https://y1ng.org/2020/08/12/CMM-%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B/"/>
+    <id>https://y1ng.org/2020/08/12/CMM-%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B/</id>
+    <published>2020-08-12T03:38:45.000Z</published>
+    <updated>2020-08-12T04:00:09.053Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Notes" scheme="https://y1ng.org/categories/Notes/"/>
+    
+    
+      <category term="Note" scheme="https://y1ng.org/tags/Note/"/>
+    
+      <category term="软件工程" scheme="https://y1ng.org/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>研究和业务</title>
@@ -492,31 +521,6 @@
     
     
       <category term="Linux" scheme="https://y1ng.org/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于SSH超时断开的安全性考虑</title>
-    <link href="https://y1ng.org/2020/02/22/%E5%85%B3%E4%BA%8ESSH%E8%B6%85%E6%97%B6%E6%96%AD%E5%BC%80%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91/"/>
-    <id>https://y1ng.org/2020/02/22/%E5%85%B3%E4%BA%8ESSH%E8%B6%85%E6%97%B6%E6%96%AD%E5%BC%80%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E8%80%83%E8%99%91/</id>
-    <published>2020-02-22T13:48:04.000Z</published>
-    <updated>2020-02-22T13:54:47.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="安全运维" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   

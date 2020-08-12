@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>CMM-能力成熟度模型</title>
+      <link href="/2020/08/12/CMM-%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2020/08/12/CMM-%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CMM能力成熟度模型"><a href="#CMM能力成熟度模型" class="headerlink" title="CMM能力成熟度模型"></a>CMM能力成熟度模型</h1><p>在产品调研过程中遇到的一个评论，说是要准备好成熟度模型，才能让XXX产品更适合你的需求。可以看到，对于甲方来说，一个成熟度模型关乎自身的评估，也关乎对外采取活动的决策。</p><p>而之前不是很了解这个概念，因此补充一下笔记。</p><h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote><p>   能力成熟度模型（Capability Maturity Model for Software，英文缩写为SW-CMM，简称CMM）[1]</p></blockquote><blockquote><p>   CMM是指“能力成熟度模型”，是对于软件组织在定义、实施、度量、控制和改善其<a href="https://wiki.mbalib.com/wiki/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B" target="_blank" rel="noopener">软件过程</a>的实践中各个发展阶段的描述。[1]</p></blockquote><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200812115113.png"></p><p>图：CMM模型的五个阶梯[1]</p><p>众所周知，管理的最终目的是为了提高整体的效率，而CMM模型就是为了提供一个参考的方案，帮助提高软件生产的效率（质量与速度）、优化软件过程（即软件生命周期的一系列活动的集合）。</p><h2 id="为什么？"><a href="#为什么？" class="headerlink" title="为什么？"></a>为什么？</h2><p>把软件开发当作一个过程，就像制造业的工厂流水线是有一套流程规范的，同样，采取这套流程规范，也是为了软件开发能产出质量更好的产品。</p><p>在实际生产情况下，软件开发的过程和软件开发管理之间是不一样的。例如对于一个安全产品的开发人员来说，他们需要一个安全能力的支持，但安全能力的支持又依赖于研究人员。研究人员的技术成果——开发人员手里拿到的技术文档，这个过程中会产生太多的问题，因此我们需要对这个过程进行一个改进。使得整个生产线能以一个正向反馈的循环存在，最终提高产品的质量。</p><h2 id="怎么做？"><a href="#怎么做？" class="headerlink" title="怎么做？"></a>怎么做？</h2><p>把软件开发当作一个过程，就像制造业的工厂流水线是有一套流程规范的，同样，采取这套流程规范，也是为了软件开发能产出质量更好的产品。</p><p>软件过程的改善不能追求一蹴而就，需要以增量的形式逐步改进，可以参考CMM的不同等级。</p><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200812115015.png"></p><p>Table. CMM的分级、特征与要求[1]</p><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] 能力成熟度模型，MBA智库 <a href="https://wiki.mbalib.com/wiki/%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B" target="_blank" rel="noopener">https://wiki.mbalib.com/wiki/%E8%83%BD%E5%8A%9B%E6%88%90%E7%86%9F%E5%BA%A6%E6%A8%A1%E5%9E%8B</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Notes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Note </tag>
+            
+            <tag> 软件工程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>研究和业务</title>
       <link href="/2020/08/05/%E7%A0%94%E7%A9%B6%E5%92%8C%E4%B8%9A%E5%8A%A1/"/>
       <url>/2020/08/05/%E7%A0%94%E7%A9%B6%E5%92%8C%E4%B8%9A%E5%8A%A1/</url>
@@ -600,9 +627,9 @@
       
         <tags>
             
-            <tag> 软件测试 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 软件测试 </tag>
             
         </tags>
       
@@ -621,9 +648,9 @@
       
         <tags>
             
-            <tag> 软件测试 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 软件测试 </tag>
             
         </tags>
       
@@ -642,9 +669,9 @@
       
         <tags>
             
-            <tag> 软件测试 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 软件测试 </tag>
             
         </tags>
       
@@ -663,9 +690,9 @@
       
         <tags>
             
-            <tag> ML&amp;AI </tag>
-            
             <tag> Note </tag>
+            
+            <tag> ML&amp;AI </tag>
             
         </tags>
       
@@ -718,9 +745,9 @@
       
         <tags>
             
-            <tag> 软件测试 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 软件测试 </tag>
             
         </tags>
       
@@ -760,11 +787,11 @@
       
         <tags>
             
+            <tag> 软件工程 </tag>
+            
             <tag> 开发 </tag>
             
             <tag> 软件测试 </tag>
-            
-            <tag> 软件工程 </tag>
             
         </tags>
       
@@ -806,9 +833,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
         </tags>
       
@@ -1050,9 +1077,9 @@
       
         <tags>
             
-            <tag> 安全综合 </tag>
-            
             <tag> CTF </tag>
+            
+            <tag> 安全综合 </tag>
             
         </tags>
       
