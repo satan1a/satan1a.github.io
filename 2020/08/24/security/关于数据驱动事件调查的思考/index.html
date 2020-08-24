@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="关于数据驱动事件调查的思考基于事件调查的分析能力提升 在实际的情况下，各种安全设备、系统会产生海量的数据。对于企业来说，很重要的一件事情，就是要从这些疑似的安全告警中，根据一些模型和算法提取有价值的安全事件。 众所周知，传统的安全设备，往往都是以特征检查为主，模型检查的能力受限（短时间窗口），也比较弱。那么，在这个基础之上，我们需要做的一件事，就可以是写好确定的分析模型，这个分析模型需要结合安全方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于数据驱动事件调查的思考">
+<meta property="og:url" content="https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="关于数据驱动事件调查的思考基于事件调查的分析能力提升 在实际的情况下，各种安全设备、系统会产生海量的数据。对于企业来说，很重要的一件事情，就是要从这些疑似的安全告警中，根据一些模型和算法提取有价值的安全事件。 众所周知，传统的安全设备，往往都是以特征检查为主，模型检查的能力受限（短时间窗口），也比较弱。那么，在这个基础之上，我们需要做的一件事，就可以是写好确定的分析模型，这个分析模型需要结合安全方">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-24T08:05:02.345Z">
+<meta property="article:modified_time" content="2020-08-24T08:07:34.244Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="安全综合">
+<meta property="article:tag" content="安全之路">
+<meta property="article:tag" content="安全数据分析">
+<meta property="article:tag" content="事件调查">
+<meta property="article:tag" content="数据驱动">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>关于数据驱动事件调查的思考</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/08/21/%E4%B8%8D%E8%83%BD%E8%AF%B4%E4%B8%8D%E8%A1%8C/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&text=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&is_video=false&description=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于数据驱动事件调查的思考&body=Check out this article: https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&name=关于数据驱动事件调查的思考&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&t=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于数据驱动事件调查的思考"><span class="toc-number">1.</span> <span class="toc-text">关于数据驱动事件调查的思考</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        关于数据驱动事件调查的思考
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-24T08:05:02.345Z" itemprop="datePublished">2020-08-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5/" rel="tag">事件调查</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E4%B9%8B%E8%B7%AF/" rel="tag">安全之路</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">安全数据分析</a>, <a class="tag-link" href="/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/" rel="tag">安全综合</a>, <a class="tag-link" href="/tags/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8/" rel="tag">数据驱动</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="关于数据驱动事件调查的思考"><a href="#关于数据驱动事件调查的思考" class="headerlink" title="关于数据驱动事件调查的思考"></a>关于数据驱动事件调查的思考</h1><p><em>基于事件调查的分析能力提升</em></p>
+<p>在实际的情况下，各种安全设备、系统会产生海量的数据。对于企业来说，很重要的一件事情，就是要从这些疑似的安全告警中，根据一些模型和算法提取有价值的安全事件。</p>
+<p>众所周知，传统的安全设备，往往都是以特征检查为主，模型检查的能力受限（短时间窗口），也比较弱。那么，在这个基础之上，我们需要做的一件事，就可以是写好确定的分析模型，这个分析模型需要结合安全方面的专家经验，也需要结合数据分析、机器学习学习技术（比如异常检测）。</p>
+<p>模型可以帮助我们以一个效率更高的方式对告警数据做一个初步的判断，把人工经验转化为了机器脚本去执行。但模型偏向于的单个能力的检查。比如模型能检查钓鱼邮件行为，但却不能梳理出一个APT事件。因为对于模型，我们的定义是让其做好特征检查做不到的事情，但没有要求它能到一个完整事件的梳理。</p>
+<p>此时我们就可以引入分析能力这个概念。分析能力所涵盖的事情，是基于事件而设计的，而不是单个能力的检查。在基于数据驱动的应急响应过程中，分析师所需要做的，简单来说就是从数据（告警、流量等）中找到一个真实的入侵事件，而事件的包含的内容则可以参考3W1H（Who When What How）。而这个找3W1H的过程，我们在经过特征、模型这两个阶段后，已经能对单方面攻击行为有一个初步的筛选了，比如某某IP在某某时间，对某某资产进行了XXX攻击。也就是，经过了特征和模型两个阶段，我们对3W初步进行了解决。但还剩下1H，攻击者是如何做到这个攻击的，并且要对3W做更精准的研判。</p>
+<p>此时，我们的分析平台就可以来亮相了。分析平台单从技术上来说，它应该具备上面我们所受的分析能力，并且这是它的核心。同时，作为一个与用户直接接触的平台，它还承担着业务能力、管理能力等其他产品方向的功能。</p>
+<p>那么，分析平台的分析能力如何体现呢？</p>
+<p>我们先来看一个人类分析师需要做哪些事情。首先，他需要对入侵事件进行调查，这是首要的。入侵调查后，我们可以得出一个围绕3W1H的报告。然后，他需要基于这个事件做一个风险点识别（从更大的角度，哪里出的问题体现了系统的哪个方面有问题），做一个风险处置（如何让这个风险点不再造成危害）。</p>
+<p>回到我们刚刚到问题，分析平台的分析能力，应该如何区别与特征、模型？对应上面对人类分析师所做之事的简单概括，我们可以知道，分析能力这项核心能力的体现，是要在一个更大的层面，即不再局限于某个事件，而是把多个事件整合起来，产出<strong>Knowledge</strong>。这个Knowledge可以由很多形式展现，以下列举几个我个人认为的：</p>
+<ul>
+<li>同源分析</li>
+<li>事件归并</li>
+<li>攻击评估</li>
+<li>攻击者画像<ul>
+<li>攻击者能力</li>
+<li>攻击者行为</li>
+</ul>
+</li>
+<li>TTPs（技战术组合）提炼</li>
+<li>威胁趋势、预测</li>
+<li>威胁狩猎</li>
+</ul>
+<p>所以，我们基于事件调查所进行进行的分析能力提升，总体来说是这三个阶段：特征——模型——分析。目前，特征阶段已经比较成熟，但覆盖率和精准率还有待提升。模型阶段，目前比较好的方案是结合安全方面专家能力和机器学习算法，在某个攻击行为上，检测的覆盖率和精准率已经挺不错了，但因为攻击、漏洞的千变万化，已经各种组合和绕过，使得复杂情况下的检测情况不是很完美。而分析阶段，目前不管是商业化的还是开源的，还是学术届的研究，只能说是一个对分析师的辅助，大多是工具性质，要进行半自动化的利用。</p>
+<p>未来就在眼前，把握机会。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#关于数据驱动事件调查的思考"><span class="toc-number">1.</span> <span class="toc-text">关于数据驱动事件调查的思考</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&text=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&is_video=false&description=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于数据驱动事件调查的思考&body=Check out this article: https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&title=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&name=关于数据驱动事件调查的思考&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/08/24/security/%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E4%BA%8B%E4%BB%B6%E8%B0%83%E6%9F%A5%E7%9A%84%E6%80%9D%E8%80%83/&t=关于数据驱动事件调查的思考" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
