@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://y1ng.org/"/>
-  <updated>2020-08-24T08:30:45.524Z</updated>
+  <updated>2020-08-28T16:40:18.507Z</updated>
   <id>https://y1ng.org/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>实习这段时间</title>
+    <link href="https://y1ng.org/2020/08/29/%E5%AE%9E%E4%B9%A0%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4/"/>
+    <id>https://y1ng.org/2020/08/29/%E5%AE%9E%E4%B9%A0%E8%BF%99%E6%AE%B5%E6%97%B6%E9%97%B4/</id>
+    <published>2020-08-28T16:01:44.000Z</published>
+    <updated>2020-08-28T16:40:18.507Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="Notes" scheme="https://y1ng.org/tags/Notes/"/>
+    
+      <category term="感了个悟" scheme="https://y1ng.org/tags/%E6%84%9F%E4%BA%86%E4%B8%AA%E6%82%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>关于数据驱动事件调查的思考</title>
@@ -506,31 +533,6 @@
     
     
       <category term="威胁情报" scheme="https://y1ng.org/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>漫漫安全路</title>
-    <link href="https://y1ng.org/2020/02/24/%E6%BC%AB%E6%BC%AB%E5%AE%89%E5%85%A8%E8%B7%AF/"/>
-    <id>https://y1ng.org/2020/02/24/%E6%BC%AB%E6%BC%AB%E5%AE%89%E5%85%A8%E8%B7%AF/</id>
-    <published>2020-02-24T15:42:40.000Z</published>
-    <updated>2020-02-24T15:47:33.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="安全之路" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E4%B9%8B%E8%B7%AF/"/>
     
   </entry>
   
