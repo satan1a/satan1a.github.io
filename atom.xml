@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://y1ng.org/"/>
-  <updated>2020-09-19T04:05:03.022Z</updated>
+  <updated>2020-09-19T04:06:35.981Z</updated>
   <id>https://y1ng.org/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://y1ng.org/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/"/>
     <id>https://y1ng.org/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/</id>
     <published>2020-09-19T01:45:06.678Z</published>
-    <updated>2020-09-19T04:05:03.022Z</updated>
+    <updated>2020-09-19T04:06:35.981Z</updated>
     
     <summary type="html">
     
@@ -64,9 +64,9 @@
     
       <category term="安全综合" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E7%BB%BC%E5%90%88/"/>
     
-      <category term="安全运营" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E8%BF%90%E8%90%A5/"/>
-    
       <category term="感了个悟" scheme="https://y1ng.org/tags/%E6%84%9F%E4%BA%86%E4%B8%AA%E6%82%9F/"/>
+    
+      <category term="安全运营" scheme="https://y1ng.org/tags/%E5%AE%89%E5%85%A8%E8%BF%90%E8%90%A5/"/>
     
   </entry>
   
