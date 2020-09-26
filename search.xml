@@ -167,6 +167,25 @@
     
     
     <entry>
+      <title>SSH免密登陆</title>
+      <link href="/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"/>
+      <url>/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SSH免密登陆"><a href="#SSH免密登陆" class="headerlink" title="SSH免密登陆"></a>SSH免密登陆</h1><p>在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？</p><p>当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。</p><h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png"></p><p>图：SSH公钥匙登入过程</p><p>先偷个懒，画了个流程图，文字部分以后再补😏</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Note </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>理解scroll search</title>
       <link href="/2020/07/24/scroll-search/"/>
       <url>/2020/07/24/scroll-search/</url>
@@ -898,9 +917,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
             <tag> 软件测试 </tag>
             
@@ -944,9 +963,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
         </tags>
       
