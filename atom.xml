@@ -40,6 +40,35 @@
   </entry>
   
   <entry>
+    <title>SSH免密登陆</title>
+    <link href="https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"/>
+    <id>https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/</id>
+    <published>2020-09-25T03:10:56.614Z</published>
+    <updated>2020-10-04T11:08:14.263Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+      <category term="ElasticSearch" scheme="https://y1ng.org/categories/ElasticSearch/"/>
+    
+    
+      <category term="Note" scheme="https://y1ng.org/tags/Note/"/>
+    
+      <category term="运维" scheme="https://y1ng.org/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于海外云服务器的选择</title>
     <link href="https://y1ng.org/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/"/>
     <id>https://y1ng.org/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/</id>
@@ -233,31 +262,6 @@
     
     
       <category term="感了个悟" scheme="https://y1ng.org/tags/%E6%84%9F%E4%BA%86%E4%B8%AA%E6%82%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SSH免密登陆</title>
-    <link href="https://y1ng.org/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"/>
-    <id>https://y1ng.org/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/</id>
-    <published>2020-07-24T03:21:07.000Z</published>
-    <updated>2020-09-26T00:43:14.935Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="Note" scheme="https://y1ng.org/tags/Note/"/>
     
   </entry>
   

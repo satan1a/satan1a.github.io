@@ -17,6 +17,33 @@
     
     
     <entry>
+      <title>SSH免密登陆</title>
+      <link href="/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"/>
+      <url>/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SSH免密登陆"><a href="#SSH免密登陆" class="headerlink" title="SSH免密登陆"></a>SSH免密登陆</h1><p>在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？</p><p>当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。</p><h2 id="1-流程图"><a href="#1-流程图" class="headerlink" title="1. 流程图"></a>1. 流程图</h2><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png"></p><p>图：SSH公钥匙登入过程</p><p><del>先偷个懒，画了个流程图，文字部分以后再补😏</del></p><h2 id="2-具体命令"><a href="#2-具体命令" class="headerlink" title="2. 具体命令"></a>2. 具体命令</h2><h3 id="本地生成一对密钥"><a href="#本地生成一对密钥" class="headerlink" title="本地生成一对密钥"></a>本地生成一对密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -o</span><br></pre></td></tr></table></figure><p>接着输入所生成密钥对的位置，小心不要覆盖；然后需要选择输入密钥的口令（passphrase），可以留空</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/Users/xxxxx/.ssh/id_rsa): /Users/xxxxx/.ssh/id_rsa_for_test</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br></pre></td></tr></table></figure><p>此时，我们已经在指定位置生成一对密钥了，例如上面就是在<code>/Users/xxxxx/.ssh/id_rsa</code>。</p><h3 id="在服务端开启公钥登入"><a href="#在服务端开启公钥登入" class="headerlink" title="在服务端开启公钥登入"></a>在服务端开启公钥登入</h3><p>登入服务器，对文件<code>/etc/ssh/sshd_config</code>进行编辑，开启远程公钥登入：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure><p>加入或者将以下的配置行解除注释：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2</span><br></pre></td></tr></table></figure><p>保存修改后，重启ssh服务，例如Debian系统使用命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service sshd restart</span><br></pre></td></tr></table></figure><h3 id="本地公钥发送"><a href="#本地公钥发送" class="headerlink" title="本地公钥发送"></a>本地公钥发送</h3><p>对于上面的流程图中第三步，我们需要本地生成的密钥对中的公钥发送到服务器，我们使用命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i id_rsa.pub root@xxx.xxx.xx.xxx</span><br></pre></td></tr></table></figure><p>如上面的命令，我们用<code>ssh-copy-id</code>命令，用<code>-i</code>参数指定发送的公钥，后面则是需要传送的服务器用户名、IP地址。输入密码验证后，我们看到响应信息：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Number of key(s) added:        1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   <span class="string">"ssh 'root@xxx.xxx.xx.xxx'"</span></span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br></pre></td></tr></table></figure><p>显示公钥发送成功，接下来就可以尝试免密（公钥）登入。</p><h3 id="尝试登入"><a href="#尝试登入" class="headerlink" title="尝试登入"></a>尝试登入</h3><p>直接ssh尝试登入，输入密钥的口令（如果在本地生成是设置了的话需要，留空则不需要）即可登入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  ssh root@xxx.xxx.xx.xxx</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> ElasticSearch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Note </tag>
+            
+            <tag> 运维 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>关于海外云服务器的选择</title>
       <link href="/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/"/>
       <url>/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/</url>
@@ -172,25 +199,6 @@
         <tags>
             
             <tag> 感了个悟 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>SSH免密登陆</title>
-      <link href="/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"/>
-      <url>/2020/07/24/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<h1 id="SSH免密登陆"><a href="#SSH免密登陆" class="headerlink" title="SSH免密登陆"></a>SSH免密登陆</h1><p>在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？</p><p>当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。</p><h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png"></p><p>图：SSH公钥匙登入过程</p><p>先偷个懒，画了个流程图，文字部分以后再补😏</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Note </tag>
             
         </tags>
       
@@ -930,9 +938,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
             <tag> 软件测试 </tag>
             
@@ -976,9 +984,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
         </tags>
       

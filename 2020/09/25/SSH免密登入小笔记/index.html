@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="SSH免密登陆在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？ 当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。 1. 流程图 图：SSH公钥匙登入过程 先偷个懒，画了个流程图，文字部分以后再补😏 2. 具体命令本地生成一对密钥1$ ssh-ke">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH免密登陆">
+<meta property="og:url" content="https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="SSH免密登陆在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？ 当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。 1. 流程图 图：SSH公钥匙登入过程 先偷个懒，画了个流程图，文字部分以后再补😏 2. 具体命令本地生成一对密钥1$ ssh-ke">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png">
+<meta property="article:published_time" content="2020-09-25T03:10:56.614Z">
+<meta property="article:modified_time" content="2020-10-04T11:08:14.263Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Note">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>SSH免密登陆</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/09/26/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%8A%E5%85%B6%E5%9C%A8%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F%E7%9A%84%E5%BA%94%E7%94%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/09/19/%E5%A4%96%E7%BD%91%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%AF%94%E8%BE%83/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&text=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&is_video=false&description=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SSH免密登陆&body=Check out this article: https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&name=SSH免密登陆&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&t=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH免密登陆"><span class="toc-number">1.</span> <span class="toc-text">SSH免密登陆</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-流程图"><span class="toc-number">1.1.</span> <span class="toc-text">1. 流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-具体命令"><span class="toc-number">1.2.</span> <span class="toc-text">2. 具体命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#本地生成一对密钥"><span class="toc-number">1.2.1.</span> <span class="toc-text">本地生成一对密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在服务端开启公钥登入"><span class="toc-number">1.2.2.</span> <span class="toc-text">在服务端开启公钥登入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地公钥发送"><span class="toc-number">1.2.3.</span> <span class="toc-text">本地公钥发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#尝试登入"><span class="toc-number">1.2.4.</span> <span class="toc-text">尝试登入</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SSH免密登陆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-09-25T03:10:56.614Z" itemprop="datePublished">2020-09-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/ElasticSearch/">ElasticSearch</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Note/" rel="tag">Note</a>, <a class="tag-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="SSH免密登陆"><a href="#SSH免密登陆" class="headerlink" title="SSH免密登陆"></a>SSH免密登陆</h1><p>在面试的时候，有个面试官问过一个问题：如果你是一个安全运维人员，你会做什么来提升SSH安全性？</p>
+<p>当时有提到说要使用publickey的形式登入，而不要使用密码登入的形式。但前者其实自己不是很熟练，因此在这里记一下使用publickey免密登入的过程。</p>
+<h2 id="1-流程图"><a href="#1-流程图" class="headerlink" title="1. 流程图"></a>1. 流程图</h2><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20200926081536.png"></p>
+<p>图：SSH公钥匙登入过程</p>
+<p><del>先偷个懒，画了个流程图，文字部分以后再补😏</del></p>
+<h2 id="2-具体命令"><a href="#2-具体命令" class="headerlink" title="2. 具体命令"></a>2. 具体命令</h2><h3 id="本地生成一对密钥"><a href="#本地生成一对密钥" class="headerlink" title="本地生成一对密钥"></a>本地生成一对密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -o</span><br></pre></td></tr></table></figure>
+
+<p>接着输入所生成密钥对的位置，小心不要覆盖；然后需要选择输入密钥的口令（passphrase），可以留空</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/Users/xxxxx/.ssh/id_rsa): /Users/xxxxx/.ssh/id_rsa_for_test</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们已经在指定位置生成一对密钥了，例如上面就是在<code>/Users/xxxxx/.ssh/id_rsa</code>。</p>
+<h3 id="在服务端开启公钥登入"><a href="#在服务端开启公钥登入" class="headerlink" title="在服务端开启公钥登入"></a>在服务端开启公钥登入</h3><p>登入服务器，对文件<code>/etc/ssh/sshd_config</code>进行编辑，开启远程公钥登入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>加入或者将以下的配置行解除注释：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile      .ssh/authorized_keys .ssh/authorized_keys2</span><br></pre></td></tr></table></figure>
+
+<p>保存修改后，重启ssh服务，例如Debian系统使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service sshd restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地公钥发送"><a href="#本地公钥发送" class="headerlink" title="本地公钥发送"></a>本地公钥发送</h3><p>对于上面的流程图中第三步，我们需要本地生成的密钥对中的公钥发送到服务器，我们使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i id_rsa.pub root@xxx.xxx.xx.xxx</span><br></pre></td></tr></table></figure>
+
+<p>如上面的命令，我们用<code>ssh-copy-id</code>命令，用<code>-i</code>参数指定发送的公钥，后面则是需要传送的服务器用户名、IP地址。输入密码验证后，我们看到响应信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Number of key(s) added:        1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   <span class="string">"ssh 'root@xxx.xxx.xx.xxx'"</span></span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br></pre></td></tr></table></figure>
+
+<p>显示公钥发送成功，接下来就可以尝试免密（公钥）登入。</p>
+<h3 id="尝试登入"><a href="#尝试登入" class="headerlink" title="尝试登入"></a>尝试登入</h3><p>直接ssh尝试登入，输入密钥的口令（如果在本地生成是设置了的话需要，留空则不需要）即可登入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  ssh root@xxx.xxx.xx.xxx</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH免密登陆"><span class="toc-number">1.</span> <span class="toc-text">SSH免密登陆</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-流程图"><span class="toc-number">1.1.</span> <span class="toc-text">1. 流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-具体命令"><span class="toc-number">1.2.</span> <span class="toc-text">2. 具体命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#本地生成一对密钥"><span class="toc-number">1.2.1.</span> <span class="toc-text">本地生成一对密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在服务端开启公钥登入"><span class="toc-number">1.2.2.</span> <span class="toc-text">在服务端开启公钥登入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地公钥发送"><span class="toc-number">1.2.3.</span> <span class="toc-text">本地公钥发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#尝试登入"><span class="toc-number">1.2.4.</span> <span class="toc-text">尝试登入</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&text=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&is_video=false&description=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SSH免密登陆&body=Check out this article: https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&title=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&name=SSH免密登陆&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2020/09/25/SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%85%A5%E5%B0%8F%E7%AC%94%E8%AE%B0/&t=SSH免密登陆" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'y1ng-org-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
