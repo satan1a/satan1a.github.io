@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>在macOS上设置Tor代理</title>
+      <link href="/2020/10/05/%E5%9C%A8macOS%E4%B8%8A%E8%AE%BE%E7%BD%AETor%E4%BB%A3%E7%90%86/"/>
+      <url>/2020/10/05/%E5%9C%A8macOS%E4%B8%8A%E8%AE%BE%E7%BD%AETor%E4%BB%A3%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h1 id="在macOS上设置Tor代理"><a href="#在macOS上设置Tor代理" class="headerlink" title="在macOS上设置Tor代理"></a>在macOS上设置Tor代理</h1><p>相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用<a href="https://www.torproject.org/download/" target="_blank" rel="noopener">Tor Browser</a>开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。</p><p>因为洋葱网络是由N个志愿节点组成的，所以我们初期是不需要自己<a href="https://zhuanlan.zhihu.com/p/34358838" target="_blank" rel="noopener">搭建洋葱网络节点</a>的（后续会更，先挖个坑😉）。所以我们这里主要是在搭建Tor客户端，以及进行相关配置。</p><h2 id="0-前期准备"><a href="#0-前期准备" class="headerlink" title="0. 前期准备"></a>0. 前期准备</h2><ul><li>稳定可用的自建科学上网节点，或者使用机场服务</li><li>科学上网代理的客户端，提供代理转发。例如本篇使用的是Qv2ray</li><li><del>其他好像也不需要什么了</del></li></ul><h2 id="1-安装Tor代理"><a href="#1-安装Tor代理" class="headerlink" title="1. 安装Tor代理"></a>1. 安装Tor代理</h2><p>首先我们需要在终端安装Tor服务。对于macOS用户，我们可以使用HomeBrew一键安装：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install tor</span><br></pre></td></tr></table></figure><p>HomeBrew使用原生源下载比较慢，建议给终端加上科学上网代理，使用国内镜像还是不太推荐，你说你都要使用Tor了对吧。</p><h2 id="2-设置Tor的上级代理"><a href="#2-设置Tor的上级代理" class="headerlink" title="2. 设置Tor的上级代理"></a>2. 设置Tor的上级代理</h2><p>由于GFW，我们的不能直连Tor网络，需要给Tor设置上级代理。Tor服务本身支持，只需要修改配置文件即可。在macOS中，配置文件在：<code>/usr/local/etc/tor/torrc.sample</code>，配置文件中包含很多配置介绍，有更多需求的同学可以仔细看下备注。</p><p>先备份一下配置文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp /usr/<span class="built_in">local</span>/etc/tor/torrc.sample /usr/<span class="built_in">local</span>/etc/tor/torrc.sample.BK</span><br></pre></td></tr></table></figure><p>接下来，我们需要编辑<code>torrc.sample</code>，在文件头部加入科学上网客户端的socks代理信息<code>SOCKS5Proxy 127.0.0.1:1086</code>，最后去掉起sample后缀使其生效：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/etc/tor/torrc.sample</span><br><span class="line">...</span><br><span class="line">SOCKS5Proxy 127.0.0.1:1086</span><br></pre></td></tr></table></figure><p>这里再给不太清楚同学补充一下，之所以填入<code>127.0.0.1:1086</code>是因为这里使用的科学上网工具Qv2ray的监听地址是<code>127.0.0.1</code>、Socks端口为<code>1086</code>，如下图所示：</p><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005214715.png"></p><p>图：Qv2ray的客户端配置信息</p><p>在配置文件<code>torrc</code>中加入这个科学上网的上级代理信息后，我们就可以通过科学上网代理去连接洋葱网络啦。</p><h2 id="3-运行Tor服务"><a href="#3-运行Tor服务" class="headerlink" title="3.  运行Tor服务"></a>3.  运行Tor服务</h2><p>我们使用HomeBrew的<code>services</code>命令来管理服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看使用HomeBrew安装的服务列表，检查是否有成功安装，显示有tor</span></span><br><span class="line">$ brew services</span><br><span class="line">...</span><br><span class="line"><span class="comment"># 开启Tor代理</span></span><br><span class="line">$ brew services start tor</span><br></pre></td></tr></table></figure><p>开启Tor服务后，Tor服务会在本地进行Socks5代理，监听的地址为<code>localhost</code>，端口号为<code>9050</code></p><p>因此，我们在需要使用Tor代理时，只需要走<code>127.0.0.1:9050</code>即可。</p><h2 id="4-在Chrome中配置"><a href="#4-在Chrome中配置" class="headerlink" title="4. 在Chrome中配置"></a>4. 在Chrome中配置</h2><p>我们可以直接在Chrome的设置中进行网络代理设置，也可以下载代理管理插件，例如<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="noopener">SwitchyOmega</a>。如下图所示，就是我们在SwitchyOmega插件中进行Tor的Socks代理配置：</p><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005215803.png"></p><p>配置好，apply后，选择该代理模式，就可以<del>愉快地</del>使用Tor代理进行网上冲浪啦～</p><p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005220258.png"></p><p>图：访问<a href="http://jh32yv5zgayyyts3.onion/" target="_blank" rel="noopener">Hidden Wiki（.onion）</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Note </tag>
+            
+            <tag> Tor </tag>
+            
+            <tag> 跨过山河大海　 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>知识图谱及其在安全领域的应用</title>
       <link href="/2020/09/26/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%8A%E5%85%B6%E5%9C%A8%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F%E7%9A%84%E5%BA%94%E7%94%A8/"/>
       <url>/2020/09/26/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%8F%8A%E5%85%B6%E5%9C%A8%E5%AE%89%E5%85%A8%E9%A2%86%E5%9F%9F%E7%9A%84%E5%BA%94%E7%94%A8/</url>
