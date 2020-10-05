@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="在macOS上设置Tor代理相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用Tor Browser开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。 因为洋葱网络是由N个志愿">
+    <meta name="description" content="在macOS上设置Tor代理注：仅作技术探讨 相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用Tor Browser开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。 因为洋">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在macOS上设置Tor代理">
 <meta property="og:url" content="https://y1ng.org/2020/10/05/%E5%9C%A8macOS%E4%B8%8A%E8%AE%BE%E7%BD%AETor%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
-<meta property="og:description" content="在macOS上设置Tor代理相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用Tor Browser开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。 因为洋葱网络是由N个志愿">
+<meta property="og:description" content="在macOS上设置Tor代理注：仅作技术探讨 相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用Tor Browser开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。 因为洋">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005214715.png">
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005215803.png">
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005220258.png">
 <meta property="article:published_time" content="2020-10-05T13:13:13.338Z">
-<meta property="article:modified_time" content="2020-10-05T14:04:07.568Z">
+<meta property="article:modified_time" content="2020-10-05T14:05:14.436Z">
 <meta property="article:author" content="Toky">
 <meta property="article:tag" content="Note">
 <meta property="article:tag" content="Tor">
@@ -165,7 +165,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="在macOS上设置Tor代理"><a href="#在macOS上设置Tor代理" class="headerlink" title="在macOS上设置Tor代理"></a>在macOS上设置Tor代理</h1><p>相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用<a href="https://www.torproject.org/download/" target="_blank" rel="noopener">Tor Browser</a>开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。</p>
+    <h1 id="在macOS上设置Tor代理"><a href="#在macOS上设置Tor代理" class="headerlink" title="在macOS上设置Tor代理"></a>在macOS上设置Tor代理</h1><p><strong>注：仅作技术探讨</strong></p>
+<p>相信很多接触Tor（The Onion Router，洋葱路由器）网络的同学，刚开始都是从使用<a href="https://www.torproject.org/download/" target="_blank" rel="noopener">Tor Browser</a>开始的。在后面使用过程中，我也逐渐以上到，Tor作为一种代理技术，本身是可以脱离浏览器的捆绑，应用在网络活动的各个角落的。比如说进行匿名访问Onion网站、通过Tor网络传输敏感文件，乃至使用各种软件服务时设置Tor代理隐藏身份。</p>
 <p>因为洋葱网络是由N个志愿节点组成的，所以我们初期是不需要自己<a href="https://zhuanlan.zhihu.com/p/34358838" target="_blank" rel="noopener">搭建洋葱网络节点</a>的（后续会更，先挖个坑😉）。所以我们这里主要是在搭建Tor客户端，以及进行相关配置。</p>
 <h2 id="0-前期准备"><a href="#0-前期准备" class="headerlink" title="0. 前期准备"></a>0. 前期准备</h2><ul>
 <li>稳定可用的自建科学上网节点，或者使用机场服务</li>
