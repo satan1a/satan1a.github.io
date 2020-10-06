@@ -16,8 +16,9 @@
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005214715.png">
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005215803.png">
 <meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005220258.png">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201006213543.png">
 <meta property="article:published_time" content="2020-10-05T13:13:13.338Z">
-<meta property="article:modified_time" content="2020-10-05T14:05:14.436Z">
+<meta property="article:modified_time" content="2020-10-06T13:39:47.235Z">
 <meta property="article:author" content="Toky">
 <meta property="article:tag" content="Note">
 <meta property="article:tag" content="Tor">
@@ -121,7 +122,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在macOS上设置Tor代理"><span class="toc-number">1.</span> <span class="toc-text">在macOS上设置Tor代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-前期准备"><span class="toc-number">1.1.</span> <span class="toc-text">0. 前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装Tor代理"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安装Tor代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置Tor的上级代理"><span class="toc-number">1.3.</span> <span class="toc-text">2. 设置Tor的上级代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-运行Tor服务"><span class="toc-number">1.4.</span> <span class="toc-text">3.  运行Tor服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-在Chrome中配置"><span class="toc-number">1.5.</span> <span class="toc-text">4. 在Chrome中配置</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在macOS上设置Tor代理"><span class="toc-number">1.</span> <span class="toc-text">在macOS上设置Tor代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-前期准备"><span class="toc-number">1.1.</span> <span class="toc-text">0. 前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装Tor代理"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安装Tor代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置Tor的上级代理"><span class="toc-number">1.3.</span> <span class="toc-text">2. 设置Tor的上级代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-运行Tor服务"><span class="toc-number">1.4.</span> <span class="toc-text">3.  运行Tor服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-在Chrome中配置"><span class="toc-number">1.5.</span> <span class="toc-text">4. 在Chrome中配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补：5-终端Tor代理监视"><span class="toc-number">1.6.</span> <span class="toc-text">补：5. 终端Tor代理监视</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -198,6 +199,22 @@
 <p>配置好，apply后，选择该代理模式，就可以<del>愉快地</del>使用Tor代理进行网上冲浪啦～</p>
 <p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201005220258.png"></p>
 <p>图：访问<a href="http://jh32yv5zgayyyts3.onion/" target="_blank" rel="noopener">Hidden Wiki（.onion）</a></p>
+<h2 id="补：5-终端Tor代理监视"><a href="#补：5-终端Tor代理监视" class="headerlink" title="补：5. 终端Tor代理监视"></a>补：5. 终端Tor代理监视</h2><p>Tor代理服务在终端中本身没有提供相关监视信息，我们需要一个对Tor的监视面板。这里我们采用官方推荐的<a href="https://nyx.torproject.org/" target="_blank" rel="noopener">Nyx</a>，它可以查看Tor代理的带宽图、事件日志和连接信息等。</p>
+<p>同样，我们可以在macOS中使用HomeBrew一键安装:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nyx</span><br></pre></td></tr></table></figure>
+
+<p>然后，我们需要在Tor配置文件中开启控制接口，去掉<code>ControlPort 9051</code>参数前的注释符，注意，这个9051端口也正好是Nyx的默认attach端口，如果需要改变该端口可以使用Nyx 的<code>-i</code>参数改变：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ vim /usr/<span class="built_in">local</span>/etc/tor/torrc</span><br><span class="line">···</span><br><span class="line"><span class="comment">## The port on which Tor will listen for local connections from Tor</span></span><br><span class="line"><span class="comment">## controller applications, as documented in control-spec.txt.</span></span><br><span class="line">ControlPort 9051</span><br><span class="line"><span class="comment">## If you enable the controlport, be sure to enable one of these</span></span><br><span class="line"><span class="comment">## authentication methods, to prevent attackers from accessing it.</span></span><br><span class="line">···</span><br></pre></td></tr></table></figure>
+
+<p>如果不开启该选项的话，Nyx无法attach到Tor代理服务，会报以下的错误:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Unable to connect to tor. Are you sure it<span class="string">'s running?</span></span><br><span class="line"><span class="string"># 或者是</span></span><br><span class="line"><span class="string">please check in your torrc that 9050 is the controlport. maybe you configured it to be the orport or socksport instead?</span></span><br></pre></td></tr></table></figure>
+
+<p>我们也可以修改上面的Tor配置文件，此时用Nyx的<code>-i</code>参数即可设置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用-i参数可以指定另外的attach地址、端口</span></span><br><span class="line">$ nyx -i 192.168.0.0:9052</span><br></pre></td></tr></table></figure>
+
+<p>完成上述配置后，我们显示的效果如下图所示，并且有多种功能支持：</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/20201006213543.png"></p>
+<p>图：Nyx在终端开启后的效果</p>
 
   </div>
 </article>
@@ -237,7 +254,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在macOS上设置Tor代理"><span class="toc-number">1.</span> <span class="toc-text">在macOS上设置Tor代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-前期准备"><span class="toc-number">1.1.</span> <span class="toc-text">0. 前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装Tor代理"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安装Tor代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置Tor的上级代理"><span class="toc-number">1.3.</span> <span class="toc-text">2. 设置Tor的上级代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-运行Tor服务"><span class="toc-number">1.4.</span> <span class="toc-text">3.  运行Tor服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-在Chrome中配置"><span class="toc-number">1.5.</span> <span class="toc-text">4. 在Chrome中配置</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在macOS上设置Tor代理"><span class="toc-number">1.</span> <span class="toc-text">在macOS上设置Tor代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-前期准备"><span class="toc-number">1.1.</span> <span class="toc-text">0. 前期准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装Tor代理"><span class="toc-number">1.2.</span> <span class="toc-text">1. 安装Tor代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置Tor的上级代理"><span class="toc-number">1.3.</span> <span class="toc-text">2. 设置Tor的上级代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-运行Tor服务"><span class="toc-number">1.4.</span> <span class="toc-text">3.  运行Tor服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-在Chrome中配置"><span class="toc-number">1.5.</span> <span class="toc-text">4. 在Chrome中配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补：5-终端Tor代理监视"><span class="toc-number">1.6.</span> <span class="toc-text">补：5. 终端Tor代理监视</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
