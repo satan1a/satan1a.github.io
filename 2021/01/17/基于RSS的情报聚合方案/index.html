@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="基于RSS的情报聚合方案网络上公开的新闻、资讯、文章等，是开源情报收集的重要组成。但这些信息源来源不同，并且对订阅的支持方式各不相同（公众号订阅、RSS、邮件订阅），且有不同的反爬策略等限制，导致我们每天在阅读相关安全资讯时需要辗转不同的平台，不太方便。所以这里整理一个简单的思路，聚合一些常用的信息源。 订阅方式本方案选择最常用的RSS订阅方式 平台选择使用RSS订阅，我们可以选择在线的RSS订阅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于RSS的情报聚合方案">
+<meta property="og:url" content="https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="基于RSS的情报聚合方案网络上公开的新闻、资讯、文章等，是开源情报收集的重要组成。但这些信息源来源不同，并且对订阅的支持方式各不相同（公众号订阅、RSS、邮件订阅），且有不同的反爬策略等限制，导致我们每天在阅读相关安全资讯时需要辗转不同的平台，不太方便。所以这里整理一个简单的思路，聚合一些常用的信息源。 订阅方式本方案选择最常用的RSS订阅方式 平台选择使用RSS订阅，我们可以选择在线的RSS订阅">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210117152232495.png">
+<meta property="article:published_time" content="2021-01-17T06:42:46.453Z">
+<meta property="article:modified_time" content="2021-01-17T07:29:06.715Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210117152232495.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>基于RSS的情报聚合方案</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/10/05/%E5%9C%A8macOS%E4%B8%8A%E8%AE%BE%E7%BD%AETor%E4%BB%A3%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&text=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&is_video=false&description=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=基于RSS的情报聚合方案&body=Check out this article: https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&name=基于RSS的情报聚合方案&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&t=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于RSS的情报聚合方案"><span class="toc-number">1.</span> <span class="toc-text">基于RSS的情报聚合方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#订阅方式"><span class="toc-number">1.1.</span> <span class="toc-text">订阅方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平台选择"><span class="toc-number">1.2.</span> <span class="toc-text">平台选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情报源聚合"><span class="toc-number">1.3.</span> <span class="toc-text">情报源聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#支持RSS的网站"><span class="toc-number">1.3.1.</span> <span class="toc-text">支持RSS的网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信公众号"><span class="toc-number">1.3.2.</span> <span class="toc-text">微信公众号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Twitter"><span class="toc-number">1.3.3.</span> <span class="toc-text">Twitter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Email-Newsletters"><span class="toc-number">1.3.4.</span> <span class="toc-text">Email Newsletters</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        基于RSS的情报聚合方案
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-17T06:42:46.453Z" itemprop="datePublished">2021-01-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="基于RSS的情报聚合方案"><a href="#基于RSS的情报聚合方案" class="headerlink" title="基于RSS的情报聚合方案"></a>基于RSS的情报聚合方案</h1><p>网络上公开的新闻、资讯、文章等，是开源情报收集的重要组成。但这些信息源来源不同，并且对订阅的支持方式各不相同（公众号订阅、RSS、邮件订阅），且有不同的反爬策略等限制，导致我们每天在阅读相关安全资讯时需要辗转不同的平台，不太方便。所以这里整理一个简单的思路，聚合一些常用的信息源。</p>
+<h2 id="订阅方式"><a href="#订阅方式" class="headerlink" title="订阅方式"></a>订阅方式</h2><p>本方案选择最常用的RSS订阅方式</p>
+<h2 id="平台选择"><a href="#平台选择" class="headerlink" title="平台选择"></a>平台选择</h2><p>使用RSS订阅，我们可以选择在线的RSS订阅平台，也可以使用本机软件，两者各有好坏。本方案选择使用在线的RSS订阅平台，主要的好处有：</p>
+<ul>
+<li>可实现托管形式的定时爬取、更新</li>
+<li>本地无缓存占用</li>
+<li>避免了部分订阅源由于GFW而产生的网络问题（使用外网平台）</li>
+<li>可以隐藏订阅者的本机信息</li>
+</ul>
+<p>劣势是：</p>
+<ul>
+<li>订阅源到一定数量需要付费，且有缓存、更新时间等限制</li>
+<li>对平台来说，暴露了你自己的情报源（一般来说问题不大）</li>
+</ul>
+<p>目前常用的在线RSS订阅平台有<a href="https://feedly.com/" target="_blank" rel="noopener">Feedly</a>、<a href="https://www.inoreader.com/" target="_blank" rel="noopener">Inoreader</a>、<a href="https://feedbin.com/" target="_blank" rel="noopener">Feedbin</a>等，笔者更偏爱Inoreader一些。以下是Inoreader支持的一些功能（Feedly基本也具有）：</p>
+<ul>
+<li>支持订阅webpage，不必提供RSS</li>
+<li>支持订阅Twitter、Youtube、Facebook、Reddit等</li>
+<li>支持邮件简讯订阅</li>
+<li>还支持订阅Inoreader用户</li>
+<li>多平台客户端支持，Web的体验比较简介专注</li>
+</ul>
+<h2 id="情报源聚合"><a href="#情报源聚合" class="headerlink" title="情报源聚合"></a>情报源聚合</h2><h3 id="支持RSS的网站"><a href="#支持RSS的网站" class="headerlink" title="支持RSS的网站"></a>支持RSS的网站</h3><p>直接在平台添加RSS订阅地址即可。</p>
+<p>Tips：可以使用浏览器插件来探测网站的RSS链接，更加方便，这样的插件有：<a href="">RSS Reader Extension (by Inoreader)</a>、<a href="">RSS Hub</a></p>
+<h3 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h3><p>微信公众号本身不支持RSS订阅，但可以使用一些平台服务进行转换。例如使用<a href="https://werss.app/" target="_blank" rel="noopener">WeRSS</a>，可搜索微信公众号名字，直接转换为RSS链接，然后在Inoreader中添加即可。</p>
+<p>P.S. 该服务的付费套餐价格也比较亲民。</p>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210117152232495.png" alt="image-20210117152232495"></p>
+<p>图：WeRSS使用示例</p>
+<h3 id="Twitter"><a href="#Twitter" class="headerlink" title="Twitter"></a>Twitter</h3><p>Inoreader支持直接订阅。</p>
+<h3 id="Email-Newsletters"><a href="#Email-Newsletters" class="headerlink" title="Email Newsletters"></a>Email Newsletters</h3><p>Inoreader支持直接订阅。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于RSS的情报聚合方案"><span class="toc-number">1.</span> <span class="toc-text">基于RSS的情报聚合方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#订阅方式"><span class="toc-number">1.1.</span> <span class="toc-text">订阅方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平台选择"><span class="toc-number">1.2.</span> <span class="toc-text">平台选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情报源聚合"><span class="toc-number">1.3.</span> <span class="toc-text">情报源聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#支持RSS的网站"><span class="toc-number">1.3.1.</span> <span class="toc-text">支持RSS的网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微信公众号"><span class="toc-number">1.3.2.</span> <span class="toc-text">微信公众号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Twitter"><span class="toc-number">1.3.3.</span> <span class="toc-text">Twitter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Email-Newsletters"><span class="toc-number">1.3.4.</span> <span class="toc-text">Email Newsletters</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&text=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&is_video=false&description=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=基于RSS的情报聚合方案&body=Check out this article: https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&title=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&name=基于RSS的情报聚合方案&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2021/01/17/%E5%9F%BA%E4%BA%8ERSS%E7%9A%84%E6%83%85%E6%8A%A5%E8%81%9A%E5%90%88%E6%96%B9%E6%A1%88/&t=基于RSS的情报聚合方案" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="https://y1ng.cc/" target="_blank" rel="noopener">BBS</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'y1ng-org-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
