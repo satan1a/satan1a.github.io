@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="读书笔记：机器学习互联网业务安全实践   机器学习互联网业务安全实践，王帅、吴哲夫 著  前言 机器学习发展阶段  规则学习 统计学习  深度学习    机器学习三要素  模型（建模） 策略（学习方法） 算法（实现）   数学基础  数值分析 —— 算法推衍 线性代数 —— 算法实现 概率统计 —— 理解模型 离散数学 —— 理解模型 矩阵论、优化论、泛函分析、贝叶斯统计、模糊数学 —— 理解模型">
+<meta property="og:type" content="website">
+<meta property="og:title" content="读书笔记：机器学习互联网业务安全实践">
+<meta property="og:url" content="https://y1ng.org/books/ReadNotes/0x1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BA%92%E8%81%94%E7%BD%91%E4%B8%9A%E5%8A%A1%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="读书笔记：机器学习互联网业务安全实践   机器学习互联网业务安全实践，王帅、吴哲夫 著  前言 机器学习发展阶段  规则学习 统计学习  深度学习    机器学习三要素  模型（建模） 策略（学习方法） 算法（实现）   数学基础  数值分析 —— 算法推衍 线性代数 —— 算法实现 概率统计 —— 理解模型 离散数学 —— 理解模型 矩阵论、优化论、泛函分析、贝叶斯统计、模糊数学 —— 理解模型">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210520005250228.png">
+<meta property="article:published_time" content="2021-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-19T17:16:23.720Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="Cyber Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210520005250228.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>读书笔记：机器学习互联网业务安全实践</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+    <div class="content index py4">
+        
+          <header id="header">
+  <a href="/">
+  
+    
+      <div id="logo" style="background-image: url(/images/logo_white.png);"></div>
+    
+  
+    <div id="title">
+      <h1>喵了个咪乎 Cat My Dog</h1>
+    </div>
+  </a>
+  <div id="nav">
+    <ul>
+      <li class="icon">
+        <a href="#"><i class="fas fa-bars fa-2x"></i></a>
+      </li>
+       
+        <li><a href="/">Home</a></li>
+       
+        <li><a href="/archives/">Writing</a></li>
+       
+        <li><a href="/tags">Tags</a></li>
+       
+        <li><a href="/Project">Projects</a></li>
+       
+        <li><a href="/learning">Learning</a></li>
+       
+        <li><a href="/books">Books</a></li>
+       
+        <li><a href="/atom.xml">RSS</a></li>
+       
+        <li><a href="/about">About</a></li>
+      
+    </ul>
+  </div>
+</header>
+
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  
+
+  <div class="content" itemprop="articleBody">
+      
+          <h1 id="读书笔记：机器学习互联网业务安全实践"><a href="#读书笔记：机器学习互联网业务安全实践" class="headerlink" title="读书笔记：机器学习互联网业务安全实践"></a>读书笔记：机器学习互联网业务安全实践</h1><blockquote>
+<p>  机器学习互联网业务安全实践，王帅、吴哲夫 著</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p>机器学习发展阶段</p>
+<ul>
+<li><h1 id="规则学习"><a href="#规则学习" class="headerlink" title="规则学习"></a>规则学习</h1></li>
+<li><p>统计学习</p>
+</li>
+<li><p>深度学习</p>
+</li>
+</ul>
+</li>
+<li><p>机器学习三要素</p>
+<ul>
+<li>模型（建模）</li>
+<li>策略（学习方法）</li>
+<li>算法（实现）</li>
+</ul>
+</li>
+<li><p>数学基础</p>
+<ul>
+<li>数值分析 —— 算法推衍</li>
+<li>线性代数 —— 算法实现</li>
+<li>概率统计 —— 理解模型</li>
+<li>离散数学 —— 理解模型</li>
+<li>矩阵论、优化论、泛函分析、贝叶斯统计、模糊数学 —— 理解模型算法的实现原理</li>
+</ul>
+</li>
+<li><p>如何快速掌握并使用模型，关键在于<strong>理解模型的适用条件</strong>，从而能构造出<strong>模型要求的特征</strong></p>
+</li>
+<li><p>不一定要选择最合适的模型，理由：</p>
+<ul>
+<li>先前的模型转化为适用现有问题的复杂度可能不是很高</li>
+<li>对业务场景的深入分析、研究需要大量时间，而这是提取特征的关键</li>
+<li>转换模型对结构和工程化的压力大</li>
+</ul>
+</li>
+<li><p>注重培养看公式比看文字更高效的能力</p>
+</li>
+</ul>
+<hr>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20210520005250228.png" alt="image-20210520005250228"></p>
+<p>图：机器学习算法工程师所具备的技能树</p>
+<h2 id="第1章-——-互联网业务简述"><a href="#第1章-——-互联网业务简述" class="headerlink" title="第1章 —— 互联网业务简述"></a>第1章 —— 互联网业务简述</h2><ul>
+<li>业务安全事件的特点<ul>
+<li>频率高、范围广</li>
+<li>高度产业链化</li>
+<li>危害严重、社会影响较大</li>
+</ul>
+</li>
+<li>如何应对互联网业务安全挑战？<ul>
+<li>监控业务安全预警信息—— 先决条件（天时）<ul>
+<li>业界内的信息共享，对安全事件的联防联控，可以广大公司争取一定的应对时间，避免完全被动</li>
+<li>互联网企业可以联合司法机关和政府部分共同治理黑灰产</li>
+<li>根据公司业务建立情报监测系统</li>
+</ul>
+</li>
+<li>提升业务安全防护技术 —— 基石（地利）<ul>
+<li>移动端加固</li>
+<li>敏感、隐私信息保护</li>
+<li>从海量业务数据中挖掘出异常风险行为</li>
+</ul>
+</li>
+<li>培养业务安全相关的专业技术人员 —— 核心（人和）<ul>
+<li>专业技能 + 了解业务</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>该书切入点：<strong>基于机器学习技术来打造风险识别引擎，为业务安全对抗提供技术支撑</strong></li>
+</ul>
+
+        
+  </div>
+</article>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/Project">Projects</a></li>
+         
+          <li><a href="/learning">Learning</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'y1ng-org-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
