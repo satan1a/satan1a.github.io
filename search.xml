@@ -700,9 +700,9 @@
             
             <tag> 安全综合 </tag>
             
-            <tag> 威胁情报 </tag>
-            
             <tag> 情报 </tag>
+            
+            <tag> 威胁情报 </tag>
             
         </tags>
       
@@ -1024,9 +1024,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
             <tag> 软件测试 </tag>
             
@@ -1070,9 +1070,9 @@
       
         <tags>
             
-            <tag> 开发 </tag>
-            
             <tag> 软件工程 </tag>
+            
+            <tag> 开发 </tag>
             
         </tags>
       
@@ -1272,9 +1272,9 @@
             
             <tag> 安全综合 </tag>
             
-            <tag> 渗透测试 </tag>
-            
             <tag> Tips </tag>
+            
+            <tag> 渗透测试 </tag>
             
         </tags>
       
