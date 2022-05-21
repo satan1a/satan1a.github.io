@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://y1ng.org/"/>
-  <updated>2021-08-28T11:16:23.801Z</updated>
+  <updated>2022-05-21T16:16:03.726Z</updated>
   <id>https://y1ng.org/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MITRE ATT&amp;CK实践入门</title>
+    <link href="https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/"/>
+    <id>https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/</id>
+    <published>2022-05-21T16:12:54.564Z</published>
+    <updated>2022-05-21T16:16:03.726Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          
+        
+      
+    
+    </summary>
+    
+    
+    
+      <category term="威胁情报" scheme="https://y1ng.org/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/"/>
+    
+      <category term="ATT&amp;CK" scheme="https://y1ng.org/tags/ATT-CK/"/>
+    
+      <category term="威胁狩猎" scheme="https://y1ng.org/tags/%E5%A8%81%E8%83%81%E7%8B%A9%E7%8C%8E/"/>
+    
+      <category term="红蓝对抗" scheme="https://y1ng.org/tags/%E7%BA%A2%E8%93%9D%E5%AF%B9%E6%8A%97/"/>
+    
+      <category term="学习笔记" scheme="https://y1ng.org/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>安全领域内的开放数据集</title>
@@ -526,31 +559,6 @@
     
     
       <category term="工具相关" scheme="https://y1ng.org/tags/%E5%B7%A5%E5%85%B7%E7%9B%B8%E5%85%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS应用安全学习——文件结构</title>
-    <link href="https://y1ng.org/2020/03/12/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/"/>
-    <id>https://y1ng.org/2020/03/12/iOS%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/</id>
-    <published>2020-03-12T06:58:19.000Z</published>
-    <updated>2020-03-12T06:59:24.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          
-        
-      
-    
-    </summary>
-    
-    
-    
-      <category term="iOS安全" scheme="https://y1ng.org/tags/iOS%E5%AE%89%E5%85%A8/"/>
     
   </entry>
   

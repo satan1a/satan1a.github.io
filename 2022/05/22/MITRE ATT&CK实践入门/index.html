@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="MITRE ATT&amp;CK实践入门本篇是对Getting Started with ATT&amp;CK的学习笔记，整理了对应脑图。 相关资源：  脑图xmind源文件：[链接](https:&#x2F;&#x2F;wiki.y1ng.org&#x2F;assets&#x2F;MITRE ATT&amp;CK实践入门.xmind)  脑图PDF版本：[链接](https:&#x2F;&#x2F;wiki.y1ng.org&#x2F;assets&#x2F;MITRE A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MITRE ATT&amp;CK实践入门">
+<meta property="og:url" content="https://y1ng.org/2022/05/22/MITRE%20ATT&CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="喵了个咪乎 Cat My Dog">
+<meta property="og:description" content="MITRE ATT&amp;CK实践入门本篇是对Getting Started with ATT&amp;CK的学习笔记，整理了对应脑图。 相关资源：  脑图xmind源文件：[链接](https:&#x2F;&#x2F;wiki.y1ng.org&#x2F;assets&#x2F;MITRE ATT&amp;CK实践入门.xmind)  脑图PDF版本：[链接](https:&#x2F;&#x2F;wiki.y1ng.org&#x2F;assets&#x2F;MITRE A">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20220521233721606.png">
+<meta property="article:published_time" content="2022-05-21T16:12:54.564Z">
+<meta property="article:modified_time" content="2022-05-21T16:16:03.726Z">
+<meta property="article:author" content="Toky">
+<meta property="article:tag" content="威胁情报">
+<meta property="article:tag" content="ATT&amp;CK">
+<meta property="article:tag" content="威胁狩猎">
+<meta property="article:tag" content="红蓝对抗">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20220521233721606.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MITRE ATT&amp;CK实践入门</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="喵了个咪乎 Cat My Dog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/projects/">Projects</a></li>
+         
+          <li><a href="/tools/">Tools</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/03/25/%E5%BC%80%E6%94%BE%E5%AE%89%E5%85%A8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%95%B4%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&text=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&is_video=false&description=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MITRE ATT&amp;CK实践入门&body=Check out this article: https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&name=MITRE ATT&amp;CK实践入门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&t=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MITRE-ATT-amp-CK实践入门"><span class="toc-number">1.</span> <span class="toc-text">MITRE ATT&amp;CK实践入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#〇、概要"><span class="toc-number">1.1.</span> <span class="toc-text">〇、概要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#围绕4个关键用例"><span class="toc-number">1.1.1.</span> <span class="toc-text">围绕4个关键用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以3个层次讲述"><span class="toc-number">1.1.2.</span> <span class="toc-text">以3个层次讲述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、网络威胁情报"><span class="toc-number">1.2.</span> <span class="toc-text">一、网络威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层"><span class="toc-number">1.2.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层"><span class="toc-number">1.2.3.</span> <span class="toc-text">第三层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、检测与分析"><span class="toc-number">1.3.</span> <span class="toc-text">二、检测与分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">第三层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关资源"><span class="toc-number">1.3.4.</span> <span class="toc-text">相关资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、对手仿真与红队"><span class="toc-number">1.4.</span> <span class="toc-text">三、对手仿真与红队</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-2"><span class="toc-number">1.4.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-2"><span class="toc-number">1.4.3.</span> <span class="toc-text">第三层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、评估与工程"><span class="toc-number">1.5.</span> <span class="toc-text">四、评估与工程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-3"><span class="toc-number">1.5.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-3"><span class="toc-number">1.5.3.</span> <span class="toc-text">第三层</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MITRE ATT&amp;CK实践入门
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">喵了个咪乎 Cat My Dog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-21T16:12:54.564Z" itemprop="datePublished">2022-05-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/ATT-CK/" rel="tag">ATT&CK</a>, <a class="tag-link" href="/tags/%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5/" rel="tag">威胁情报</a>, <a class="tag-link" href="/tags/%E5%A8%81%E8%83%81%E7%8B%A9%E7%8C%8E/" rel="tag">威胁狩猎</a>, <a class="tag-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>, <a class="tag-link" href="/tags/%E7%BA%A2%E8%93%9D%E5%AF%B9%E6%8A%97/" rel="tag">红蓝对抗</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="MITRE-ATT-amp-CK实践入门"><a href="#MITRE-ATT-amp-CK实践入门" class="headerlink" title="MITRE ATT&amp;CK实践入门"></a>MITRE ATT&amp;CK实践入门</h1><p>本篇是对<a href="https://www.mitre.org/sites/default/files/publications/mitre-getting-started-with-attack-october-2019.pdf" target="_blank" rel="noopener">Getting Started with ATT&amp;CK</a>的学习笔记，整理了对应脑图。</p>
+<p>相关资源：</p>
+<ul>
+<li><p>脑图xmind源文件：[链接](<a href="https://wiki.y1ng.org/assets/MITRE" target="_blank" rel="noopener">https://wiki.y1ng.org/assets/MITRE</a> ATT&amp;CK实践入门.xmind)</p>
+</li>
+<li><p>脑图PDF版本：[链接](<a href="https://wiki.y1ng.org/assets/MITRE" target="_blank" rel="noopener">https://wiki.y1ng.org/assets/MITRE</a> ATT&amp;CK实践入门.pdf)</p>
+</li>
+<li><p>Getting Started with ATT&amp;CK：<a href="https://wiki.y1ng.org/assets/mitre-getting-started-with-attack-october-2019.pdf" target="_blank" rel="noopener">链接</a></p>
+</li>
+<li><p>瀚思科技翻译版本：<a href="https://wiki.y1ng.org/assets/ATT&CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8.pdf" target="_blank" rel="noopener">链接</a></p>
+</li>
+</ul>
+<p><img src="https://image-host-toky.oss-cn-shanghai.aliyuncs.com/image-20220521233721606.png" alt="image-20220521233721606"></p>
+<p>图：ATT&amp;CK实践入门脑图</p>
+<h2 id="〇、概要"><a href="#〇、概要" class="headerlink" title="〇、概要"></a>〇、概要</h2><h3 id="围绕4个关键用例"><a href="#围绕4个关键用例" class="headerlink" title="围绕4个关键用例"></a>围绕4个关键用例</h3><ul>
+<li><p>网络威胁情报</p>
+</li>
+<li><p>检测与分析</p>
+</li>
+<li><p>对手模拟与红队</p>
+</li>
+<li><p>评估与工程</p>
+</li>
+</ul>
+<h3 id="以3个层次讲述"><a href="#以3个层次讲述" class="headerlink" title="以3个层次讲述"></a>以3个层次讲述</h3><ul>
+<li>第一层：资源少的初始团队/新手</li>
+<li>第二层：走向成熟的中等安全团队</li>
+<li>第三层：拥有高级安全团队和更多资源的组织机构</li>
+</ul>
+<h2 id="一、网络威胁情报"><a href="#一、网络威胁情报" class="headerlink" title="一、网络威胁情报"></a>一、网络威胁情报</h2><h3 id="第一层"><a href="#第一层" class="headerlink" title="第一层"></a>第一层</h3><ul>
+<li><p>查询已映射ATT&amp;CK的开源报告</p>
+</li>
+<li><p>查询每个威胁组织的TTP和检测、缓解措施</p>
+<h3 id="第二层"><a href="#第二层" class="headerlink" title="第二层"></a>第二层</h3><p>将自己的情报映射至ATT&amp;CK，映射的具体步骤：</p>
+</li>
+<li><p>理解ATT&amp;CK（结构、定义）</p>
+</li>
+<li><p>找出指标与行为</p>
+<ul>
+<li>e.g. 原子指标：IP</li>
+<li>e.g. 行为：建立Socks5通讯</li>
+</ul>
+</li>
+<li><p>研究行为</p>
+</li>
+<li><p>将行为转译为战术(Tactics)</p>
+</li>
+<li><p>确定行为里所应用的技术(Techniques)</p>
+</li>
+<li><p>对比其他分析师的结果</p>
+</li>
+</ul>
+<h3 id="第三层"><a href="#第三层" class="headerlink" title="第三层"></a>第三层</h3><ul>
+<li><p>从更多数据源处进行映射</p>
+<ul>
+<li>事件响应数据</li>
+<li>OSINT情报源</li>
+<li>威胁情报订阅源</li>
+<li>实时告警信息</li>
+<li>组织历史信息</li>
+</ul>
+</li>
+<li><p>根据映射的ATT&amp;CK信息来规划防御步骤</p>
+</li>
+</ul>
+<h2 id="二、检测与分析"><a href="#二、检测与分析" class="headerlink" title="二、检测与分析"></a>二、检测与分析</h2><h3 id="第一层-1"><a href="#第一层-1" class="headerlink" title="第一层"></a>第一层</h3><ul>
+<li>了解组织内拥有的数据源。可以对照ATT&amp;CK中的DataSource部分进行收集。重要的一些数据源包括：<ul>
+<li>进程及命令行监控</li>
+<li>文件及注册表监控</li>
+<li>身份验证日志</li>
+<li>网络数据包捕获</li>
+</ul>
+</li>
+<li>收集数据并输入至SIEM<ul>
+<li>测试数据集可参考：<a href="https://github.com/splunk/botsv2" target="_blank" rel="noopener">Splunk Botsv2</a></li>
+<li>测试环境搭建可参考：<a href="https://github.com/clong/DetectionLab" target="_blank" rel="noopener">DetectionLab</a></li>
+</ul>
+</li>
+<li>观察他人创建的分析，应用到自己的数据上<ul>
+<li>适合初学者的分析案例：<a href="https://car.mitre.org/analytics/CAR-2016-03-002/" target="_blank" rel="noopener">CAR-2016-03-002</a></li>
+<li>从分析到检测的完整流程：<ul>
+<li>分析攻击技术</li>
+<li>得出检测伪代码</li>
+<li><a href="https://github.com/NVISOsecurity/sigma-public/blob/master/rules/windows/process_creation/win_susp_wmi_execution.yml" target="_blank" rel="noopener">编写SIEM查询语句</a></li>
+<li>自动化</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="第二层-1"><a href="#第二层-1" class="headerlink" title="第二层"></a>第二层</h3><ul>
+<li><p>编写自己的分析来扩展覆盖面，包括两方面：</p>
+<ul>
+<li>理解攻击机制</li>
+<li>发现攻击在数据中的反应</li>
+</ul>
+</li>
+<li><p>具体实施</p>
+<ul>
+<li>进行模拟攻击<ul>
+<li>使用工具：<a href="https://github.com/redcanaryco/" target="_blank" rel="noopener">Atomic Red Team</a></li>
+<li>收集攻击的日志数据</li>
+<li>使用工具：<a href="https://github.com/clong/DetectionLab" target="_blank" rel="noopener">DetectionLab</a></li>
+<li>寻找指标并编写搜索语句</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>迭代分析流程：</p>
+<ul>
+<li>编写搜索语句检测恶意行为</li>
+<li>修正搜索以减少误报</li>
+<li>同时确保恶意行为的检出</li>
+</ul>
+</li>
+</ul>
+<h3 id="第三层-1"><a href="#第三层-1" class="headerlink" title="第三层"></a>第三层</h3><ul>
+<li>进行真实的红蓝对抗</li>
+<li>在对抗中完善对不同攻击技术的检测策略</li>
+<li>追踪检测策略的覆盖情况<ul>
+<li>使用工具：<a href="https://mitre-attack.github.io/attack-navigator/" target="_blank" rel="noopener">ATT&amp;CK Navigator</a></li>
+<li>例如使用颜色标注：<ul>
+<li>红色：未覆盖</li>
+<li>黄色：一定程度的覆盖</li>
+<li>绿色：高完成度的覆盖</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h3><ul>
+<li><a href="https://car.mitre.org/" target="_blank" rel="noopener">网络分析库 (CAR)：MITRE 的分析库</a></li>
+<li><a href="https://eqllib.readthedocs.io/en/latest/analytics.html" target="_blank" rel="noopener">EQL: Endgame 的开源分析库</a></li>
+<li><a href="https://github.com/Neo23x0/sigma" target="_blank" rel="noopener">Sigma: 一种工具无关的分析格式，附带按此格式编写的分析库</a></li>
+<li><a href="https://github.com/OTRF/ThreatHunter-Playbook" target="_blank" rel="noopener">威胁猎手战术手册: 在日志数据中查找 ATT&amp;CK 技术的策略库</a></li>
+<li><a href="https://github.com/redcanaryco/atomic-red-team" target="_blank" rel="noopener">原子红队 (Atomic Red Team)</a></li>
+<li><a href="https://github.com/clong/DetectionLab" target="_blank" rel="noopener">检测实验室 (Detection Lab)</a></li>
+<li><a href="https://github.com/splunk/botsv2" target="_blank" rel="noopener">BOTS: Splunk的Boss of the SOC数据集，含背景噪音和红队攻击</a></li>
+<li><a href="https://github.com/mitre/brawl-public-game-001" target="_blank" rel="noopener">BRAWL Public Game: MITRE 的红队数据集</a></li>
+<li><a href="https://mitre-attack.github.io/attack-navigator/" target="_blank" rel="noopener">ATT&amp;CK Navigator: ATT&amp;CK 矩阵数据可视化工具</a></li>
+</ul>
+<h2 id="三、对手仿真与红队"><a href="#三、对手仿真与红队" class="headerlink" title="三、对手仿真与红队"></a>三、对手仿真与红队</h2><p>注：对手仿真(Adversary Emulation)与渗透测试等其他红队形式不同的是，前者在预先构造的场景下，使用特定的TTP、针对特征防御面进行攻击，模拟特定对手组织</p>
+<h3 id="第一层-2"><a href="#第一层-2" class="headerlink" title="第一层"></a>第一层</h3><ul>
+<li>使用对手仿真工具模拟红队攻击<ul>
+<li><a href="https://github.com/redcanaryco/atomic-red-team" target="_blank" rel="noopener">原子红队</a></li>
+<li><a href="https://github.com/mitre/caldera" target="_blank" rel="noopener">CALDERA</a></li>
+</ul>
+</li>
+<li>执行原子测试的周期：<ul>
+<li>选择一个ATT&amp;CK技术</li>
+<li>选择一个针对该技术的测试</li>
+<li>执行测试过程</li>
+<li>分析检测过程</li>
+<li>提高对抗能力</li>
+</ul>
+</li>
+</ul>
+<h3 id="第二层-2"><a href="#第二层-2" class="headerlink" title="第二层"></a>第二层</h3><ul>
+<li>阶段建议：当团队/组织具备红队功能时，将技术映射至ATT&amp;CK</li>
+<li>重要案例：<a href="https://attack.mitre.org/docs/APT3_Adversary_Emulation_Plan.pdf" target="_blank" rel="noopener">APT3对手模拟手册</a></li>
+<li>使用工具：Cobalt Strike / Empire已经映射到ATT&amp;CK中</li>
+</ul>
+<h3 id="第三层-2"><a href="#第三层-2" class="headerlink" title="第三层"></a>第三层</h3><ul>
+<li><p>阶段任务：与CTI团队合作，创建对手仿真任务</p>
+</li>
+<li><p>对手仿真的五个步骤</p>
+<ul>
+<li><p>收集威胁情报：基于自身组织机构选择一个对手，与CTI团队合作分析该对手的TTP</p>
+</li>
+<li><p>抽取技术：将红队操作映射至ATT&amp;CK，便于红队进行攻击操作</p>
+</li>
+<li><p>分析与组织：基于对手及其操作方式的大量情报，抽取出对手的操作流程图</p>
+</li>
+<li><p>开发工具和程序：在知道红队做什么、怎么做之后，需要确定如何实现</p>
+</li>
+<li><p>模拟对手：红队与蓝队开始紧密合作，仿真对手TTP进行</p>
+</li>
+</ul>
+</li>
+<li><p>相关资源：<a href="https://attack.mitre.org/docs/APT3_Adversary_Emulation_Plan.pdf" target="_blank" rel="noopener">APT3对手模拟手册</a></p>
+</li>
+</ul>
+<h2 id="四、评估与工程"><a href="#四、评估与工程" class="headerlink" title="四、评估与工程"></a>四、评估与工程</h2><h3 id="第一层-3"><a href="#第一层-3" class="headerlink" title="第一层"></a>第一层</h3><ul>
+<li>阶段建议：相比全面评估，更建议从小处入手</li>
+<li>做法：选择一种技术，确定对此技术对覆盖率，进行适当工程强化后，开始检测此技术</li>
+</ul>
+<h3 id="第二层-3"><a href="#第二层-3" class="headerlink" title="第二层"></a>第二层</h3><ul>
+<li>阶段建议：扩大技术的评估，使用ATT&amp;CK覆盖热度图进行追踪</li>
+<li>做法：<ul>
+<li>技术覆盖度可分为高中低置信度</li>
+<li>对检测工具进行迭代：<ul>
+<li>工具在哪里运行：边界还是端点？</li>
+<li>工具检测的原理：静态指针还是行为检测？</li>
+<li>工具所监视的数据源：数据源类型可以推断所能检测的攻击技术</li>
+</ul>
+</li>
+<li>提升覆盖率主要过程：<ul>
+<li>创建短期内需重点关注的技术列表</li>
+<li>确保拉取正确数据以供分析</li>
+<li>开始构建分析并更新覆盖图    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="第三层-3"><a href="#第三层-3" class="headerlink" title="第三层"></a>第三层</h3><ul>
+<li>阶段建议：纳入缓解措施以强化评估</li>
+<li><a href="https://attack.mitre.org/mitigations/" target="_blank" rel="noopener">做法：参照ATT&amp;CK缓解措施（Mitigation）进行引入、实现</a></li>
+<li>相关资源<ul>
+<li><a href="https://www.malwarearchaeology.com/cheat-sheets/" target="_blank" rel="noopener">ATT&amp;CK Logging Cheat Sheet（可用于检测的Windows事件日志清单）</a></li>
+<li><a href="https://medium.com/@olafhartong/assess-your-data-potential-with-att-ck-datamap-f44884cfed11" target="_blank" rel="noopener">ATT&amp;CK数据地图（Datamap）项目</a></li>
+<li><a href="https://www.mbsecure.nl/blog/2019/5/dettact-mapping-your-blue-team-to-mitre-attack" target="_blank" rel="noopener">Dett&amp;CT框架</a></li>
+<li><a href="https://github.com/mitre-attack/attack-scripts/tree/master/scripts" target="_blank" rel="noopener">MITRE ATT&amp;CK脚本</a></li>
+<li><a href="https://www.mitre.org/sites/default/files/publications/16-3713-finding-cyber-threats%20with%20att&ck-based-analytics.pdf" target="_blank" rel="noopener">基于ATT&amp;CK分析发现网络威胁</a></li>
+<li><a href="https://attack.mitre.org/mitigations/enterprise/" target="_blank" rel="noopener">ATT&amp;CK缓解措施（ATT&amp;CK Mitigation）</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/projects/">Projects</a></li>
+         
+          <li><a href="/tools/">Tools</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MITRE-ATT-amp-CK实践入门"><span class="toc-number">1.</span> <span class="toc-text">MITRE ATT&amp;CK实践入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#〇、概要"><span class="toc-number">1.1.</span> <span class="toc-text">〇、概要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#围绕4个关键用例"><span class="toc-number">1.1.1.</span> <span class="toc-text">围绕4个关键用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以3个层次讲述"><span class="toc-number">1.1.2.</span> <span class="toc-text">以3个层次讲述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、网络威胁情报"><span class="toc-number">1.2.</span> <span class="toc-text">一、网络威胁情报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层"><span class="toc-number">1.2.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层"><span class="toc-number">1.2.3.</span> <span class="toc-text">第三层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、检测与分析"><span class="toc-number">1.3.</span> <span class="toc-text">二、检测与分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">第三层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关资源"><span class="toc-number">1.3.4.</span> <span class="toc-text">相关资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、对手仿真与红队"><span class="toc-number">1.4.</span> <span class="toc-text">三、对手仿真与红队</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-2"><span class="toc-number">1.4.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-2"><span class="toc-number">1.4.3.</span> <span class="toc-text">第三层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、评估与工程"><span class="toc-number">1.5.</span> <span class="toc-text">四、评估与工程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">第一层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层-3"><span class="toc-number">1.5.2.</span> <span class="toc-text">第二层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三层-3"><span class="toc-number">1.5.3.</span> <span class="toc-text">第三层</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&text=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&is_video=false&description=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MITRE ATT&amp;CK实践入门&body=Check out this article: https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&title=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&name=MITRE ATT&amp;CK实践入门&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://y1ng.org/2022/05/22/MITRE%20ATT&amp;CK%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8/&t=MITRE ATT&amp;CK实践入门" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Toky
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/projects/">Projects</a></li>
+         
+          <li><a href="/tools/">Tools</a></li>
+         
+          <li><a href="/books">Books</a></li>
+         
+          <li><a href="/atom.xml">RSS</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-157954403-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'y1ng-org-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
